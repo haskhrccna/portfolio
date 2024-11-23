@@ -2,7 +2,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Card } from "@/components/ui/card";
 import { pmpCertification, otherCertifications } from '@/data/certificateData';
 
-const Certifications = () => {
+export const Certifications = () => {
   const { t } = useLanguage();
 
   const CertificationCard = ({ cert }: { cert: typeof pmpCertification }) => (
@@ -55,5 +55,3 @@ const Certifications = () => {
     </section>
   );
 };
-
-export default Certifications;
