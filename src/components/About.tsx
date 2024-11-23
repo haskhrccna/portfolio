@@ -7,18 +7,13 @@ export const About = () => {
   return (
     <section id="about" className="section-padding">
       <div className="max-w-4xl mx-auto">
-        <motion.h2 
+        <motion.p 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-4xl font-bold mb-12"
+          className="text-lg leading-relaxed"
         >
-          {t('about')}
-        </motion.h2>
-        <div className="glass p-8">
-          <p className="text-lg leading-relaxed">
-            {t('bio')}
-          </p>
-        </div>
+          {t('bio')}
+        </motion.p>
       </div>
     </section>
   );
