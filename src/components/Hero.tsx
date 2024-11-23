@@ -10,7 +10,7 @@ export const Hero = () => {
           transition={{ duration: 0.5 }}
           className="text-5xl md:text-7xl font-bold mb-6"
         >
-          <span className="text-primary">Hassan Hassan</span>
+          <span className="text-white">Hassan Hassan Khairalla Adam</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
