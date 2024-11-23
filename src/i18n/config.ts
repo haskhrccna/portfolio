@@ -11,7 +11,8 @@ const resources = {
       "skillsTitle": "Skills",
       "getInTouch": "Get in Touch",
       "jobTitle": "Principal Resident Engineer - Electrical",
-      "name": "Hassan Hassan Khairalla Adam"
+      "name": "Hassan Hassan Khairalla Adam",
+      "hero.status": "Status: Available"
     }
   },
   ar: {
@@ -23,7 +24,8 @@ const resources = {
       "skillsTitle": "المهارات",
       "getInTouch": "تواصل معي",
       "jobTitle": "مهندس مقيم رئيسي - كهرباء",
-      "name": "حسن حسن خير الله آدم"
+      "name": "حسن حسن خير الله آدم",
+      "hero.status": "الحالة: متاح"
     }
   },
   fr: {
@@ -35,7 +37,8 @@ const resources = {
       "skillsTitle": "Compétences",
       "getInTouch": "Me Contacter",
       "jobTitle": "Ingénieur Résident Principal - Électricité",
-      "name": "Hassan Hassan Khairalla Adam"
+      "name": "Hassan Hassan Khairalla Adam",
+      "hero.status": "Statut: Disponible"
     }
   }
 };
