@@ -94,7 +94,7 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-4 right-32 z-50 flex gap-6">
+      <div className="fixed top-4 right-24 z-50 flex gap-4">
         <Button 
           onClick={handleAdminLogin}
           variant="outline"
