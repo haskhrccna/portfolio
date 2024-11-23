@@ -19,10 +19,7 @@ export const Hero = () => {
               />
               <AvatarFallback>HA</AvatarFallback>
             </Avatar>
-            <div className="mt-4 flex gap-4 items-center">
-              <a href="#contact" className="bg-white/10 backdrop-blur px-4 py-1 rounded-full text-white font-semibold hover:bg-white/20 transition-all">
-                {t('getInTouch')}
-              </a>
+            <div className="mt-4 relative">
               <div className="bg-emerald-500/90 px-4 py-1 rounded-full text-white font-semibold relative overflow-hidden">
                 {t('hero.status')}
                 <div className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 animate-spark-repeat" />
@@ -39,6 +36,11 @@ export const Hero = () => {
             <p className="text-lg text-gray-300 animate-fade-up opacity-90 mt-4" style={{ animationDelay: '0.3s' }}>
               {t('bio')}
             </p>
+            <div className="mt-8">
+              <a href="#contact" className="glass px-8 py-4 text-lg hover:bg-white/20 transition-all">
+                {t('getInTouch')}
+              </a>
+            </div>
           </div>
         </div>
       </div>
