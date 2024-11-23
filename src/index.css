@@ -5,9 +5,9 @@
 @layer base {
   body {
     @apply min-h-screen text-white;
-    background: linear-gradient(-45deg, #1A1F2C, #9b87f5);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    background: linear-gradient(-45deg, #1A1F2C, #9b87f5, #6E59A5, #7E69AB);
+    background-size: 300% 300%;
+    animation: gradient 8s ease infinite;
   }
 }
 
@@ -15,8 +15,14 @@
   0% {
     background-position: 0% 50%;
   }
-  50% {
+  25% {
     background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 0% 50%;
   }
   100% {
     background-position: 0% 50%;
