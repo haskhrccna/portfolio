@@ -38,11 +38,11 @@ export const Hero = () => {
             </p>
           </div>
         </div>
-        <div className="absolute bottom-0 right-4 mb-24">
-          <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block">
-            {t('getInTouch')}
-          </a>
-        </div>
+      </div>
+      <div className="fixed top-4 right-24 z-50">
+        <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block">
+          {t('getInTouch')}
+        </a>
       </div>
     </section>
   );
