@@ -20,7 +20,11 @@ export const LanguageSwitcher = () => {
     <div className="fixed top-4 right-4 z-50">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button 
+            variant="outline" 
+            size="icon"
+            className="glass hover:bg-white/20 transition-all"
+          >
             <Languages className="h-[1.2rem] w-[1.2rem]" />
           </Button>
         </DropdownMenuTrigger>
