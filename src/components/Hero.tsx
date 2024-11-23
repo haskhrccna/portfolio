@@ -100,14 +100,14 @@ export const Hero = () => {
           variant="outline"
           className="glass hover:bg-white/20 transition-all"
         >
-          Admin Login
+          {t('contact.adminLogin')}
         </Button>
         <Button 
           onClick={handleGetInTouch}
           variant="outline"
           className="glass hover:bg-white/20 transition-all"
         >
-          {t('getInTouch')}
+          {t('contact.getInTouch')}
         </Button>
       </div>
     </section>

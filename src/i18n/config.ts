@@ -22,14 +22,36 @@ const resources = {
           "linux": "Linux Systems"
         }
       },
-      "contact": "Get in Touch",
+      "contact": {
+        "title": "Get in Touch",
+        "getInTouch": "Contact Me",
+        "adminLogin": "Admin Login",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send Message"
+      },
+      "projects": {
+        "title": "Projects Photo Library",
+        "viewAll": "View All Projects"
+      },
+      "certifications": {
+        "title": "Professional Certifications",
+        "viewCertificate": "View Certificate"
+      },
+      "navigation": {
+        "home": "Home",
+        "about": "About",
+        "skills": "Skills",
+        "projects": "Projects",
+        "contact": "Contact"
+      },
       "bio": "Specialized in high-voltage power systems with extensive experience in managing and supervising infrastructure projects across the Middle East.",
       "getInTouch": "Get in Touch",
       "jobTitle": "Principal Resident Engineer - Electrical",
       "name": "Hassan Hassan Khairalla Adam",
-      "hero.status": "Status: Available",
-      "certifications": {
-        "title": "Professional Certifications"
+      "hero": {
+        "status": "Status: Available"
       }
     }
   },
@@ -53,14 +75,36 @@ const resources = {
           "linux": "أنظمة لينكس"
         }
       },
-      "contact": "تواصل معي",
+      "contact": {
+        "title": "تواصل معي",
+        "getInTouch": "اتصل بي",
+        "adminLogin": "تسجيل دخول المشرف",
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "message": "الرسالة",
+        "send": "إرسال الرسالة"
+      },
+      "projects": {
+        "title": "معرض صور المشاريع",
+        "viewAll": "عرض جميع المشاريع"
+      },
+      "certifications": {
+        "title": "الشهادات المهنية",
+        "viewCertificate": "عرض الشهادة"
+      },
+      "navigation": {
+        "home": "الرئيسية",
+        "about": "عني",
+        "skills": "المهارات",
+        "projects": "المشاريع",
+        "contact": "اتصل بي"
+      },
       "bio": "متخصص في أنظمة الطاقة عالية الجهد مع خبرة واسعة في إدارة والإشراف على مشاريع البنية التحتية في الشرق الأوسط",
       "getInTouch": "تواصل معي",
       "jobTitle": "مهندس مقيم رئيسي - كهرباء",
       "name": "حسن حسن خير الله آدم",
-      "hero.status": "الحالة: متاح",
-      "certifications": {
-        "title": "الشهادات المهنية"
+      "hero": {
+        "status": "الحالة: متاح"
       }
     }
   },
@@ -84,14 +128,36 @@ const resources = {
           "linux": "Systèmes Linux"
         }
       },
-      "contact": "Contact",
+      "contact": {
+        "title": "Contact",
+        "getInTouch": "Me Contacter",
+        "adminLogin": "Connexion Admin",
+        "name": "Nom",
+        "email": "Email",
+        "message": "Message",
+        "send": "Envoyer"
+      },
+      "projects": {
+        "title": "Galerie de Photos des Projets",
+        "viewAll": "Voir Tous les Projets"
+      },
+      "certifications": {
+        "title": "Certifications Professionnelles",
+        "viewCertificate": "Voir le Certificat"
+      },
+      "navigation": {
+        "home": "Accueil",
+        "about": "À Propos",
+        "skills": "Compétences",
+        "projects": "Projets",
+        "contact": "Contact"
+      },
       "bio": "Spécialisé dans les systèmes électriques haute tension avec une vaste expérience dans la gestion et la supervision de projets d'infrastructure au Moyen-Orient",
       "getInTouch": "Me Contacter",
       "jobTitle": "Ingénieur Résident Principal - Électricité",
       "name": "Hassan Hassan Khairalla Adam",
-      "hero.status": "Statut: Disponible",
-      "certifications": {
-        "title": "Certifications Professionnelles"
+      "hero": {
+        "status": "Statut: Disponible"
       }
     }
   }

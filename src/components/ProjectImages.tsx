@@ -5,7 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const IMAGES = [
   "/images/projects/cable-installation.jpg",
@@ -28,6 +28,7 @@ const IMAGES = [
 ];
 
 const ProjectImages = () => {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides, setTotalSlides] = useState(IMAGES.length);
 
@@ -41,7 +42,7 @@ const ProjectImages = () => {
     <section className="glass section-padding mb-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-white text-center mb-8 animate-on-scroll">
-          Projects Photo Library
+          {t('projects.title')}
         </h2>
         <div className="animate-on-scroll">
           <Carousel
