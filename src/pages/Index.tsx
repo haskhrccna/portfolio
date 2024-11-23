@@ -32,9 +32,9 @@ const Index = () => {
       <Hero />
       <About />
       <Skills />
-      <ProjectImages />
       <Certifications />
       <Contact />
+      <ProjectImages />
     </main>
   );
 };

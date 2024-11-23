@@ -38,36 +38,41 @@ const ProjectImages = () => {
   };
 
   return (
-    <section className="min-h-[30vh] bg-slate-800 p-8">
+    <section className="glass section-padding">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-white text-center mb-6">Projects Photo Library</h2>
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full relative"
-          onSelect={handleSlideChange}
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {IMAGES.map((src, index) => (
-              <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                <div className="relative h-48 overflow-hidden rounded-lg group">
-                  <img
-                    src={src}
-                    alt={`Construction project phase ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 rounded-full text-sm">
-                    {index + 1} / {IMAGES.length}
+        <h2 className="text-3xl font-bold text-white text-center mb-8 animate-on-scroll">
+          Projects Photo Library
+        </h2>
+        <div className="animate-on-scroll">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full relative"
+            onSelect={handleSlideChange}
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {IMAGES.map((src, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <div className="relative h-48 overflow-hidden rounded-lg group">
+                    <img
+                      src={src}
+                      alt={`Construction project phase ${index + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-2 right-2 bg-white/10 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                      {index + 1} / {IMAGES.length}
+                    </div>
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
-        </Carousel>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
+            <CarouselNext className="hidden md:flex bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
+          </Carousel>
+        </div>
       </div>
     </section>
   );
