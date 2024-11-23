@@ -30,13 +30,13 @@ export const LanguageSwitcher = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => changeLanguage('en')}>
-            English (EN)
+            E
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => changeLanguage('ar')}>
-            العربية (AR)
+            ع
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => changeLanguage('fr')}>
-            Français (FR)
+            F
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
