@@ -55,7 +55,7 @@ const ProjectImages = () => {
             <CarouselContent className="-ml-2 md:-ml-4">
               {IMAGES.map((src, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="relative h-48 overflow-hidden rounded-lg group">
+                  <div className="relative h-60 overflow-hidden rounded-lg group">
                     <img
                       src={src}
                       alt={`Construction project phase ${index + 1}`}
