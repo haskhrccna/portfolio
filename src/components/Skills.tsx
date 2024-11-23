@@ -1,51 +1,98 @@
-import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
+import { Progress } from "@/components/ui/progress";
+import { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const skills = [
-  { name: "React", level: 90 },
-  { name: "TypeScript", level: 85 },
-  { name: "Node.js", level: 80 },
-  { name: "UI/UX Design", level: 75 },
-];
+const Skills = () => {
+  const [animated, setAnimated] = useState(false);
+  const { t } = useLanguage();
 
-export const Skills = () => {
-  const { t } = useTranslation();
+  const skills = [
+    { name: t('skills.items.projectManagement'), level: 95 },
+    { name: t('skills.items.constructionSupervision'), level: 90 },
+    { name: t('skills.items.powerTransmission'), level: 95 },
+    { name: t('skills.items.infrastructureDesign'), level: 85 },
+    { name: t('skills.items.tenderManagement'), level: 90 }
+  ];
+
+  const itSkills = [
+    { name: t('skills.itSkills.microsoftOffice'), level: 99 },
+    { name: t('skills.itSkills.pythonProgramming'), level: 95 },
+    { name: t('skills.itSkills.networking'), level: 97 },
+    { name: t('skills.itSkills.linux'), level: 90 }
+  ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAnimated(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const element = document.getElementById('skills-section');
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, []);
 
   return (
-    <section id="skills" className="section-padding">
-      <div className="max-w-4xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-4xl font-bold mb-12"
-        >
-          {t('skillsTitle')}
-        </motion.h2>
-        <div className="grid gap-6">
-          {skills.map((skill, index) => (
-            <motion.div 
-              key={skill.name}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="glass p-6"
-            >
-              <div className="flex justify-between mb-2">
-                <span>{skill.name}</span>
-                <span>{skill.level}%</span>
-              </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  className="h-full bg-primary"
+    <section id="skills" className="py-20 bg-slate-900">
+      <div id="skills-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-xl md:text-2xl font-bold text-center mb-16 text-white">{t('skills.title')}</h2>
+        
+        <div className="space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {skills.map((skill, index) => (
+              <div
+                key={skill.name}
+                className="bg-slate-800 p-6 rounded-lg shadow-sm animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium text-white text-sm">{skill.name}</span>
+                  <span className="text-blue-400 text-sm">{skill.level}%</span>
+                </div>
+                <Progress
+                  value={animated ? skill.level : 0}
+                  className="transition-all duration-1000 ease-out"
                 />
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-center mb-8 text-white">{t('skills.itSkills.title')}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {itSkills.map((skill, index) => (
+                <div
+                  key={skill.name}
+                  className="bg-slate-800 p-6 rounded-lg shadow-sm animate-fade-up"
+                  style={{ animationDelay: `${(index + skills.length) * 0.1}s` }}
+                >
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium text-white text-sm">{skill.name}</span>
+                    <span className="text-blue-400 text-sm">{skill.level}%</span>
+                  </div>
+                  <Progress
+                    value={animated ? skill.level : 0}
+                    className="transition-all duration-1000 ease-out"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
+
+export default Skills;

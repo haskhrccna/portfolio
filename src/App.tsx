@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import "./i18n/config";
 
 // Create a client
@@ -22,16 +23,18 @@ const App = () => {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <LanguageSwitcher />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <LanguageSwitcher />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </LanguageProvider>
       </QueryClientProvider>
     </React.StrictMode>
   );
