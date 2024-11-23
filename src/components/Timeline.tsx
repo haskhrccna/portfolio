@@ -39,13 +39,13 @@ export const Timeline = () => {
   ];
 
   return (
-    <section className="pt-0 pb-2">
+    <section className="pt-0 pb-2 -mt-20">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-center mb-4"
+          className="text-3xl font-bold text-center mb-2"
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
