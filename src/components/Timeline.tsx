@@ -39,13 +39,13 @@ export const Timeline = () => {
   ];
 
   return (
-    <section className="py-4">
+    <section className="py-2">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-center mb-6"
+          className="text-3xl font-bold text-center mb-4"
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
@@ -60,7 +60,7 @@ export const Timeline = () => {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
+              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-8`}
             >
               {/* Timeline dot */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
