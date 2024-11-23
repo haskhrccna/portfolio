@@ -36,10 +36,12 @@ export const Hero = () => {
             <p className="text-lg text-gray-300 animate-fade-up opacity-90 mt-4" style={{ animationDelay: '0.3s' }}>
               {t('bio')}
             </p>
-            <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block mt-6">
-              {t('getInTouch')}
-            </a>
           </div>
+        </div>
+        <div className="absolute bottom-4 right-4">
+          <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block">
+            {t('getInTouch')}
+          </a>
         </div>
       </div>
     </section>
