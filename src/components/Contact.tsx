@@ -13,7 +13,7 @@ export const Contact = () => {
           whileInView={{ opacity: 1 }}
           className="text-4xl font-bold mb-12"
         >
-          {t('contact')}
+          {t('contact.getInTouch')}
         </motion.h2>
         <div className="glass p-8">
           <div className="flex justify-center gap-8">
