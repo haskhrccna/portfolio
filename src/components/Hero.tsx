@@ -19,11 +19,14 @@ export const Hero = () => {
               />
               <AvatarFallback>HA</AvatarFallback>
             </Avatar>
-            <div className="mt-4 relative">
+            <div className="mt-4 relative flex items-center gap-4">
               <div className="bg-emerald-500/90 px-4 py-1 rounded-full text-white font-semibold relative overflow-hidden">
                 {t('hero.status')}
                 <div className="absolute inset-0 w-1/2 h-full bg-white/20 skew-x-12 animate-spark-repeat" />
               </div>
+              <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all">
+                {t('getInTouch')}
+              </a>
             </div>
           </div>
           <div className="flex-grow text-center md:text-left">
@@ -38,11 +41,6 @@ export const Hero = () => {
             </p>
           </div>
         </div>
-      </div>
-      <div className="absolute top-16 right-20">
-        <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all">
-          {t('getInTouch')}
-        </a>
       </div>
     </section>
   );
