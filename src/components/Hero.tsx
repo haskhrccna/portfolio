@@ -24,7 +24,6 @@ export const Hero = () => {
       }
 
       if (session) {
-        // Check if user is admin
         const { data: adminData, error: adminError } = await supabase
           .from('admin_profiles')
           .select('is_admin')
@@ -43,7 +42,6 @@ export const Hero = () => {
         }
       }
 
-      // If not logged in or not admin, redirect to login
       const { error: signInError } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
@@ -96,7 +94,7 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-4 right-24 z-50 flex gap-4">
+      <div className="fixed top-4 right-4 z-50 flex gap-4">
         <Button 
           onClick={handleAdminLogin}
           variant="outline"
