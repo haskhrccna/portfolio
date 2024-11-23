@@ -44,46 +44,52 @@ export const Skills = () => {
   }, []);
 
   return (
-    <section id="skills" className="py-20 bg-slate-900">
-      <div id="skills-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl md:text-2xl font-bold text-center mb-16 text-white">{t('skills.title')}</h2>
+    <section id="skills" className="section-padding">
+      <div id="skills-section" className="max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-16">
+          {t('skills.title')}
+        </h2>
         
-        <div className="space-y-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="bg-slate-800 p-6 rounded-lg shadow-sm animate-fade-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium text-white text-sm">{skill.name}</span>
-                  <span className="text-blue-400 text-sm">{skill.level}%</span>
-                </div>
-                <Progress
-                  value={animated ? skill.level : 0}
-                  className="transition-all duration-1000 ease-out"
-                />
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h3 className="text-lg font-bold text-center mb-8 text-white">{t('skills.itSkills.title')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {itSkills.map((skill, index) => (
+        <div className="space-y-16">
+          <div className="glass p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {skills.map((skill, index) => (
                 <div
                   key={skill.name}
-                  className="bg-slate-800 p-6 rounded-lg shadow-sm animate-fade-up"
-                  style={{ animationDelay: `${(index + skills.length) * 0.1}s` }}
+                  className="animate-fade-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex justify-between mb-2">
-                    <span className="font-medium text-white text-sm">{skill.name}</span>
-                    <span className="text-blue-400 text-sm">{skill.level}%</span>
+                    <span className="font-medium text-sm">{skill.name}</span>
+                    <span className="text-primary text-sm">{skill.level}%</span>
                   </div>
                   <Progress
                     value={animated ? skill.level : 0}
-                    className="transition-all duration-1000 ease-out"
+                    className="transition-all duration-1000 ease-out h-2"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass p-8">
+            <h3 className="text-2xl font-bold text-center mb-8">
+              {t('skills.itSkills.title')}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {itSkills.map((skill, index) => (
+                <div
+                  key={skill.name}
+                  className="animate-fade-up"
+                  style={{ animationDelay: `${(index + skills.length) * 0.1}s` }}
+                >
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium text-sm">{skill.name}</span>
+                    <span className="text-primary text-sm">{skill.level}%</span>
+                  </div>
+                  <Progress
+                    value={animated ? skill.level : 0}
+                    className="transition-all duration-1000 ease-out h-2"
                   />
                 </div>
               ))}
