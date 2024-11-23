@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply min-h-screen text-white;
-    background: linear-gradient(-45deg, #1A1F2C, #8B5CF6, #6E59A5, #D946EF);
+    background: linear-gradient(-45deg, #0F0A1F, #7B3FE4, #4A1D96, #C026D3);
     background-size: 300% 300%;
     animation: gradient 8s ease infinite;
   }
