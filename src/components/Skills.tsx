@@ -46,7 +46,7 @@ export const Skills = () => {
   return (
     <section id="skills" className="section-padding">
       <div id="skills-section" className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-16">
+        <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
           {t('skills.title')}
         </h2>
         
@@ -60,8 +60,8 @@ export const Skills = () => {
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex justify-between mb-2">
-                    <span className="font-medium text-sm">{skill.name}</span>
-                    <span className="text-primary text-sm">{skill.level}%</span>
+                    <span className="font-mono text-sm tracking-tight">{skill.name}</span>
+                    <span className="font-mono text-primary text-sm">{skill.level}%</span>
                   </div>
                   <Progress
                     value={animated ? skill.level : 0}
@@ -73,7 +73,7 @@ export const Skills = () => {
           </div>
 
           <div className="glass p-8">
-            <h3 className="text-2xl font-bold text-center mb-8">
+            <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
               {t('skills.itSkills.title')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -84,8 +84,8 @@ export const Skills = () => {
                   style={{ animationDelay: `${(index + skills.length) * 0.1}s` }}
                 >
                   <div className="flex justify-between mb-2">
-                    <span className="font-medium text-sm">{skill.name}</span>
-                    <span className="text-primary text-sm">{skill.level}%</span>
+                    <span className="font-mono text-sm tracking-tight">{skill.name}</span>
+                    <span className="font-mono text-primary text-sm">{skill.level}%</span>
                   </div>
                   <Progress
                     value={animated ? skill.level : 0}
