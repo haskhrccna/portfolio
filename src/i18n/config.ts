@@ -7,8 +7,11 @@ const resources = {
       "about": "About Me",
       "skills": "Skills",
       "contact": "Get in Touch",
-      "bio": "I'm a passionate developer with 5 years of experience in creating beautiful and functional web applications.",
+      "bio": "Specialized in high-voltage power systems with extensive experience in managing and supervising infrastructure projects across the Middle East.",
       "skillsTitle": "Skills",
+      "getInTouch": "Get in Touch",
+      "jobTitle": "Principal Resident Engineer - Electrical",
+      "name": "Hassan Hassan Khairalla Adam"
     }
   },
   ar: {
@@ -16,8 +19,11 @@ const resources = {
       "about": "عني",
       "skills": "المهارات",
       "contact": "تواصل معي",
-      "bio": "أنا مطور شغوف بخبرة 5 سنوات في إنشاء تطبيقات ويب جميلة وعملية.",
+      "bio": "متخصص في أنظمة الطاقة عالية الجهد مع خبرة واسعة في إدارة والإشراف على مشاريع البنية التحتية في الشرق الأوسط",
       "skillsTitle": "المهارات",
+      "getInTouch": "تواصل معي",
+      "jobTitle": "مهندس مقيم رئيسي - كهرباء",
+      "name": "حسن حسن خير الله آدم"
     }
   },
   fr: {
@@ -25,8 +31,11 @@ const resources = {
       "about": "À Propos",
       "skills": "Compétences",
       "contact": "Contact",
-      "bio": "Je suis un développeur passionné avec 5 ans d'expérience dans la création d'applications web belles et fonctionnelles.",
+      "bio": "Spécialisé dans les systèmes électriques haute tension avec une vaste expérience dans la gestion et la supervision de projets d'infrastructure au Moyen-Orient",
       "skillsTitle": "Compétences",
+      "getInTouch": "Me Contacter",
+      "jobTitle": "Ingénieur Résident Principal - Électricité",
+      "name": "Hassan Hassan Khairalla Adam"
     }
   }
 };

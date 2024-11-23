@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Contact = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="contact" className="section-padding">
       <div className="max-w-4xl mx-auto">
@@ -10,7 +13,7 @@ export const Contact = () => {
           whileInView={{ opacity: 1 }}
           className="text-4xl font-bold mb-12"
         >
-          Get in Touch
+          {t('contact')}
         </motion.h2>
         <div className="glass p-8">
           <div className="flex justify-center gap-8">

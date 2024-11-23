@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="section-padding min-h-screen flex items-center">
       <div className="max-w-4xl mx-auto">
@@ -23,7 +26,7 @@ export const Hero = () => {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold whitespace-nowrap"
           >
-            <span className="text-white">Hassan Hassan Khairalla Adam</span>
+            <span className="text-white">{t('name')}</span>
           </motion.h1>
         </div>
         <motion.p 
@@ -32,7 +35,7 @@ export const Hero = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl md:text-2xl text-gray-300 mb-4"
         >
-          Principal Resident Engineer - Electrical
+          {t('jobTitle')}
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -40,7 +43,7 @@ export const Hero = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto"
         >
-          Specialized in high-voltage power systems with extensive experience in managing and supervising infrastructure projects across the Middle East
+          {t('bio')}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -48,7 +51,7 @@ export const Hero = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a href="#contact" className="glass px-8 py-4 text-lg hover:bg-white/20 transition-all">
-            Get in touch
+            {t('getInTouch')}
           </a>
         </motion.div>
       </div>
