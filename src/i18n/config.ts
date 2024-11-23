@@ -51,7 +51,7 @@ const resources = {
       "jobTitle": "Principal Resident Engineer - Electrical",
       "name": "Hassan Hassan Khairalla Adam",
       "hero": {
-        "status": "Status: Available"
+        "status": "Status: Hired"
       }
     }
   },
@@ -104,7 +104,7 @@ const resources = {
       "jobTitle": "مهندس مقيم رئيسي - كهرباء",
       "name": "حسن حسن خير الله آدم",
       "hero": {
-        "status": "الحالة: متاح"
+        "status": "الحالة: تم التوظيف"
       }
     }
   },
@@ -157,7 +157,7 @@ const resources = {
       "jobTitle": "Ingénieur Résident Principal - Électricité",
       "name": "Hassan Hassan Khairalla Adam",
       "hero": {
-        "status": "Statut: Disponible"
+        "status": "Statut: Embauché"
       }
     }
   }
