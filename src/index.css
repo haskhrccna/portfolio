@@ -4,7 +4,22 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-secondary to-primary min-h-screen text-white;
+    @apply min-h-screen text-white;
+    background: linear-gradient(-45deg, #1A1F2C, #9b87f5);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
