@@ -3,6 +3,7 @@ import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
+import ProjectImages from "@/components/ProjectImages";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -31,6 +32,7 @@ const Index = () => {
       <Hero />
       <About />
       <Skills />
+      <ProjectImages />
       <Certifications />
       <Contact />
     </main>
