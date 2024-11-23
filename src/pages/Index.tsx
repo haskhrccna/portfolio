@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
+import { Timeline } from "@/components/Timeline";
 import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
 import Footer from "@/components/Footer";
@@ -32,6 +33,7 @@ const Index = () => {
     <main className="overflow-hidden">
       <Hero />
       <About />
+      <Timeline />
       <Skills />
       <Certifications />
       <ProjectImages />
