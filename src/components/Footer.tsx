@@ -10,7 +10,7 @@ const Footer = () => {
       // Track the visit
       await trackVisitor();
 
-      // Get initial visitor count
+      // Get total visitor count based on visitor_number sequence
       try {
         const { data, error } = await supabase
           .from('visitors')
@@ -23,39 +23,13 @@ const Footer = () => {
         
         if (data) {
           setVisitorCount(data.visitor_number);
-          console.log('Initial visitor count:', data.visitor_number);
         }
       } catch (error) {
         console.error('Error fetching visitor count:', error);
       }
     };
 
-    // Set up realtime subscription
-    const channel = supabase
-      .channel('visitors_changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'visitors',
-        },
-        (payload) => {
-          console.log('New visitor detected:', payload);
-          if (payload.new && payload.new.visitor_number) {
-            setVisitorCount(payload.new.visitor_number);
-          }
-        }
-      )
-      .subscribe();
-
-    // Initialize visitor tracking
     initializeVisitor();
-
-    // Cleanup subscription on unmount
-    return () => {
-      channel.unsubscribe();
-    };
   }, []);
 
   return (
