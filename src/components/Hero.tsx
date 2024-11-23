@@ -107,7 +107,7 @@ export const Hero = () => {
           variant="outline"
           className="glass hover:bg-white/20 transition-all"
         >
-          {t('contact.getInTouch')}
+          Get in Touch
         </Button>
       </div>
     </section>
