@@ -38,7 +38,7 @@ const ProjectImages = () => {
   };
 
   return (
-    <section className="glass section-padding">
+    <section className="glass section-padding mb-20">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-white text-center mb-8 animate-on-scroll">
           Projects Photo Library
