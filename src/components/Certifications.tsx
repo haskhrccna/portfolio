@@ -7,10 +7,9 @@ export const Certifications = () => {
 
   const CertificationCard = ({ cert }: { cert: typeof pmpCertification }) => (
     <Card 
-      className="glass hover:bg-white/20 transition-all duration-300 p-6 
-        transform hover:scale-105 hover:shadow-xl 
-        hover:border-white/40 relative 
-        group cursor-pointer"
+      className="glass p-6 relative group cursor-pointer overflow-hidden
+        hover:bg-white/20 transition-all duration-300
+        hover:border-white/40"
     >
       <div className="flex items-start space-x-4">
         <div className={`${cert.id === 2 ? 'w-48' : 'w-24'} h-24 flex-shrink-0 rounded-lg overflow-hidden bg-white/5 
@@ -18,7 +17,7 @@ export const Certifications = () => {
           <img 
             src={cert.imageUrl} 
             alt={cert.title}
-            className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300"
+            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
           />
         </div>
         <div>
