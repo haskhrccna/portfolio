@@ -93,50 +93,76 @@ const Timeline = () => {
   ];
 
   return (
-    <section id="experience" className="py-10 bg-slate-900">
-      <div className="sticky top-0 bg-slate-900/90 backdrop-blur-sm px-6 py-3 z-50">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-white">{t('experience.title')}</h2>
+    <section id="experience" className="relative py-20 overflow-hidden">
+      <div className="sticky top-0 z-50 bg-gradient-to-b from-background to-background/80 backdrop-blur-sm px-6 py-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          {t('experience.title')}
+        </h2>
       </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-purple-500/30" />
-          <div className="space-y-20">
+          {/* Timeline center line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-purple-500 via-purple-400 to-pink-500" />
+          
+          <div className="space-y-24">
             {experiences.map((experience, index) => (
               <div
                 key={experience.id}
                 className={`relative flex items-center ${
                   index % 2 === 0 ? 'justify-start' : 'justify-end'
-                } animate-fade-up`}
-                style={{ animationDelay: `${index * 0.2}s` }}
+                } group`}
               >
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50" />
-                <Card className={`w-full md:w-5/12 ${index % 2 === 0 ? 'mr-auto md:mr-8' : 'ml-auto md:ml-8'} bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300`}>
-                  <div className="relative overflow-hidden">
-                    <button 
-                      className="w-full text-left p-6 transform transition-all duration-300 
-                        bg-gradient-to-br from-slate-800/90 to-slate-900/90
-                        hover:from-purple-900/20 hover:to-slate-800/90
-                        before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-purple-500/10 before:to-transparent before:translate-x-[-100%] hover:before:animate-spark-repeat
-                        after:absolute after:inset-0 after:bg-gradient-to-b after:from-purple-500/5 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300
-                        hover:scale-[1.02] hover:translate-y-[-8px] active:translate-y-[2px]
-                        shadow-[inset_0_0_0_1px_rgba(168,85,247,0.1)] hover:shadow-[inset_0_0_0_1px_rgba(168,85,247,0.4),0_16px_40px_-8px_rgba(168,85,247,0.2)]
-                        group relative"
-                    >
-                      <div className="flex items-center mb-2 text-sm text-purple-200/70">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        {experience.date}
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-purple-200">
-                        {experience.title}
-                      </h3>
-                      <div className="flex items-center text-purple-400 mb-4">
-                        <Briefcase className="w-4 h-4 mr-2" />
-                        {experience.company}
-                      </div>
-                      {experience.description && (
-                        <p className="text-gray-300 text-sm leading-relaxed group-hover:text-purple-100/90">{experience.description}</p>
-                      )}
-                    </button>
+                {/* Timeline dot */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/50 border-4 border-background group-hover:scale-125 transition-transform duration-300" />
+                </div>
+
+                {/* Card */}
+                <Card 
+                  className={`
+                    w-full md:w-5/12 
+                    ${index % 2 === 0 ? 'mr-auto md:mr-12' : 'ml-auto md:ml-12'}
+                    glass
+                    bg-gradient-to-br from-background/40 to-background/20
+                    backdrop-blur-lg
+                    border border-purple-500/20
+                    hover:border-purple-500/40
+                    shadow-xl
+                    hover:shadow-purple-500/10
+                    transition-all
+                    duration-300
+                    transform
+                    hover:-translate-y-1
+                    hover:scale-[1.02]
+                    animate-fade-up
+                  `}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="p-6">
+                    {/* Date */}
+                    <div className="flex items-center mb-3 text-sm text-purple-300">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      <span className="font-medium">{experience.date}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-purple-300 transition-colors">
+                      {experience.title}
+                    </h3>
+
+                    {/* Company */}
+                    <div className="flex items-center text-purple-400 mb-4">
+                      <Briefcase className="w-4 h-4 mr-2" />
+                      <span className="font-medium">{experience.company}</span>
+                    </div>
+
+                    {/* Description */}
+                    {experience.description && (
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        {experience.description}
+                      </p>
+                    )}
                   </div>
                 </Card>
               </div>
