@@ -2,7 +2,7 @@ import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const Skills = () => {
+export const Skills = () => {
   const [animated, setAnimated] = useState(false);
   const { t } = useLanguage();
 
@@ -94,5 +94,3 @@ const Skills = () => {
     </section>
   );
 };
-
-export default Skills;
