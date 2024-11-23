@@ -1,6 +1,9 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -8,6 +11,54 @@ export const Hero = () => {
 
   const handleGetInTouch = () => {
     navigate('/contact');
+  };
+
+  const handleAdminLogin = async () => {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Error checking session:', error);
+        toast.error('Authentication error');
+        return;
+      }
+
+      if (session) {
+        // Check if user is admin
+        const { data: adminData, error: adminError } = await supabase
+          .from('admin_profiles')
+          .select('is_admin')
+          .eq('id', session.user.id)
+          .single();
+
+        if (adminError) {
+          console.error('Error checking admin status:', adminError);
+          toast.error('Error checking admin status');
+          return;
+        }
+
+        if (adminData?.is_admin) {
+          toast.success('Already logged in as admin');
+          return;
+        }
+      }
+
+      // If not logged in or not admin, redirect to login
+      const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: window.location.origin
+        }
+      });
+
+      if (signInError) {
+        console.error('Error signing in:', signInError);
+        toast.error('Error signing in');
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('An unexpected error occurred');
+    }
   };
 
   return (
@@ -45,7 +96,14 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-4 right-24 z-50">
+      <div className="fixed top-4 right-4 z-50 flex gap-4">
+        <Button 
+          onClick={handleAdminLogin}
+          variant="outline"
+          className="glass hover:bg-white/20 transition-all"
+        >
+          Admin Login
+        </Button>
         <button 
           onClick={handleGetInTouch}
           className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block"
