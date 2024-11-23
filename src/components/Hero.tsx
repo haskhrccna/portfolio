@@ -16,9 +16,17 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-xl md:text-2xl text-gray-300 mb-8"
+          className="text-xl md:text-2xl text-gray-300 mb-4"
         >
           Principal Resident Engineer - Electrical
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto"
+        >
+          Specialized in high-voltage power systems with extensive experience in managing and supervising infrastructure projects across the Middle East
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
