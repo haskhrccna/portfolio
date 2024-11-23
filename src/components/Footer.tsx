@@ -3,15 +3,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { trackVisitor } from '@/utils/visitorTracking';
 
 const Footer = () => {
-  const [visitorCount, setVisitorCount] = useState(0);
+  const [visitorCount, setVisitorCount] = useState<number>(0);
 
   useEffect(() => {
     const initializeVisitor = async () => {
+      console.log('Initializing visitor tracking in Footer');
+      
       // Track the visit
       await trackVisitor();
 
       // Get total visitor count based on visitor_number sequence
       try {
+        console.log('Fetching visitor count from Supabase');
         const { data, error } = await supabase
           .from('visitors')
           .select('visitor_number')
@@ -19,13 +22,17 @@ const Footer = () => {
           .limit(1)
           .single();
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error fetching visitor count:', error);
+          throw error;
+        }
         
         if (data) {
+          console.log('Successfully fetched visitor count:', data.visitor_number);
           setVisitorCount(data.visitor_number);
         }
       } catch (error) {
-        console.error('Error fetching visitor count:', error);
+        console.error('Error in visitor count fetch:', error);
       }
     };
 
