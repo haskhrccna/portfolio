@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const skills = [
   { name: "React", level: 90 },
@@ -8,6 +9,8 @@ const skills = [
 ];
 
 export const Skills = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="skills" className="section-padding">
       <div className="max-w-4xl mx-auto">
@@ -16,7 +19,7 @@ export const Skills = () => {
           whileInView={{ opacity: 1 }}
           className="text-4xl font-bold mb-12"
         >
-          Skills
+          {t('skillsTitle')}
         </motion.h2>
         <div className="grid gap-6">
           {skills.map((skill, index) => (
