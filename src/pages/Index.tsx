@@ -3,6 +3,7 @@ import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
+import Footer from "@/components/Footer";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -34,6 +35,7 @@ const Index = () => {
       <Skills />
       <Certifications />
       <ProjectImages />
+      <Footer />
     </main>
   );
 };
