@@ -40,13 +40,13 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full py-6 mt-auto bg-slate-900/90 backdrop-blur-md">
+    <footer className="w-full py-6 mt-auto glass">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-3 items-center">
-          <div className="text-gray-400 text-sm">
+          <div className="text-white/80 text-sm">
             © {new Date().getFullYear()} Hassan Adam
           </div>
-          <div className="flex flex-col items-center text-gray-400 text-sm">
+          <div className="flex flex-col items-center text-white/80 text-sm">
             <div>
               Site Visitors: <span className="font-bold text-white">{visitorCount}</span>
             </div>
@@ -54,7 +54,7 @@ const Footer = () => {
               Last updated: {new Date().toLocaleDateString()}
             </div>
           </div>
-          <div className="text-gray-400 text-sm text-right">
+          <div className="text-white/80 text-sm text-right">
             All Rights Reserved
           </div>
         </div>
