@@ -1,8 +1,14 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleGetInTouch = () => {
+    navigate('/contact');
+  };
 
   return (
     <section className="min-h-[40vh] flex items-center justify-center relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 animate-gradient-xy overflow-hidden p-8">
@@ -40,9 +46,12 @@ export const Hero = () => {
         </div>
       </div>
       <div className="fixed top-4 right-24 z-50">
-        <a href="#contact" className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block">
+        <button 
+          onClick={handleGetInTouch}
+          className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block"
+        >
           {t('getInTouch')}
-        </a>
+        </button>
       </div>
     </section>
   );
