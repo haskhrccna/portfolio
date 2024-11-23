@@ -4,13 +4,9 @@ import { Skills } from "@/components/Skills";
 import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
 import { useEffect } from "react";
-import { trackVisitor } from "@/utils/visitorTracking";
 
 const Index = () => {
   useEffect(() => {
-    // Track visitor when component mounts
-    trackVisitor().catch(console.error);
-
     // Set up scroll animations
     const observerCallback: IntersectionObserverCallback = (entries) => {
       entries.forEach(entry => {
