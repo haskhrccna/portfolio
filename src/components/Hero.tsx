@@ -10,7 +10,7 @@ export const Hero = () => {
           transition={{ duration: 0.5 }}
           className="text-5xl md:text-7xl font-bold mb-6"
         >
-          Hi, I'm <span className="text-primary">John Doe</span>
+          Hi, I'm <span className="text-primary">Hassan Hassan</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,7 @@ export const Hero = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-xl md:text-2xl text-gray-300 mb-8"
         >
-          Full Stack Developer & UI/UX Designer
+          Principal Resident Engineer - Electrical
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
