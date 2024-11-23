@@ -104,12 +104,13 @@ export const Hero = () => {
         >
           Admin Login
         </Button>
-        <button 
+        <Button 
           onClick={handleGetInTouch}
-          className="glass px-8 py-2 text-lg hover:bg-white/20 transition-all inline-block"
+          variant="outline"
+          className="glass hover:bg-white/20 transition-all"
         >
           {t('getInTouch')}
-        </button>
+        </Button>
       </div>
     </section>
   );
