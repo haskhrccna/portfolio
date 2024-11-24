@@ -68,6 +68,7 @@ const Login = () => {
           }}
           providers={[]}
           redirectTo={`${window.location.origin}/admin`}
+          view="sign_in"
         />
       </div>
     </div>
