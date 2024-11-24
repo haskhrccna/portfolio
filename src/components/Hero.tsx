@@ -13,50 +13,8 @@ export const Hero = () => {
     navigate('/contact');
   };
 
-  const handleAdminLogin = async () => {
-    try {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error('Error checking session:', error);
-        toast.error('Authentication error');
-        return;
-      }
-
-      if (session) {
-        const { data: adminData, error: adminError } = await supabase
-          .from('admin_profiles')
-          .select('is_admin')
-          .eq('id', session.user.id)
-          .single();
-
-        if (adminError) {
-          console.error('Error checking admin status:', adminError);
-          toast.error('Error checking admin status');
-          return;
-        }
-
-        if (adminData?.is_admin) {
-          toast.success('Already logged in as admin');
-          return;
-        }
-      }
-
-      const { error: signInError } = await supabase.auth.signInWithOAuth({
-        provider: 'github',
-        options: {
-          redirectTo: window.location.origin
-        }
-      });
-
-      if (signInError) {
-        console.error('Error signing in:', signInError);
-        toast.error('Error signing in');
-      }
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      toast.error('An unexpected error occurred');
-    }
+  const handleAdminLogin = () => {
+    navigate('/login');
   };
 
   return (
