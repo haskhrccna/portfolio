@@ -45,7 +45,7 @@ export const Timeline = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-center mb-2"
+          className="text-3xl font-bold text-center mb-12" // Increased bottom margin
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
@@ -60,7 +60,7 @@ export const Timeline = () => {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-8`}
+              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`} // Increased bottom margin
             >
               {/* Timeline dot */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
@@ -68,7 +68,7 @@ export const Timeline = () => {
               {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                 <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-xl font-semibold mb-2">{experience.title}</h3>
+                  <h3 className="text-2xl font-semibold mb-4">{experience.title}</h3>
                   <p className="text-muted-foreground mb-2">{experience.company}</p>
                   <div className="flex items-center text-sm text-muted-foreground mb-4">
                     <Calendar className="w-4 h-4 mr-2" />
