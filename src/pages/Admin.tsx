@@ -20,18 +20,24 @@ const Admin = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      console.log("Checking authentication...");
       const { data: { user } } = await supabase.auth.getUser();
+      
       if (!user) {
+        console.log("No user found, redirecting to login");
         navigate("/login");
         return;
       }
       
-      // Check if user is admin
+      console.log("User found, checking admin status...");
       const { data: isAdmin, error } = await supabase.rpc('is_admin', {
         user_id: user.id
       });
       
+      console.log("Admin check result:", { isAdmin, error });
+      
       if (error || !isAdmin) {
+        console.error("Error or not admin:", error);
         toast.error("Unauthorized access");
         navigate("/");
       }

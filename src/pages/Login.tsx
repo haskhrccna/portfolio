@@ -9,32 +9,37 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
         console.log("User signed in, checking admin status...");
-        checkAdminStatus(session?.user.id);
+        if (session?.user) {
+          await checkAdminStatus(session.user.id);
+        }
       }
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const checkAdminStatus = async (userId: string | undefined) => {
-    if (!userId) return;
-
+  const checkAdminStatus = async (userId: string) => {
+    console.log("Checking admin status for user:", userId);
+    
     const { data: isAdmin, error } = await supabase.rpc('is_admin', {
       user_id: userId
     });
 
+    console.log("Admin check result:", { isAdmin, error });
+
     if (error) {
       console.error("Error checking admin status:", error);
       toast.error("Error checking admin status");
+      await supabase.auth.signOut();
       return;
     }
 
     if (isAdmin) {
       console.log("User is admin, redirecting to admin dashboard");
-      toast.success("Successfully signed in!");
+      toast.success("Welcome back, admin!");
       navigate("/admin");
     } else {
       console.log("User is not admin");
