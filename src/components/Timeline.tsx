@@ -45,7 +45,7 @@ export const Timeline = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-center mb-12" // Increased text size and bottom margin
+          className="text-3xl font-bold text-center mb-2"
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
@@ -68,7 +68,7 @@ export const Timeline = () => {
               {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                 <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-2xl font-semibold mb-2">{experience.title}</h3>
+                  <h3 className="text-xl font-semibold mb-2">{experience.title}</h3>
                   <p className="text-muted-foreground mb-2">{experience.company}</p>
                   <div className="flex items-center text-sm text-muted-foreground mb-4">
                     <Calendar className="w-4 h-4 mr-2" />
