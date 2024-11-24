@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import "./i18n/config";
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={<Admin />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>

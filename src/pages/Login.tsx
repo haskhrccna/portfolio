@@ -11,13 +11,38 @@ const Login = () => {
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN") {
-        toast.success("Successfully signed in!");
-        navigate("/");
+        console.log("User signed in, checking admin status...");
+        checkAdminStatus(session?.user.id);
       }
     });
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  const checkAdminStatus = async (userId: string | undefined) => {
+    if (!userId) return;
+
+    const { data: isAdmin, error } = await supabase.rpc('is_admin', {
+      user_id: userId
+    });
+
+    if (error) {
+      console.error("Error checking admin status:", error);
+      toast.error("Error checking admin status");
+      return;
+    }
+
+    if (isAdmin) {
+      console.log("User is admin, redirecting to admin dashboard");
+      toast.success("Successfully signed in!");
+      navigate("/admin");
+    } else {
+      console.log("User is not admin");
+      toast.error("Unauthorized access");
+      await supabase.auth.signOut();
+      navigate("/");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -36,8 +61,8 @@ const Login = () => {
               }
             }
           }}
-          providers={["github"]}
-          redirectTo={`${window.location.origin}/`}
+          providers={[]}
+          redirectTo={`${window.location.origin}/admin`}
         />
       </div>
     </div>

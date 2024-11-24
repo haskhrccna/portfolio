@@ -104,7 +104,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      contact_statistics: {
+        Row: {
+          cv_requests: number | null
+          message_date: string | null
+          total_messages: number | null
+          unique_countries: number | null
+        }
+        Relationships: []
+      }
+      visitor_statistics: {
+        Row: {
+          pages_visited: number | null
+          total_visits: number | null
+          unique_visitors: number | null
+          visit_date: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       is_admin: {
