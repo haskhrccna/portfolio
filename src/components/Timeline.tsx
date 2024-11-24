@@ -39,7 +39,7 @@ export const Timeline = () => {
   ];
 
   return (
-    <section className="pt-0 pb-2 -mt-[100px]">
+    <section className="pt-0 pb-2 -mt-[120px]">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
