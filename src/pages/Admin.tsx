@@ -1,12 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  LineChart,
-  Line,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,6 +22,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { toast } from "sonner";
+import { format } from "date-fns";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -46,45 +55,41 @@ const Admin = () => {
     checkAuth();
   }, [navigate]);
 
-  const { data: visitorStats } = useQuery({
-    queryKey: ["visitor-statistics"],
+  // Fetch visitor data
+  const { data: visitorData } = useQuery({
+    queryKey: ["visitor-data"],
     queryFn: async () => {
-      console.log("Fetching visitor statistics...");
+      console.log("Fetching visitor data...");
       const { data, error } = await supabase
-        .from('visitor_statistics')
+        .from('visitors')
         .select('*')
-        .order('visit_date', { ascending: false })
-        .limit(30);
+        .order('visited_at', { ascending: false });
       
       if (error) {
-        console.error("Error fetching visitor stats:", error);
+        console.error("Error fetching visitor data:", error);
         throw error;
       }
       
-      console.log("Visitor statistics:", data);
+      console.log("Visitor data:", data);
       return data;
     }
   });
 
-  const { data: contactStats } = useQuery({
-    queryKey: ["contact-statistics"],
-    queryFn: async () => {
-      console.log("Fetching contact statistics...");
-      const { data, error } = await supabase
-        .from('contact_statistics')
-        .select('*')
-        .order('message_date', { ascending: false })
-        .limit(30);
-      
-      if (error) {
-        console.error("Error fetching contact stats:", error);
-        throw error;
-      }
-      
-      console.log("Contact statistics:", data);
-      return data;
-    }
-  });
+  // Process data for the chart
+  const chartData = useMemo(() => {
+    if (!visitorData) return [];
+    
+    const countryStats = visitorData.reduce((acc: any, visitor) => {
+      const country = visitor.country || 'Unknown';
+      acc[country] = (acc[country] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(countryStats).map(([country, count]) => ({
+      country,
+      visitors: count,
+    }));
+  }, [visitorData]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -101,40 +106,55 @@ const Admin = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid gap-8">
           <Card>
             <CardHeader>
-              <CardTitle>Visitor Statistics (Last 30 Days)</CardTitle>
+              <CardTitle>Visitors by Country</CardTitle>
             </CardHeader>
             <CardContent className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={visitorStats}>
+                <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="visit_date" />
+                  <XAxis dataKey="country" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="total_visits" stroke="#8884d8" name="Total Visits" />
-                  <Line type="monotone" dataKey="unique_visitors" stroke="#82ca9d" name="Unique Visitors" />
-                </LineChart>
+                  <Bar dataKey="visitors" fill="#8884d8" />
+                </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Contact Statistics (Last 30 Days)</CardTitle>
+              <CardTitle>Visitor Details</CardTitle>
             </CardHeader>
-            <CardContent className="h-[400px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={contactStats}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="message_date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="total_messages" stroke="#8884d8" name="Total Messages" />
-                  <Line type="monotone" dataKey="cv_requests" stroke="#82ca9d" name="CV Requests" />
-                </LineChart>
-              </ResponsiveContainer>
+            <CardContent>
+              <div className="rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Country</TableHead>
+                      <TableHead>City</TableHead>
+                      <TableHead>IP Address</TableHead>
+                      <TableHead>Page URL</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {visitorData?.map((visitor) => (
+                      <TableRow key={visitor.id}>
+                        <TableCell>
+                          {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
+                        </TableCell>
+                        <TableCell>{visitor.country || 'Unknown'}</TableCell>
+                        <TableCell>{visitor.city || 'Unknown'}</TableCell>
+                        <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
+                        <TableCell>{visitor.page_url || 'N/A'}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </div>
