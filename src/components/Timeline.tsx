@@ -17,9 +17,9 @@ export const Timeline = () => {
   const experiences: TimelineItem[] = [
     {
       title: "Principal Resident Engineer - Electrical",
-      company: "Major Infrastructure Project",
-      period: "2020 - Present",
-      description: "Led electrical engineering teams in large-scale infrastructure projects, supervising power transmission installations and managing project deliverables.",
+      company: "AtkinsRéalis",
+      period: "Nov 2024 - Present",
+      description: "400kV OHTL transmission line upgrade including but not limited to Engineering, procurement and construction including design, manufacturing, FAT, insurance, packing, shipping, delivery to site, installation, testing, commissioning and handing over in satisfactory condition of works. Abu Dhabi, UAE",
       skills: ["Project Management", "High Voltage Systems", "Team Leadership"]
     },
     {
@@ -45,7 +45,7 @@ export const Timeline = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-center mb-12" // Increased bottom margin
+          className="text-3xl font-bold text-center mb-12"
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
@@ -60,7 +60,7 @@ export const Timeline = () => {
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`} // Increased bottom margin
+              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
             >
               {/* Timeline dot */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
