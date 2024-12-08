@@ -23,6 +23,13 @@ export const Timeline = () => {
       skills: ["Project Management", "High Voltage Systems", "Team Leadership"]
     },
     {
+      title: "Principal Resident Engineer-Electrical",
+      company: "AECOM Middle East",
+      period: "May 2024 - Oct 2024",
+      description: "Infrastructure and Landscaping Works Al Noud, including installation of 33kV primary substations, switching station and 11kV cables and related substations. Installation of street light network with all related works, testing and commissioning of 33/11 kV Cables, transformers and switch gear. Al Ain, UAE",
+      skills: ["Infrastructure Works", "Substation Installation", "Project Management"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
