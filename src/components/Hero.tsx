@@ -40,7 +40,7 @@ export const Hero = () => {
             </div>
           </div>
           <div className="flex-grow text-center md:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 animate-fade-up">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
               {t('name')}
             </h1>
             <p className="text-lg text-gray-300 animate-fade-up opacity-90" style={{ animationDelay: '0.2s' }}>
