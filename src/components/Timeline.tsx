@@ -30,6 +30,13 @@ export const Timeline = () => {
       skills: ["Infrastructure Works", "Substation Installation", "Project Management"]
     },
     {
+      title: "Project Manager",
+      company: "Mott MacDonald Consultant",
+      period: "2022",
+      description: "132kV cable /OHTL supply and installation works. Coordination with EtihadWE (previously EWEA) and main contractors in all aspects for smooth project execution as per client standard/specification, finalizing the required NOC from local authorities, executing power infrastructure projects, ensuring correct design, compliance, electrical safety and ensuring a more trouble-free work environment, project based in North, Central West and East area in UAE.",
+      skills: ["Project Management", "High Voltage Systems", "Contractor Coordination", "Compliance Management"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
