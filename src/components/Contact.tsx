@@ -46,11 +46,6 @@ export const Contact = () => {
 
       if (emailError) throw emailError;
 
-      toast({
-        title: t('contact.success'),
-        description: t('contact.successMessage'),
-      });
-
       setIsSubmitted(true);
       
     } catch (error) {
