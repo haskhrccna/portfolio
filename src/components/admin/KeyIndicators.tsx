@@ -25,12 +25,27 @@ export const KeyIndicators = () => {
       const percentageChange = previousPeriod.count ? 
         ((currentPeriod.count - previousPeriod.count) / previousPeriod.count) * 100 : 0;
 
-      // Get unique countries
-      const { data: countries } = await supabase
+      // Get unique countries for current period
+      const { data: currentCountries } = await supabase
         .from('visitors')
         .select('country')
+        .gte('visited_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
         .not('country', 'is', null);
-      const uniqueCountries = new Set(countries?.map(v => v.country)).size;
+      
+      // Get unique countries for previous period
+      const { data: previousCountries } = await supabase
+        .from('visitors')
+        .select('country')
+        .gte('visited_at', new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString())
+        .lt('visited_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+        .not('country', 'is', null);
+
+      const currentUniqueCountries = new Set(currentCountries?.map(v => v.country)).size;
+      const previousUniqueCountries = new Set(previousCountries?.map(v => v.country)).size;
+      
+      // Calculate countries percentage change
+      const countriesPercentageChange = previousUniqueCountries ? 
+        ((currentUniqueCountries - previousUniqueCountries) / previousUniqueCountries) * 100 : 0;
 
       // Get engagement metrics (messages)
       const { count: totalMessages } = await supabase
@@ -41,10 +56,11 @@ export const KeyIndicators = () => {
         totalVisitors: currentPeriod.count || 0,
         previousPeriodVisitors: previousPeriod.count || 0,
         percentageChange,
-        uniqueCountries,
+        uniqueCountries: currentUniqueCountries,
+        previousUniqueCountries,
+        countriesPercentageChange,
         totalMessages,
         averageSessionDuration: "3h 31m", // Placeholder - would need actual session tracking
-        bounceRate: "26.75%"
       };
     }
   });
@@ -58,11 +74,11 @@ export const KeyIndicators = () => {
       previousValue: stats?.previousPeriodVisitors || 0
     },
     {
-      title: "Bounce Rate",
-      value: stats?.bounceRate || "0%",
-      change: -24.84,
-      period: "vs previous period",
-      previousValue: "35.59%"
+      title: "Countries",
+      value: stats?.uniqueCountries || 0,
+      change: stats?.countriesPercentageChange || 0,
+      period: "vs previous 30 days",
+      previousValue: stats?.previousUniqueCountries || 0
     },
     {
       title: "Avg. Session Duration",
