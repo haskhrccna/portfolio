@@ -56,7 +56,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="min-h-screen bg-[#007EB5] text-white py-16">
+    <section className="min-h-screen bg-[#1F5199] text-white py-16">
       <div className="max-w-3xl mx-auto px-4">
         <ContactHeader />
         <ContactForm

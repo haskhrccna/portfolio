@@ -47,7 +47,7 @@ export const ContactForm = ({
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}
       onSubmit={onSubmit}
-      className="space-y-6 bg-[#005A85] p-8 rounded-lg"
+      className="space-y-6 bg-[#163C73] p-8 rounded-lg"
     >
       <div className="space-y-4">
         <FormField
@@ -95,7 +95,7 @@ export const ContactForm = ({
       <Button
         type="submit"
         disabled={isSubmitting || isSubmitted}
-        className="w-full bg-[#004466] hover:bg-[#003A55] text-white disabled:opacity-50"
+        className="w-full bg-[#0D2B59] hover:bg-[#0A2347] text-white disabled:opacity-50"
       >
         <Send className="mr-2 h-4 w-4" />
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
