@@ -65,6 +65,13 @@ export const Timeline = () => {
       skills: ["Construction Supervision", "Technical Evaluation", "Design Review", "EHV Cable Projects"]
     },
     {
+      title: "Project Engineer",
+      company: "EXSYM Corporation",
+      period: "Dec 2005 - Dec 2007",
+      description: "Managing all site activities, site team, and subcontractors' works for 132kV cable installation projects, including supervision of installation processes and coordination of technical requirements.",
+      skills: ["Site Management", "Technical Coordination", "Installation Supervision", "Team Leadership"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
