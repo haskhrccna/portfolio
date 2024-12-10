@@ -37,12 +37,14 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
   // Get unique countries for filter
   const uniqueCountries = [...new Set(visitors?.map(visitor => visitor.country || 'Unknown'))];
 
-  // Filter visitor data
+  // Filter visitor data and sort by date
   const filteredVisitors = visitors?.filter(visitor => {
     const matchesCountry = selectedCountry === "all" || visitor.country === selectedCountry;
     const matchesDate = !dateFilter || 
       format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
     return matchesCountry && matchesDate;
+  }).sort((a, b) => {
+    return new Date(b.visited_at).getTime() - new Date(a.visited_at).getTime();
   });
 
   return (
