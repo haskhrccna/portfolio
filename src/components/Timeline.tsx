@@ -79,6 +79,13 @@ export const Timeline = () => {
       skills: ["Cable Maintenance", "Safety Management", "High Voltage Testing", "Subcontractor Management"]
     },
     {
+      title: "Electrical Maintenance Engineer",
+      company: "High Voltage Equipment – Egyptian Army",
+      period: "1998-2000",
+      description: "Controlled equipment operation and supervised regular maintenance. Provided training for new staff members. Supervised electrical works for low, medium, and high voltage equipment, ensuring compliance with Egyptian standards.",
+      skills: ["Equipment Maintenance", "Staff Training", "Voltage Systems", "Compliance Management"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
