@@ -44,6 +44,13 @@ export const Timeline = () => {
       skills: ["Stakeholder Management", "Infrastructure Projects", "Compliance", "Safety Management"]
     },
     {
+      title: "Project Manager",
+      company: "Furukawa Electrical Co.",
+      period: "2016-2019",
+      description: "Design & supervision and practice of electrical engineering on installation, testing and commissioning of 400kV / 132kV EHV power Cables, and FO cable works for power transmission & distribution system as per standards and regulations in Doha, Qatar.",
+      skills: ["Electrical Engineering", "EHV Power Cables", "Project Supervision", "Testing & Commissioning"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
