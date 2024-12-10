@@ -14,6 +14,12 @@ interface TimelineItem {
 export const Timeline = () => {
   const { t } = useTranslation();
 
+  // Helper function to extract year from period string
+  const extractYear = (period: string): string => {
+    const match = period.match(/\b\d{4}\b/);
+    return match ? match[0] : "";
+  };
+
   const experiences: TimelineItem[] = [
     {
       title: "Principal Resident Engineer - Electrical",
@@ -121,7 +127,15 @@ export const Timeline = () => {
               }}
               className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
             >
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
+              {/* Year circle */}
+              <motion.div 
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.3, delay: (index === 10 ? 0.1 : index * 0.2) + 0.2 }}
+                className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm z-10"
+              >
+                {extractYear(experience.period)}
+              </motion.div>
               
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                 <div className={`glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group ${
