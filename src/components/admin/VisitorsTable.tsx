@@ -31,7 +31,7 @@ interface VisitorsTableProps {
 }
 
 export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<string>("all");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [dateFilter, setDateFilter] = useState<string>("");
 
   // Get unique countries for filter
@@ -39,7 +39,7 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
 
   // Filter visitor data and sort by date
   const filteredVisitors = visitors?.filter(visitor => {
-    const matchesCountry = selectedCountry === "all" || visitor.country === selectedCountry;
+    const matchesCountry = selectedCountry && visitor.country === selectedCountry;
     const matchesDate = !dateFilter || 
       format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
     return matchesCountry && matchesDate;
@@ -60,10 +60,9 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
               onValueChange={setSelectedCountry}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Filter by country" />
+                <SelectValue placeholder="Select a country" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Countries</SelectItem>
                 {uniqueCountries.map((country) => (
                   <SelectItem key={country} value={country}>
                     {country}
@@ -78,6 +77,7 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
               className="w-full"
+              disabled={!selectedCountry}
             />
           </div>
         </div>
@@ -92,16 +92,24 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredVisitors?.map((visitor) => (
-                <TableRow key={visitor.id}>
-                  <TableCell>
-                    {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
+              {selectedCountry ? (
+                filteredVisitors?.map((visitor) => (
+                  <TableRow key={visitor.id}>
+                    <TableCell>
+                      {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
+                    </TableCell>
+                    <TableCell>{visitor.country || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.city || 'Unknown'}</TableCell>
+                    <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center text-muted-foreground">
+                    Please select a country to view visitor details
                   </TableCell>
-                  <TableCell>{visitor.country || 'Unknown'}</TableCell>
-                  <TableCell>{visitor.city || 'Unknown'}</TableCell>
-                  <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>
