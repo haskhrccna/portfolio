@@ -133,7 +133,11 @@ export const Timeline = () => {
                   <p className="mb-4">{experience.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {experience.skills.map((skill, skillIndex) => (
-                      <Badge key={skillIndex} variant="secondary">
+                      <Badge 
+                        key={skillIndex} 
+                        variant="secondary"
+                        className="hover:bg-white/20 hover:text-purple-400 transition-colors duration-300"
+                      >
                         {skill}
                       </Badge>
                     ))}
