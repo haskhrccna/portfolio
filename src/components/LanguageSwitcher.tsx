@@ -17,7 +17,7 @@ export const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="fixed top-4 left-4 z-50">
+    <div className="fixed top-4 right-4 z-50">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 
@@ -28,7 +28,7 @@ export const LanguageSwitcher = () => {
             <Languages className="h-[1.2rem] w-[1.2rem]" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => changeLanguage('en')}>
             English (EN)
           </DropdownMenuItem>
