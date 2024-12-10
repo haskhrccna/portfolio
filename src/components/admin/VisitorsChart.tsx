@@ -33,6 +33,7 @@ export const VisitorsChart = ({ visitors, onCountrySelect, selectedCountry }: Vi
         .map(([country, count]) => ({
           country,
           visitors: count,
+          fill: country === selectedCountry ? '#6b46c1' : '#8884d8',
         }))
         .sort((a, b) => b.visitors - a.visitors)
     : [];
@@ -73,7 +74,7 @@ export const VisitorsChart = ({ visitors, onCountrySelect, selectedCountry }: Vi
               fill="#8884d8"
               onClick={handleBarClick}
               cursor="pointer"
-              style={{ fill: (data: any) => data.country === selectedCountry ? '#6b46c1' : '#8884d8' }}
+              fillOpacity={0.8}
             />
           </BarChart>
         </ResponsiveContainer>
