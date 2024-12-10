@@ -11,7 +11,7 @@ const ContactPage = () => {
   };
 
   return (
-    <main className="bg-[#0B1221]">
+    <main className="bg-[#007EB5]">
       <div className="fixed top-4 right-24 z-50">
         <Button 
           onClick={handleHomeClick}

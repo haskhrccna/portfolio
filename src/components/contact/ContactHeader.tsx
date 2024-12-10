@@ -10,8 +10,8 @@ export const ContactHeader = () => {
       animate={{ opacity: 1, y: 0 }}
       className="text-center mb-12"
     >
-      <h1 className="text-4xl font-bold mb-4">{t('contact.getInTouch')}</h1>
-      <p className="text-gray-300">
+      <h1 className="text-4xl font-bold mb-4 text-white">{t('contact.getInTouch')}</h1>
+      <p className="text-gray-200">
         {t('contact.description')}
       </p>
     </motion.div>

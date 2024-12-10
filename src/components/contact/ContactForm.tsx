@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { FormField } from "./FormField";
 import { CVRequestCheckbox } from "./CVRequestCheckbox";
 import { useRef } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormProps {
   isSubmitting: boolean;
@@ -48,7 +47,7 @@ export const ContactForm = ({
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}
       onSubmit={onSubmit}
-      className="space-y-6 bg-[#131B2E] p-8 rounded-lg"
+      className="space-y-6 bg-[#005A85] p-8 rounded-lg"
     >
       <div className="space-y-4">
         <FormField
@@ -96,7 +95,7 @@ export const ContactForm = ({
       <Button
         type="submit"
         disabled={isSubmitting || isSubmitted}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+        className="w-full bg-[#004466] hover:bg-[#003A55] text-white disabled:opacity-50"
       >
         <Send className="mr-2 h-4 w-4" />
         {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
