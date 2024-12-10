@@ -55,7 +55,7 @@ export const YearCircle = ({ year, isGraduationYear, isCurrentYear }: YearCircle
         ${isGraduationYear 
           ? 'bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 animate-gradient-xy' 
           : isCurrentYear
-          ? 'bg-gradient-to-br from-blue-500 to-purple-500 animate-pulse'
+          ? 'bg-[#9b87f5] animate-pulse'
           : 'bg-gradient-to-br from-purple-500 to-pink-500'
         } 
         flex items-center justify-center text-white font-bold text-sm z-10 
