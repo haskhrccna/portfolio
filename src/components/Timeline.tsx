@@ -86,18 +86,11 @@ export const Timeline = () => {
       skills: ["Equipment Maintenance", "Staff Training", "Voltage Systems", "Compliance Management"]
     },
     {
-      title: "Senior Electrical Engineer",
-      company: "Power Distribution Company",
-      period: "2017 - 2020",
-      description: "Managed power distribution networks and supervised maintenance operations for critical infrastructure.",
-      skills: ["Power Distribution", "Network Planning", "Technical Documentation"]
-    },
-    {
-      title: "Electrical Systems Engineer",
-      company: "Engineering Consultancy",
-      period: "2014 - 2017",
-      description: "Designed and implemented electrical systems for commercial and industrial projects.",
-      skills: ["System Design", "AutoCAD", "Technical Analysis"]
+      title: "B.Sc. Electronics Engineering",
+      company: "Mansoura University, Egypt",
+      period: "May 1997",
+      description: "Bachelor of Science degree in Electronics Engineering",
+      skills: ["Electronics Engineering", "Technical Analysis", "Problem Solving"]
     }
   ];
 
