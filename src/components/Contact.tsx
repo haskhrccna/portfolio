@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Contact = () => {
@@ -30,11 +30,19 @@ export const Contact = () => {
     };
 
     try {
-      const { error } = await supabase
+      // First, save to Supabase
+      const { error: supabaseError } = await supabase
         .from('contact_messages')
         .insert([data]);
 
-      if (error) throw error;
+      if (supabaseError) throw supabaseError;
+
+      // Then, send email
+      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+        body: data
+      });
+
+      if (emailError) throw emailError;
 
       toast({
         title: t('contact.success'),
@@ -80,7 +88,7 @@ export const Contact = () => {
           <div className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2">
-                {t('contact.name')}
+                {t('contact.name')} *
               </label>
               <Input
                 id="name"
@@ -92,20 +100,21 @@ export const Contact = () => {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-2">
-                {t('contact.email')}
+                {t('contact.email')} *
               </label>
               <Input
                 id="email"
                 name="email"
                 type="email"
                 required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 className="w-full bg-[#1C2537] border-gray-700 text-white"
               />
             </div>
 
             <div>
               <label htmlFor="company" className="block text-sm font-medium mb-2">
-                {t('contact.companyName')}
+                {t('contact.companyName')} *
               </label>
               <Input
                 id="company"
@@ -117,7 +126,7 @@ export const Contact = () => {
 
             <div>
               <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                {t('contact.subject')}
+                {t('contact.subject')} *
               </label>
               <Input
                 id="subject"
@@ -129,7 +138,7 @@ export const Contact = () => {
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium mb-2">
-                {t('contact.message')}
+                {t('contact.message')} *
               </label>
               <Textarea
                 id="message"
