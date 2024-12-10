@@ -72,6 +72,13 @@ export const Timeline = () => {
       skills: ["Site Management", "Technical Coordination", "Installation Supervision", "Team Leadership"]
     },
     {
+      title: "Cable Maintenance Engineer",
+      company: "Ministry of Electricity and Water (MEW)",
+      period: "Nov 2002 - Nov 2005",
+      description: "Supervised cable activities including excavation, laying, and jointing. Managed subcontractors, prepared safety permits, monitored progress, and supervised high voltage testing for 33kV-300kV cables. Responsible for fault location, repair activities, and switching operations across substations.",
+      skills: ["Cable Maintenance", "Safety Management", "High Voltage Testing", "Subcontractor Management"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
