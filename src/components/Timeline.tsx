@@ -123,7 +123,9 @@ export const Timeline = () => {
               
               {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group">
+                <div className={`glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group ${
+                  index === 10 ? 'bg-gradient-to-br from-[#8B5CF6] to-[#D946EF] bg-opacity-20' : ''
+                }`}>
                   <h3 className="text-2xl font-semibold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-600">
                     {experience.title}
                   </h3>
