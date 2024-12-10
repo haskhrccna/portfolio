@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Switch } from "@/components/ui/switch";
 import {
   BarChart,
   Bar,
@@ -24,31 +23,10 @@ import {
 } from "recharts";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { AdminSettings } from "@/components/admin/AdminSettings";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [showCvRequest, setShowCvRequest] = useState(true);
-
-  // Fetch admin settings
-  const { data: adminSettings } = useQuery({
-    queryKey: ["admin-settings"],
-    queryFn: async () => {
-      console.log("Fetching admin settings...");
-      const { data, error } = await supabase
-        .from('admin_settings')
-        .select('*')
-        .single();
-      
-      if (error) {
-        console.error("Error fetching admin settings:", error);
-        throw error;
-      }
-      
-      console.log("Admin settings:", data);
-      setShowCvRequest(data.show_cv_request);
-      return data;
-    }
-  });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -78,24 +56,6 @@ const Admin = () => {
     checkAuth();
   }, [navigate]);
 
-  // Handle CV request toggle
-  const handleCvRequestToggle = async (checked: boolean) => {
-    try {
-      const { error } = await supabase
-        .from('admin_settings')
-        .update({ show_cv_request: checked })
-        .eq('id', 1);
-
-      if (error) throw error;
-
-      setShowCvRequest(checked);
-      toast.success("CV request visibility updated successfully");
-    } catch (error) {
-      console.error("Error updating CV request visibility:", error);
-      toast.error("Failed to update CV request visibility");
-    }
-  };
-
   // Fetch visitor data
   const { data: visitorData } = useQuery({
     queryKey: ["visitor-data"],
@@ -116,21 +76,18 @@ const Admin = () => {
     }
   });
 
-  // Process data for the chart
-  const chartData = useMemo(() => {
-    if (!visitorData) return [];
-    
-    const countryStats = visitorData.reduce((acc: any, visitor) => {
-      const country = visitor.country || 'Unknown';
-      acc[country] = (acc[country] || 0) + 1;
-      return acc;
-    }, {});
+  const chartData = visitorData?.reduce((acc: any, visitor) => {
+    const country = visitor.country || 'Unknown';
+    acc[country] = (acc[country] || 0) + 1;
+    return acc;
+  }, {});
 
-    return Object.entries(countryStats).map(([country, count]) => ({
-      country,
-      visitors: count,
-    }));
-  }, [visitorData]);
+  const formattedChartData = chartData
+    ? Object.entries(chartData).map(([country, count]) => ({
+        country,
+        visitors: count,
+      }))
+    : [];
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -148,20 +105,7 @@ const Admin = () => {
         </div>
 
         <div className="grid gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Settings</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <span>Show CV Request in Contact Form</span>
-                <Switch
-                  checked={showCvRequest}
-                  onCheckedChange={handleCvRequestToggle}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <AdminSettings />
 
           <Card>
             <CardHeader>
@@ -169,7 +113,7 @@ const Admin = () => {
             </CardHeader>
             <CardContent className="h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData}>
+                <BarChart data={formattedChartData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="country" />
                   <YAxis />
