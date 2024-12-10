@@ -50,36 +50,37 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
             <AreaChart data={last30Days}>
               <defs>
                 <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7B3FE4" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#7B3FE4" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#D946EF" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#D946EF" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid 
                 strokeDasharray="3 3" 
                 vertical={false}
-                stroke="rgba(255,255,255,0.1)"
+                stroke="rgba(255,255,255,0.2)"
               />
               <XAxis 
                 dataKey="date"
-                stroke="rgba(255,255,255,0.5)"
-                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+                stroke="rgba(255,255,255,0.7)"
+                tick={{ fill: 'rgba(255,255,255,0.9)' }}
               />
               <YAxis 
-                stroke="rgba(255,255,255,0.5)"
-                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+                stroke="rgba(255,255,255,0.7)"
+                tick={{ fill: 'rgba(255,255,255,0.9)' }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  border: 'none',
-                  borderRadius: '4px',
+                  backgroundColor: 'rgba(15, 10, 31, 0.9)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '8px',
                   color: 'white'
                 }}
               />
               <Area
                 type="monotone"
                 dataKey="visitors"
-                stroke="#7B3FE4"
+                stroke="#D946EF"
+                strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#colorVisitors)"
               />

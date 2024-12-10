@@ -41,9 +41,7 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
       country,
       visitors: count,
     }))
-    .sort((a, b) => b.visitors - a.visitors); // Sort by visitor count descending
-
-  console.log('Chart data:', chartData);
+    .sort((a, b) => b.visitors - a.visitors);
 
   return (
     <Card className="glass">
@@ -67,31 +65,31 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
               <CartesianGrid 
                 strokeDasharray="3 3" 
                 vertical={false}
-                stroke="rgba(255,255,255,0.1)"
+                stroke="rgba(255,255,255,0.2)"
               />
               <XAxis 
                 dataKey="country"
-                stroke="rgba(255,255,255,0.5)"
-                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+                stroke="rgba(255,255,255,0.7)"
+                tick={{ fill: 'rgba(255,255,255,0.9)' }}
                 angle={-45}
                 textAnchor="end"
                 height={100}
               />
               <YAxis
-                stroke="rgba(255,255,255,0.5)"
-                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+                stroke="rgba(255,255,255,0.7)"
+                tick={{ fill: 'rgba(255,255,255,0.9)' }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  border: 'none',
-                  borderRadius: '4px',
+                  backgroundColor: 'rgba(15, 10, 31, 0.9)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '8px',
                   color: 'white'
                 }}
               />
               <Bar 
                 dataKey="visitors" 
-                fill="#7B3FE4"
+                fill="#0EA5E9"
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>
