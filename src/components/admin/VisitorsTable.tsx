@@ -62,36 +62,38 @@ export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps)
           </div>
         </div>
         <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Country</TableHead>
-                <TableHead>City</TableHead>
-                <TableHead>IP Address</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {selectedCountry ? (
-                filteredVisitors?.map((visitor) => (
-                  <TableRow key={visitor.id}>
-                    <TableCell>
-                      {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
-                    </TableCell>
-                    <TableCell>{visitor.country || 'Unknown'}</TableCell>
-                    <TableCell>{visitor.city || 'Unknown'}</TableCell>
-                    <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
+          <div className="max-h-[400px] overflow-y-auto">
+            <Table>
+              <TableHeader className="sticky top-0 bg-background z-10">
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center text-muted-foreground">
-                    Click on a country in the chart above to view visitor details
-                  </TableCell>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Country</TableHead>
+                  <TableHead>City</TableHead>
+                  <TableHead>IP Address</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {selectedCountry ? (
+                  filteredVisitors?.map((visitor) => (
+                    <TableRow key={visitor.id}>
+                      <TableCell>
+                        {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
+                      </TableCell>
+                      <TableCell>{visitor.country || 'Unknown'}</TableCell>
+                      <TableCell>{visitor.city || 'Unknown'}</TableCell>
+                      <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center text-muted-foreground">
+                      Click on a country in the chart above to view visitor details
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </CardContent>
     </Card>
