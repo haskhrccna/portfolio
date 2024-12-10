@@ -61,7 +61,14 @@ const Admin = () => {
   });
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    console.log("Logging out...");
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error during logout:", error);
+      toast.error("Error during logout");
+      return;
+    }
+    toast.success("Logged out successfully");
     navigate("/");
   };
 
@@ -78,7 +85,7 @@ const Admin = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
             <Button 
-              onClick={() => supabase.auth.signOut()} 
+              onClick={handleLogout} 
               variant="outline"
               className="bg-white/10 text-white hover:bg-white/20 border-white/20"
             >
