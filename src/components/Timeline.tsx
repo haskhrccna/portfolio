@@ -123,20 +123,20 @@ export const Timeline = () => {
               
               {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-2xl font-semibold mb-4">{experience.title}</h3>
-                  <p className="text-muted-foreground mb-2">{experience.company}</p>
-                  <div className="flex items-center text-sm text-muted-foreground mb-4">
+                <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group">
+                  <h3 className="text-2xl font-semibold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-600">{experience.title}</h3>
+                  <p className="text-muted-foreground mb-2 group-hover:text-white/90">{experience.company}</p>
+                  <div className="flex items-center text-sm text-muted-foreground mb-4 group-hover:text-white/90">
                     <Calendar className="w-4 h-4 mr-2" />
                     {experience.period}
                   </div>
-                  <p className="mb-4">{experience.description}</p>
+                  <p className="mb-4 group-hover:text-white/90">{experience.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {experience.skills.map((skill, skillIndex) => (
                       <Badge 
                         key={skillIndex} 
                         variant="secondary"
-                        className="hover:bg-white/20 hover:text-purple-400 transition-colors duration-300"
+                        className="hover:bg-white/20 hover:text-purple-400 transition-colors duration-300 group-hover:border-white/40"
                       >
                         {skill}
                       </Badge>
