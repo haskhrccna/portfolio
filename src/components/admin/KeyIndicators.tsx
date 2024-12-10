@@ -45,25 +45,25 @@ export const KeyIndicators = () => {
       title: "Total Visitors",
       value: stats?.totalVisitors || 0,
       bgColor: "bg-purple-50 dark:bg-purple-950/30",
-      textColor: "text-purple-600 dark:text-purple-400"
+      textColor: "text-black"
     },
     {
       title: "Messages",
       value: stats?.totalMessages || 0,
       bgColor: "bg-red-50 dark:bg-red-950/30",
-      textColor: "text-red-600 dark:text-red-400"
+      textColor: "text-black"
     },
     {
       title: "Countries",
       value: stats?.uniqueCountries || 0,
       bgColor: "bg-green-50 dark:bg-green-950/30",
-      textColor: "text-green-600 dark:text-green-400"
+      textColor: "text-black"
     },
     {
       title: "CV Requests",
       value: stats?.cvRequests || 0,
       bgColor: "bg-blue-50 dark:bg-blue-950/30",
-      textColor: "text-blue-600 dark:text-blue-400"
+      textColor: "text-black"
     }
   ];
 
@@ -74,7 +74,7 @@ export const KeyIndicators = () => {
           key={indicator.title}
           className={`p-4 ${indicator.bgColor} border-none`}
         >
-          <h3 className="text-sm font-medium text-muted-foreground">
+          <h3 className="text-sm font-medium text-black">
             {indicator.title}
           </h3>
           <p className={`text-2xl font-bold mt-2 ${indicator.textColor}`}>
