@@ -51,6 +51,13 @@ export const Timeline = () => {
       skills: ["Electrical Engineering", "EHV Power Cables", "Project Supervision", "Testing & Commissioning"]
     },
     {
+      title: "Project Manager Electrical Works",
+      company: "KEO International Consultants",
+      period: "2012-2016",
+      description: "Design & supervision on 132kV / 11kV and street light network installation works for infrastructure and Highway roads projects and, testing and commissioning, project based in Doha, Qatar.",
+      skills: ["Electrical Design", "Infrastructure Projects", "Project Supervision", "Testing & Commissioning"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
