@@ -18,7 +18,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="min-h-[40vh] flex items-center justify-center relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 animate-gradient-xy overflow-hidden p-8">
+    <section className="min-h-[40vh] flex items-center justify-center relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 animate-gradient-xy overflow-hidden p-8 mt-16">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.2),rgba(0,0,0,0))]" />
       <div className="absolute w-full h-full opacity-20" />
       <div className="max-w-7xl w-full mx-auto relative">
@@ -52,21 +52,23 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-4 right-24 z-50 flex gap-4">
-        <Button 
-          onClick={handleAdminLogin}
-          variant="outline"
-          className="glass hover:bg-white/20 transition-all"
-        >
-          {t('contact.adminLogin')}
-        </Button>
-        <Button 
-          onClick={handleGetInTouch}
-          variant="outline"
-          className="glass hover:bg-white/20 transition-all"
-        >
-          Get in Touch
-        </Button>
+      <div className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm py-4 px-6">
+        <div className="max-w-7xl mx-auto flex justify-end gap-4">
+          <Button 
+            onClick={handleAdminLogin}
+            variant="outline"
+            className="glass hover:bg-white/20 transition-all"
+          >
+            {t('contact.adminLogin')}
+          </Button>
+          <Button 
+            onClick={handleGetInTouch}
+            variant="outline"
+            className="glass hover:bg-white/20 transition-all"
+          >
+            Get in Touch
+          </Button>
+        </div>
       </div>
     </section>
   );
