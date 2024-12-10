@@ -1,17 +1,17 @@
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { format, subDays } from "date-fns";
 
 interface Visitor {
-  country: string | null;
+  visited_at: string;
 }
 
 interface VisitorsChartProps {
@@ -20,85 +20,72 @@ interface VisitorsChartProps {
   selectedCountry: string | null;
 }
 
-export const VisitorsChart = ({ visitors, onCountrySelect, selectedCountry }: VisitorsChartProps) => {
-  // Count visitors by country
-  const chartData = visitors?.reduce((acc: { [key: string]: { total: number; successful: number } }, visitor) => {
-    const country = visitor.country || 'Unknown';
-    if (!acc[country]) {
-      acc[country] = { total: 0, successful: 0 };
-    }
-    acc[country].total += 1;
-    acc[country].successful += 1; // For demonstration, all visits are considered successful
-    return acc;
-  }, {});
-
-  // Format data for the chart and sort by number of visitors
-  const formattedChartData = chartData
-    ? Object.entries(chartData)
-        .map(([country, data]) => ({
-          country,
-          successful: data.successful,
-          failed: data.total - data.successful,
-          fill: country === selectedCountry ? '#6b46c1' : '#8884d8',
-        }))
-        .sort((a, b) => b.successful - a.successful)
-    : [];
-
-  const handleBarClick = (data: any) => {
-    console.log('Bar clicked:', data.payload.country);
-    onCountrySelect(data.payload.country);
-  };
+export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
+  // Process data for the last 30 days
+  const last30Days = Array.from({ length: 30 }, (_, i) => {
+    const date = subDays(new Date(), i);
+    const dayVisitors = visitors?.filter(v => 
+      format(new Date(v.visited_at), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
+    ).length || 0;
+    
+    return {
+      date: format(date, 'MMM dd'),
+      visitors: dayVisitors,
+    };
+  }).reverse();
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Visits</CardTitle>
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center">
-            <div className="w-3 h-3 bg-purple-600 rounded-full mr-1" />
-            <span className="text-sm">Successful</span>
+    <Card className="bg-[#D35400]/90 text-white border-none">
+      <CardHeader>
+        <CardTitle className="flex justify-between items-center">
+          <span>Sessions</span>
+          <div className="text-sm font-normal">
+            Last 30 days ({format(subDays(new Date(), 30), 'MMM dd')} - {format(new Date(), 'MMM dd')})
           </div>
-          <div className="flex items-center">
-            <div className="w-3 h-3 bg-red-400 rounded-full mr-1" />
-            <span className="text-sm">Failed</span>
-          </div>
-        </div>
+        </CardTitle>
       </CardHeader>
-      <CardContent className="h-[400px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={formattedChartData} barGap={0}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis 
-              dataKey="country"
-              angle={-45}
-              textAnchor="end"
-              height={70}
-              interval={0}
-              tick={{ fontSize: 12 }}
-            />
-            <YAxis 
-              allowDecimals={false}
-              tick={{ fontSize: 12 }}
-            />
-            <Tooltip />
-            <Bar 
-              dataKey="successful" 
-              fill="#7c3aed"
-              radius={[4, 4, 0, 0]}
-              onClick={handleBarClick}
-              cursor="pointer"
-              maxBarSize={50}
-            />
-            <Bar 
-              dataKey="failed" 
-              fill="#f87171"
-              radius={[4, 4, 0, 0]}
-              onClick={handleBarClick}
-              cursor="pointer"
-              maxBarSize={50}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+      <CardContent>
+        <div className="h-[300px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={last30Days}>
+              <defs>
+                <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#FFA500" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#FFA500" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                vertical={false}
+                stroke="rgba(255,255,255,0.1)"
+              />
+              <XAxis 
+                dataKey="date"
+                stroke="rgba(255,255,255,0.5)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+              />
+              <YAxis 
+                stroke="rgba(255,255,255,0.5)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'rgba(0,0,0,0.8)',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: 'white'
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="visitors"
+                stroke="#FFA500"
+                fillOpacity={1}
+                fill="url(#colorVisitors)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );

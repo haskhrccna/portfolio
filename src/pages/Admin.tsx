@@ -42,7 +42,6 @@ const Admin = () => {
     checkAuth();
   }, [navigate]);
 
-  // Fetch visitor data
   const { data: visitorData } = useQuery({
     queryKey: ["visitor-data"],
     queryFn: async () => {
@@ -57,7 +56,6 @@ const Admin = () => {
         throw error;
       }
       
-      console.log("Visitor data:", data);
       return data;
     }
   });
@@ -73,50 +71,49 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="flex h-full">
-        {/* Main content */}
-        <div className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto space-y-8">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold">Dashboard</h1>
-              <Button onClick={handleLogout} variant="outline">
-                Logout
-              </Button>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#D35400] to-[#E67E22]">
+      <div className="container mx-auto p-8">
+        <div className="space-y-8">
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-white">Analytics Dashboard</h1>
+            <Button 
+              onClick={() => supabase.auth.signOut()} 
+              variant="outline"
+              className="bg-white/10 text-white hover:bg-white/20 border-white/20"
+            >
+              Logout
+            </Button>
+          </div>
 
-            {/* Key Indicators */}
-            <section>
-              <h2 className="text-lg font-semibold mb-4">Key Indicators</h2>
-              <KeyIndicators />
+          {/* Key Indicators */}
+          <section className="space-y-4">
+            <KeyIndicators />
+          </section>
+
+          {/* Charts Section */}
+          <div className="grid gap-8 md:grid-cols-2">
+            <section className="col-span-2">
+              <VisitorsChart 
+                visitors={visitorData || []} 
+                onCountrySelect={setSelectedCountry}
+                selectedCountry={selectedCountry}
+              />
             </section>
-
-            {/* Charts Section */}
-            <div className="grid gap-8 md:grid-cols-2">
-              <section className="col-span-2">
-                <h2 className="text-lg font-semibold mb-4">Visitor Statistics</h2>
-                <VisitorsChart 
-                  visitors={visitorData || []} 
-                  onCountrySelect={handleCountrySelect}
-                  selectedCountry={selectedCountry}
-                />
-              </section>
-              
-              <section className="col-span-2">
-                <VisitorsTable 
-                  visitors={visitorData || []} 
-                  selectedCountry={selectedCountry}
-                />
-              </section>
-            </div>
-
-            {/* Settings Section */}
-            <section>
-              <h2 className="text-lg font-semibold mb-4">Settings</h2>
-              <AdminSettings />
+            
+            <section className="col-span-2">
+              <VisitorsTable 
+                visitors={visitorData || []} 
+                selectedCountry={selectedCountry}
+              />
             </section>
           </div>
+
+          {/* Settings Section */}
+          <section className="bg-white/10 rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">Settings</h2>
+            <AdminSettings />
+          </section>
         </div>
       </div>
     </div>
