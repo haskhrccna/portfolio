@@ -125,14 +125,20 @@ export const Timeline = () => {
                 delay: index === 10 ? 0.1 : index * 0.2,
                 ease: index === 10 ? "easeOut" : "easeInOut"
               }}
-              className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
+              className={`relative flex group ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
             >
               {/* Year circle */}
               <motion.div 
                 initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.3, delay: (index === 10 ? 0.1 : index * 0.2) + 0.2 }}
-                className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm z-10"
+                whileInView={{ scale: 0 }}
+                animate={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 10
+                }}
+                className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               >
                 {extractYear(experience.period)}
               </motion.div>
