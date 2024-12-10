@@ -27,15 +27,22 @@ interface VisitorsTableProps {
 export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps) => {
   const [dateFilter, setDateFilter] = useState<string>("");
 
-  // Filter visitor data and sort by date
+  console.log('Selected country:', selectedCountry);
+  console.log('Visitors data:', visitors);
+
+  // Filter visitor data and sort by date with case-insensitive comparison
   const filteredVisitors = visitors?.filter(visitor => {
-    const matchesCountry = visitor.country === selectedCountry;
+    const matchesCountry = selectedCountry && visitor.country && 
+      visitor.country.toLowerCase() === selectedCountry.toLowerCase();
     const matchesDate = !dateFilter || 
       format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
+    
     return matchesCountry && matchesDate;
   }).sort((a, b) => {
     return new Date(b.visited_at).getTime() - new Date(a.visited_at).getTime();
   });
+
+  console.log('Filtered visitors:', filteredVisitors);
 
   return (
     <Card>
