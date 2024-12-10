@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   BarChart,
   Bar,
@@ -27,6 +35,8 @@ import { AdminSettings } from "@/components/admin/AdminSettings";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [dateFilter, setDateFilter] = useState<string>("");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -74,6 +84,17 @@ const Admin = () => {
       console.log("Visitor data:", data);
       return data;
     }
+  });
+
+  // Get unique countries for filter
+  const uniqueCountries = [...new Set(visitorData?.map(visitor => visitor.country || 'Unknown'))];
+
+  // Filter visitor data
+  const filteredVisitorData = visitorData?.filter(visitor => {
+    const matchesCountry = !selectedCountry || visitor.country === selectedCountry;
+    const matchesDate = !dateFilter || 
+      format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
+    return matchesCountry && matchesDate;
   });
 
   const chartData = visitorData?.reduce((acc: any, visitor) => {
@@ -129,6 +150,34 @@ const Admin = () => {
               <CardTitle>Visitor Details</CardTitle>
             </CardHeader>
             <CardContent>
+              <div className="flex gap-4 mb-4">
+                <div className="w-48">
+                  <Select
+                    value={selectedCountry}
+                    onValueChange={setSelectedCountry}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Filter by country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">All Countries</SelectItem>
+                      {uniqueCountries.map((country) => (
+                        <SelectItem key={country} value={country}>
+                          {country}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="w-48">
+                  <Input
+                    type="date"
+                    value={dateFilter}
+                    onChange={(e) => setDateFilter(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+              </div>
               <div className="rounded-md border">
                 <Table>
                   <TableHeader>
@@ -137,11 +186,10 @@ const Admin = () => {
                       <TableHead>Country</TableHead>
                       <TableHead>City</TableHead>
                       <TableHead>IP Address</TableHead>
-                      <TableHead>Page URL</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {visitorData?.map((visitor) => (
+                    {filteredVisitorData?.map((visitor) => (
                       <TableRow key={visitor.id}>
                         <TableCell>
                           {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
@@ -149,7 +197,6 @@ const Admin = () => {
                         <TableCell>{visitor.country || 'Unknown'}</TableCell>
                         <TableCell>{visitor.city || 'Unknown'}</TableCell>
                         <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
-                        <TableCell>{visitor.page_url || 'N/A'}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
