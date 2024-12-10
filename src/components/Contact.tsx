@@ -1,36 +1,169 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
+import { useState } from "react";
+import { useToast } from "./ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Contact = () => {
   const { t } = useTranslation();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [requestCV, setRequestCV] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      company_name: formData.get('company') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+      request_cv: requestCV
+    };
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([data]);
+
+      if (error) throw error;
+
+      toast({
+        title: t('contact.success'),
+        description: t('contact.successMessage'),
+      });
+
+      // Reset form
+      e.currentTarget.reset();
+      setRequestCV(false);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        variant: "destructive",
+        title: t('contact.error'),
+        description: t('contact.errorMessage'),
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <section id="contact" className="section-padding">
-      <div className="max-w-4xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-4xl font-bold mb-12"
+    <section className="min-h-screen bg-[#0B1221] text-white py-16">
+      <div className="max-w-3xl mx-auto px-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
         >
-          {t('contact.getInTouch')}
-        </motion.h2>
-        <div className="glass p-8">
-          <div className="flex justify-center gap-8">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-               className="hover:text-primary transition-colors">
-              <Github size={32} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-               className="hover:text-primary transition-colors">
-              <Linkedin size={32} />
-            </a>
-            <a href="mailto:your@email.com"
-               className="hover:text-primary transition-colors">
-              <Mail size={32} />
-            </a>
+          <h1 className="text-4xl font-bold mb-4">{t('contact.getInTouch')}</h1>
+          <p className="text-gray-300">
+            {t('contact.description')}
+          </p>
+        </motion.div>
+
+        <motion.form 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-[#131B2E] p-8 rounded-lg"
+        >
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2">
+                {t('contact.name')}
+              </label>
+              <Input
+                id="name"
+                name="name"
+                required
+                className="w-full bg-[#1C2537] border-gray-700 text-white"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
+                {t('contact.email')}
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="w-full bg-[#1C2537] border-gray-700 text-white"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="company" className="block text-sm font-medium mb-2">
+                {t('contact.companyName')}
+              </label>
+              <Input
+                id="company"
+                name="company"
+                required
+                className="w-full bg-[#1C2537] border-gray-700 text-white"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                {t('contact.subject')}
+              </label>
+              <Input
+                id="subject"
+                name="subject"
+                required
+                className="w-full bg-[#1C2537] border-gray-700 text-white"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium mb-2">
+                {t('contact.message')}
+              </label>
+              <Textarea
+                id="message"
+                name="message"
+                required
+                className="w-full bg-[#1C2537] border-gray-700 text-white min-h-[150px]"
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="requestCV"
+                checked={requestCV}
+                onCheckedChange={(checked) => setRequestCV(checked as boolean)}
+                className="border-gray-700"
+              />
+              <label
+                htmlFor="requestCV"
+                className="text-sm text-gray-300 cursor-pointer"
+              >
+                {t('contact.requestCV')}
+              </label>
+            </div>
           </div>
-        </div>
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <Mail className="mr-2 h-4 w-4" />
+            {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
+          </Button>
+        </motion.form>
       </div>
     </section>
   );

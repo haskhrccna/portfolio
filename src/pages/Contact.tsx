@@ -11,20 +11,18 @@ const ContactPage = () => {
   };
 
   return (
-    <main className="min-h-screen">
+    <main className="bg-[#0B1221]">
       <div className="fixed top-4 right-24 z-50">
         <Button 
           onClick={handleHomeClick}
           variant="outline"
-          className="glass hover:bg-white/20 transition-all"
+          className="bg-[#131B2E] text-white border-gray-700 hover:bg-[#1C2537] transition-all"
         >
           <Home className="mr-2 h-4 w-4" />
           Home
         </Button>
       </div>
-      <div className="container mx-auto">
-        <Contact />
-      </div>
+      <Contact />
     </main>
   );
 };
