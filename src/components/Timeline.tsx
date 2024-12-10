@@ -1,24 +1,10 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Sparkles } from "lucide-react";
-
-interface TimelineItem {
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  skills: string[];
-}
+import { TimelineEntry } from "./timeline/TimelineEntry";
+import { TimelineItem } from "@/types/timeline";
 
 export const Timeline = () => {
   const { t } = useTranslation();
-
-  // Helper function to extract year from period string
-  const extractYear = (period: string): string => {
-    const match = period.match(/\b\d{4}\b/);
-    return match ? match[0] : "";
-  };
 
   const experiences: TimelineItem[] = [
     {
@@ -100,31 +86,6 @@ export const Timeline = () => {
     }
   ];
 
-  const celebrationVariants = {
-    initial: { scale: 0.8 },
-    hover: {
-      scale: 1.3,
-      transition: {
-        duration: 0.3,
-        repeat: Infinity,
-        repeatType: "reverse" as const,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const regularVariants = {
-    initial: { scale: 0.8 },
-    hover: {
-      scale: 1.2,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  };
-
   return (
     <section className="pt-0 pb-2 -mt-[120px]">
       <div className="container mx-auto px-4">
@@ -140,99 +101,13 @@ export const Timeline = () => {
         <div className="relative">
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500" />
           
-          {experiences.map((experience, index) => {
-            const year = extractYear(experience.period);
-            const isGraduationYear = year === "1997";
-
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.5,
-                  delay: index * 0.2
-                }}
-                className={`relative flex group ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
-              >
-                {/* Year circle with conditional celebration effect */}
-                <motion.div 
-                  initial="initial"
-                  whileHover="hover"
-                  variants={isGraduationYear ? celebrationVariants : regularVariants}
-                  className={`absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full 
-                    ${isGraduationYear 
-                      ? 'bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 animate-gradient-xy' 
-                      : 'bg-gradient-to-br from-purple-500 to-pink-500'
-                    } 
-                    flex items-center justify-center text-white font-bold text-sm z-10 
-                    shadow-lg hover:shadow-xl transition-shadow duration-200`}
-                >
-                  {year}
-                  {isGraduationYear && (
-                    <>
-                      <motion.div
-                        className="absolute -top-1 -right-1"
-                        animate={{
-                          rotate: [0, 15, -15, 0],
-                          scale: [1, 1.2, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                        }}
-                      >
-                        <Sparkles className="w-4 h-4 text-yellow-300" />
-                      </motion.div>
-                      <motion.div
-                        className="absolute -bottom-1 -left-1"
-                        animate={{
-                          rotate: [0, -15, 15, 0],
-                          scale: [1, 1.2, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          delay: 0.5,
-                        }}
-                      >
-                        <Sparkles className="w-4 h-4 text-yellow-300" />
-                      </motion.div>
-                    </>
-                  )}
-                </motion.div>
-                
-                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                  <div className={`glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group ${
-                    index === 10 ? 'bg-gradient-to-br from-[#8B5CF6] to-[#D946EF] bg-opacity-20' : ''
-                  }`}>
-                    <h3 className="text-2xl font-semibold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-600">
-                      {experience.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-2 group-hover:text-white/90">{experience.company}</p>
-                    <div className="flex items-center text-sm text-muted-foreground mb-4 group-hover:text-white/90">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      {experience.period}
-                    </div>
-                    <p className="mb-4 group-hover:text-white/90">{experience.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {experience.skills.map((skill, skillIndex) => (
-                        <Badge 
-                          key={skillIndex} 
-                          variant="secondary"
-                          className="hover:bg-white/20 hover:text-purple-400 transition-colors duration-300 group-hover:border-white/40"
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {experiences.map((experience, index) => (
+            <TimelineEntry 
+              key={index}
+              experience={experience}
+              index={index}
+            />
+          ))}
         </div>
       </div>
     </section>
