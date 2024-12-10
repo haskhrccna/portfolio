@@ -129,16 +129,15 @@ export const Timeline = () => {
             >
               {/* Year circle */}
               <motion.div 
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 0 }}
-                animate={{ scale: 0 }}
-                whileHover={{ scale: 1 }}
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 0.8 }}
+                whileHover={{ scale: 1.2 }}
                 transition={{ 
                   type: "spring",
                   stiffness: 400,
                   damping: 10
                 }}
-                className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm z-10 shadow-lg hover:shadow-xl transition-shadow duration-200"
               >
                 {extractYear(experience.period)}
               </motion.div>
