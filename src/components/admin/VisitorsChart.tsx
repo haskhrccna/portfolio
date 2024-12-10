@@ -15,9 +15,11 @@ interface Visitor {
 
 interface VisitorsChartProps {
   visitors: Visitor[];
+  onCountrySelect: (country: string) => void;
+  selectedCountry: string | null;
 }
 
-export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
+export const VisitorsChart = ({ visitors, onCountrySelect, selectedCountry }: VisitorsChartProps) => {
   // Count visitors by country
   const chartData = visitors?.reduce((acc: { [key: string]: number }, visitor) => {
     const country = visitor.country || 'Unknown';
@@ -32,8 +34,13 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
           country,
           visitors: count,
         }))
-        .sort((a, b) => b.visitors - a.visitors) // Sort by number of visitors in descending order
+        .sort((a, b) => b.visitors - a.visitors)
     : [];
+
+  const handleBarClick = (data: any) => {
+    console.log('Bar clicked:', data.country);
+    onCountrySelect(data.country);
+  };
 
   return (
     <Card>
@@ -64,7 +71,9 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
             <Bar 
               dataKey="visitors" 
               fill="#8884d8"
-              name="Visitors"
+              onClick={handleBarClick}
+              cursor="pointer"
+              style={{ fill: (data: any) => data.country === selectedCountry ? '#6b46c1' : '#8884d8' }}
             />
           </BarChart>
         </ResponsiveContainer>

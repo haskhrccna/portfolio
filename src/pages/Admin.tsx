@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -64,6 +65,11 @@ const Admin = () => {
     navigate("/");
   };
 
+  const handleCountrySelect = (country: string) => {
+    console.log('Country selected:', country);
+    setSelectedCountry(country);
+  };
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
@@ -76,8 +82,15 @@ const Admin = () => {
 
         <div className="grid gap-8">
           <AdminSettings />
-          <VisitorsChart visitors={visitorData || []} />
-          <VisitorsTable visitors={visitorData || []} />
+          <VisitorsChart 
+            visitors={visitorData || []} 
+            onCountrySelect={handleCountrySelect}
+            selectedCountry={selectedCountry}
+          />
+          <VisitorsTable 
+            visitors={visitorData || []} 
+            selectedCountry={selectedCountry}
+          />
         </div>
       </div>
     </div>

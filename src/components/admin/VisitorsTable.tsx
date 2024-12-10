@@ -8,13 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -28,18 +21,15 @@ interface Visitor {
 
 interface VisitorsTableProps {
   visitors: Visitor[];
+  selectedCountry: string | null;
 }
 
-export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
-  const [selectedCountry, setSelectedCountry] = useState<string>("");
+export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps) => {
   const [dateFilter, setDateFilter] = useState<string>("");
-
-  // Get unique countries for filter
-  const uniqueCountries = [...new Set(visitors?.map(visitor => visitor.country || 'Unknown'))];
 
   // Filter visitor data and sort by date
   const filteredVisitors = visitors?.filter(visitor => {
-    const matchesCountry = selectedCountry && visitor.country === selectedCountry;
+    const matchesCountry = visitor.country === selectedCountry;
     const matchesDate = !dateFilter || 
       format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
     return matchesCountry && matchesDate;
@@ -54,23 +44,6 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex gap-4 mb-4">
-          <div className="w-48">
-            <Select
-              value={selectedCountry}
-              onValueChange={setSelectedCountry}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a country" />
-              </SelectTrigger>
-              <SelectContent>
-                {uniqueCountries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
           <div className="w-48">
             <Input
               type="date"
@@ -106,7 +79,7 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} className="text-center text-muted-foreground">
-                    Please select a country to view visitor details
+                    Click on a country in the chart above to view visitor details
                   </TableCell>
                 </TableRow>
               )}
