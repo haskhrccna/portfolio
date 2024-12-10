@@ -4,10 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 export const Hero = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   const handleGetInTouch = () => {
     navigate('/contact');
@@ -52,7 +71,7 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="fixed top-4 right-24 z-50 flex gap-4">
+      <div className={`fixed top-4 right-24 z-50 flex gap-4 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-20'}`}>
         <Button 
           onClick={handleAdminLogin}
           variant="outline"

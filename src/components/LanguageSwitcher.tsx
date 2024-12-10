@@ -7,9 +7,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -17,7 +36,7 @@ export const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-20'}`}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button 
