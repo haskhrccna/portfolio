@@ -101,14 +101,14 @@ export const Timeline = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-center mb-12"
+          className="text-3xl font-bold text-center mb-12 text-white/90"
         >
           {t('experience.title', 'Professional Experience')}
         </motion.h2>
         
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500" />
+          {/* Vertical line with gradient */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500/50 via-pink-500/50 to-purple-500/50" />
           
           {experiences.map((experience, index) => (
             <motion.div
@@ -118,25 +118,31 @@ export const Timeline = () => {
               transition={{ duration: 0.5, delay: index * 0.2 }}
               className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
             >
-              {/* Timeline dot */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
+              {/* Timeline dot with gradient border */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500/50" />
               
               {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group">
-                  <h3 className="text-2xl font-semibold mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-600">{experience.title}</h3>
-                  <p className="text-muted-foreground mb-2 group-hover:text-white/90">{experience.company}</p>
-                  <div className="flex items-center text-sm text-muted-foreground mb-4 group-hover:text-white/90">
-                    <Calendar className="w-4 h-4 mr-2" />
+                <div className="glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group 
+                  bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md
+                  hover:from-white/10 hover:to-white/15">
+                  <h3 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                    {experience.title}
+                  </h3>
+                  <p className="text-white/80 mb-2 font-medium">{experience.company}</p>
+                  <div className="flex items-center text-sm text-white/70 mb-4">
+                    <Calendar className="w-4 h-4 mr-2 text-purple-300" />
                     {experience.period}
                   </div>
-                  <p className="mb-4 group-hover:text-white/90">{experience.description}</p>
+                  <p className="mb-4 text-white/80 leading-relaxed">{experience.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {experience.skills.map((skill, skillIndex) => (
                       <Badge 
                         key={skillIndex} 
                         variant="secondary"
-                        className="hover:bg-white/20 hover:text-purple-400 transition-colors duration-300 group-hover:border-white/40"
+                        className="bg-white/5 hover:bg-white/15 text-purple-200 
+                          border border-purple-500/20 hover:border-purple-500/40
+                          transition-all duration-300"
                       >
                         {skill}
                       </Badge>
