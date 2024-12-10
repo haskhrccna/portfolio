@@ -30,6 +30,24 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_settings: {
+        Row: {
+          id: number
+          show_cv_request: boolean
+          updated_at: string | null
+        }
+        Insert: {
+          id?: number
+          show_cv_request?: boolean
+          updated_at?: string | null
+        }
+        Update: {
+          id?: number
+          show_cv_request?: boolean
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           city: string | null

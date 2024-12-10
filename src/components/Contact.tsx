@@ -8,6 +8,7 @@ import { Checkbox } from "./ui/checkbox";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 export const Contact = () => {
   const { t } = useTranslation();
@@ -16,6 +17,20 @@ export const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [requestCV, setRequestCV] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+
+  // Fetch admin settings to check if CV request should be shown
+  const { data: adminSettings } = useQuery({
+    queryKey: ["admin-settings"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('admin_settings')
+        .select('*')
+        .single();
+      
+      if (error) throw error;
+      return data;
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -150,21 +165,23 @@ export const Contact = () => {
               />
             </div>
 
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="requestCV"
-                checked={requestCV}
-                disabled={isSubmitted}
-                onCheckedChange={(checked) => setRequestCV(checked as boolean)}
-                className="border-gray-700 disabled:opacity-50"
-              />
-              <label
-                htmlFor="requestCV"
-                className="text-sm text-gray-300 cursor-pointer"
-              >
-                {t('contact.requestCV')}
-              </label>
-            </div>
+            {adminSettings?.show_cv_request && (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="requestCV"
+                  checked={requestCV}
+                  disabled={isSubmitted}
+                  onCheckedChange={(checked) => setRequestCV(checked as boolean)}
+                  className="border-gray-700 disabled:opacity-50"
+                />
+                <label
+                  htmlFor="requestCV"
+                  className="text-sm text-gray-300 cursor-pointer"
+                >
+                  {t('contact.requestCV')}
+                </label>
+              </div>
+            )}
           </div>
 
           <Button
@@ -180,9 +197,9 @@ export const Contact = () => {
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-red-500 text-center mt-4 font-medium"
+              className="text-green-500 text-center mt-4 font-medium"
             >
-              Thank you for reaching out and I will get back as soon as possible.
+              {t('contact.successMessage')}
             </motion.p>
           )}
         </motion.form>

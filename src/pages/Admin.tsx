@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Switch } from "@/components/ui/switch";
 import {
   BarChart,
   Bar,
@@ -26,6 +27,28 @@ import { format } from "date-fns";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const [showCvRequest, setShowCvRequest] = useState(true);
+
+  // Fetch admin settings
+  const { data: adminSettings } = useQuery({
+    queryKey: ["admin-settings"],
+    queryFn: async () => {
+      console.log("Fetching admin settings...");
+      const { data, error } = await supabase
+        .from('admin_settings')
+        .select('*')
+        .single();
+      
+      if (error) {
+        console.error("Error fetching admin settings:", error);
+        throw error;
+      }
+      
+      console.log("Admin settings:", data);
+      setShowCvRequest(data.show_cv_request);
+      return data;
+    }
+  });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -54,6 +77,24 @@ const Admin = () => {
 
     checkAuth();
   }, [navigate]);
+
+  // Handle CV request toggle
+  const handleCvRequestToggle = async (checked: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('admin_settings')
+        .update({ show_cv_request: checked })
+        .eq('id', 1);
+
+      if (error) throw error;
+
+      setShowCvRequest(checked);
+      toast.success("CV request visibility updated successfully");
+    } catch (error) {
+      console.error("Error updating CV request visibility:", error);
+      toast.error("Failed to update CV request visibility");
+    }
+  };
 
   // Fetch visitor data
   const { data: visitorData } = useQuery({
@@ -107,6 +148,21 @@ const Admin = () => {
         </div>
 
         <div className="grid gap-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Settings</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between">
+                <span>Show CV Request in Contact Form</span>
+                <Switch
+                  checked={showCvRequest}
+                  onCheckedChange={handleCvRequestToggle}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle>Visitors by Country</CardTitle>
