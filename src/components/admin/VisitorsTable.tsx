@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { format } from "date-fns";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 interface Visitor {
   id: string;
@@ -24,30 +24,31 @@ interface VisitorsTableProps {
   selectedCountry: string | null;
 }
 
-export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps) => {
+export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
   const [dateFilter, setDateFilter] = useState<string>("");
 
-  console.log('Selected country:', selectedCountry);
-  console.log('Visitors data:', visitors);
+  // Process visitors data to count visitors per country
+  const countryData = visitors.reduce((acc: { [key: string]: number }, visitor) => {
+    if (visitor.country) {
+      acc[visitor.country] = (acc[visitor.country] || 0) + 1;
+    }
+    return acc;
+  }, {});
 
-  // Filter visitor data and sort by date with case-insensitive comparison
-  const filteredVisitors = visitors?.filter(visitor => {
-    const matchesCountry = selectedCountry && visitor.country && 
-      visitor.country.toLowerCase() === selectedCountry.toLowerCase();
-    const matchesDate = !dateFilter || 
-      format(new Date(visitor.visited_at), 'yyyy-MM-dd') === dateFilter;
-    
-    return matchesCountry && matchesDate;
-  }).sort((a, b) => {
-    return new Date(b.visited_at).getTime() - new Date(a.visited_at).getTime();
-  });
+  // Convert to array format for recharts
+  const chartData = Object.entries(countryData)
+    .map(([country, count]) => ({
+      country,
+      visitors: count,
+    }))
+    .sort((a, b) => b.visitors - a.visitors); // Sort by visitor count descending
 
-  console.log('Filtered visitors:', filteredVisitors);
+  console.log('Chart data:', chartData);
 
   return (
     <Card className="glass">
       <CardHeader>
-        <CardTitle className="text-white">Visitor Details</CardTitle>
+        <CardTitle className="text-white">Visitors by Country</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex gap-4 mb-4">
@@ -57,43 +58,44 @@ export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps)
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
               className="w-full bg-white/10 text-white border-white/20"
-              disabled={!selectedCountry}
             />
           </div>
         </div>
-        <div className="rounded-md border border-white/20">
-          <div className="max-h-[400px] overflow-y-auto">
-            <Table>
-              <TableHeader className="sticky top-0 bg-white/10 backdrop-blur-md">
-                <TableRow>
-                  <TableHead className="text-white">Date</TableHead>
-                  <TableHead className="text-white">Country</TableHead>
-                  <TableHead className="text-white">City</TableHead>
-                  <TableHead className="text-white">IP Address</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="bg-white/5">
-                {selectedCountry ? (
-                  filteredVisitors?.map((visitor) => (
-                    <TableRow key={visitor.id} className="hover:bg-white/10">
-                      <TableCell className="text-white">
-                        {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
-                      </TableCell>
-                      <TableCell className="text-white">{visitor.country || 'Unknown'}</TableCell>
-                      <TableCell className="text-white">{visitor.city || 'Unknown'}</TableCell>
-                      <TableCell className="text-white">{visitor.ip_address || 'N/A'}</TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center text-white/60">
-                      Click on a country in the chart above to view visitor details
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+        <div className="h-[400px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData}>
+              <CartesianGrid 
+                strokeDasharray="3 3" 
+                vertical={false}
+                stroke="rgba(255,255,255,0.1)"
+              />
+              <XAxis 
+                dataKey="country"
+                stroke="rgba(255,255,255,0.5)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+                angle={-45}
+                textAnchor="end"
+                height={100}
+              />
+              <YAxis
+                stroke="rgba(255,255,255,0.5)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'rgba(0,0,0,0.8)',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: 'white'
+                }}
+              />
+              <Bar 
+                dataKey="visitors" 
+                fill="#7B3FE4"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </CardContent>
     </Card>
