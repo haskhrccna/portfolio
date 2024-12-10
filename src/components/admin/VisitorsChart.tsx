@@ -18,17 +18,21 @@ interface VisitorsChartProps {
 }
 
 export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
-  const chartData = visitors?.reduce((acc: any, visitor) => {
+  // Count visitors by country
+  const chartData = visitors?.reduce((acc: { [key: string]: number }, visitor) => {
     const country = visitor.country || 'Unknown';
     acc[country] = (acc[country] || 0) + 1;
     return acc;
   }, {});
 
+  // Format data for the chart and sort by number of visitors
   const formattedChartData = chartData
-    ? Object.entries(chartData).map(([country, count]) => ({
-        country,
-        visitors: count,
-      }))
+    ? Object.entries(chartData)
+        .map(([country, count]) => ({
+          country,
+          visitors: count,
+        }))
+        .sort((a, b) => b.visitors - a.visitors) // Sort by number of visitors in descending order
     : [];
 
   return (
@@ -40,10 +44,28 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={formattedChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="country" />
-            <YAxis />
+            <XAxis 
+              dataKey="country"
+              angle={-45}
+              textAnchor="end"
+              height={70}
+              interval={0}
+            />
+            <YAxis 
+              allowDecimals={false}
+              label={{ 
+                value: 'Number of Visitors', 
+                angle: -90, 
+                position: 'insideLeft',
+                style: { textAnchor: 'middle' }
+              }}
+            />
             <Tooltip />
-            <Bar dataKey="visitors" fill="#8884d8" />
+            <Bar 
+              dataKey="visitors" 
+              fill="#8884d8"
+              name="Visitors"
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
