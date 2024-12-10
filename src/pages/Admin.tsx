@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { AdminSettings } from "@/components/admin/AdminSettings";
 import { VisitorsTable } from "@/components/admin/VisitorsTable";
 import { VisitorsChart } from "@/components/admin/VisitorsChart";
+import { KeyIndicators } from "@/components/admin/KeyIndicators";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -71,26 +73,50 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <Button onClick={handleLogout} variant="outline">
-            Logout
-          </Button>
-        </div>
+    <div className="min-h-screen bg-background">
+      <div className="flex h-full">
+        {/* Main content */}
+        <div className="flex-1 p-8">
+          <div className="max-w-7xl mx-auto space-y-8">
+            {/* Header */}
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold">Dashboard</h1>
+              <Button onClick={handleLogout} variant="outline">
+                Logout
+              </Button>
+            </div>
 
-        <div className="grid gap-8">
-          <AdminSettings />
-          <VisitorsChart 
-            visitors={visitorData || []} 
-            onCountrySelect={handleCountrySelect}
-            selectedCountry={selectedCountry}
-          />
-          <VisitorsTable 
-            visitors={visitorData || []} 
-            selectedCountry={selectedCountry}
-          />
+            {/* Key Indicators */}
+            <section>
+              <h2 className="text-lg font-semibold mb-4">Key Indicators</h2>
+              <KeyIndicators />
+            </section>
+
+            {/* Charts Section */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <section className="col-span-2">
+                <h2 className="text-lg font-semibold mb-4">Visitor Statistics</h2>
+                <VisitorsChart 
+                  visitors={visitorData || []} 
+                  onCountrySelect={handleCountrySelect}
+                  selectedCountry={selectedCountry}
+                />
+              </section>
+              
+              <section className="col-span-2">
+                <VisitorsTable 
+                  visitors={visitorData || []} 
+                  selectedCountry={selectedCountry}
+                />
+              </section>
+            </div>
+
+            {/* Settings Section */}
+            <section>
+              <h2 className="text-lg font-semibold mb-4">Settings</h2>
+              <AdminSettings />
+            </section>
+          </div>
         </div>
       </div>
     </div>

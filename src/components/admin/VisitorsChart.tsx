@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -21,60 +22,80 @@ interface VisitorsChartProps {
 
 export const VisitorsChart = ({ visitors, onCountrySelect, selectedCountry }: VisitorsChartProps) => {
   // Count visitors by country
-  const chartData = visitors?.reduce((acc: { [key: string]: number }, visitor) => {
+  const chartData = visitors?.reduce((acc: { [key: string]: { total: number; successful: number } }, visitor) => {
     const country = visitor.country || 'Unknown';
-    acc[country] = (acc[country] || 0) + 1;
+    if (!acc[country]) {
+      acc[country] = { total: 0, successful: 0 };
+    }
+    acc[country].total += 1;
+    acc[country].successful += 1; // For demonstration, all visits are considered successful
     return acc;
   }, {});
 
   // Format data for the chart and sort by number of visitors
   const formattedChartData = chartData
     ? Object.entries(chartData)
-        .map(([country, count]) => ({
+        .map(([country, data]) => ({
           country,
-          visitors: count,
+          successful: data.successful,
+          failed: data.total - data.successful,
           fill: country === selectedCountry ? '#6b46c1' : '#8884d8',
         }))
-        .sort((a, b) => b.visitors - a.visitors)
+        .sort((a, b) => b.successful - a.successful)
     : [];
 
   const handleBarClick = (data: any) => {
-    console.log('Bar clicked:', data.country);
-    onCountrySelect(data.country);
+    console.log('Bar clicked:', data.payload.country);
+    onCountrySelect(data.payload.country);
   };
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Visitors by Country</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Visits</CardTitle>
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center">
+            <div className="w-3 h-3 bg-purple-600 rounded-full mr-1" />
+            <span className="text-sm">Successful</span>
+          </div>
+          <div className="flex items-center">
+            <div className="w-3 h-3 bg-red-400 rounded-full mr-1" />
+            <span className="text-sm">Failed</span>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={formattedChartData}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <BarChart data={formattedChartData} barGap={0}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis 
               dataKey="country"
               angle={-45}
               textAnchor="end"
               height={70}
               interval={0}
+              tick={{ fontSize: 12 }}
             />
             <YAxis 
               allowDecimals={false}
-              label={{ 
-                value: 'Number of Visitors', 
-                angle: -90, 
-                position: 'insideLeft',
-                style: { textAnchor: 'middle' }
-              }}
+              tick={{ fontSize: 12 }}
             />
             <Tooltip />
             <Bar 
-              dataKey="visitors" 
-              fill="#8884d8"
+              dataKey="successful" 
+              fill="#7c3aed"
+              radius={[4, 4, 0, 0]}
               onClick={handleBarClick}
               cursor="pointer"
-              fillOpacity={0.8}
+              maxBarSize={50}
+            />
+            <Bar 
+              dataKey="failed" 
+              fill="#f87171"
+              radius={[4, 4, 0, 0]}
+              onClick={handleBarClick}
+              cursor="pointer"
+              maxBarSize={50}
             />
           </BarChart>
         </ResponsiveContainer>
