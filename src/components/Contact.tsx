@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -14,6 +14,7 @@ export const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestCV, setRequestCV] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,8 +50,8 @@ export const Contact = () => {
         description: t('contact.successMessage'),
       });
 
-      // Reset form
-      e.currentTarget.reset();
+      // Reset form using the ref
+      formRef.current?.reset();
       setRequestCV(false);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -79,6 +80,7 @@ export const Contact = () => {
         </motion.div>
 
         <motion.form 
+          ref={formRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
