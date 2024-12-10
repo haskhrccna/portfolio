@@ -13,6 +13,7 @@ export const Contact = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [requestCV, setRequestCV] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -50,9 +51,8 @@ export const Contact = () => {
         description: t('contact.successMessage'),
       });
 
-      // Reset form using the ref
-      formRef.current?.reset();
-      setRequestCV(false);
+      setIsSubmitted(true);
+      
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
@@ -96,7 +96,8 @@ export const Contact = () => {
                 id="name"
                 name="name"
                 required
-                className="w-full bg-[#1C2537] border-gray-700 text-white"
+                disabled={isSubmitted}
+                className="w-full bg-[#1C2537] border-gray-700 text-white disabled:opacity-50"
               />
             </div>
 
@@ -109,8 +110,9 @@ export const Contact = () => {
                 name="email"
                 type="email"
                 required
+                disabled={isSubmitted}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                className="w-full bg-[#1C2537] border-gray-700 text-white"
+                className="w-full bg-[#1C2537] border-gray-700 text-white disabled:opacity-50"
               />
             </div>
 
@@ -122,7 +124,8 @@ export const Contact = () => {
                 id="company"
                 name="company"
                 required
-                className="w-full bg-[#1C2537] border-gray-700 text-white"
+                disabled={isSubmitted}
+                className="w-full bg-[#1C2537] border-gray-700 text-white disabled:opacity-50"
               />
             </div>
 
@@ -134,7 +137,8 @@ export const Contact = () => {
                 id="subject"
                 name="subject"
                 required
-                className="w-full bg-[#1C2537] border-gray-700 text-white"
+                disabled={isSubmitted}
+                className="w-full bg-[#1C2537] border-gray-700 text-white disabled:opacity-50"
               />
             </div>
 
@@ -146,7 +150,8 @@ export const Contact = () => {
                 id="message"
                 name="message"
                 required
-                className="w-full bg-[#1C2537] border-gray-700 text-white min-h-[150px]"
+                disabled={isSubmitted}
+                className="w-full bg-[#1C2537] border-gray-700 text-white min-h-[150px] disabled:opacity-50"
               />
             </div>
 
@@ -154,8 +159,9 @@ export const Contact = () => {
               <Checkbox
                 id="requestCV"
                 checked={requestCV}
+                disabled={isSubmitted}
                 onCheckedChange={(checked) => setRequestCV(checked as boolean)}
-                className="border-gray-700"
+                className="border-gray-700 disabled:opacity-50"
               />
               <label
                 htmlFor="requestCV"
@@ -168,12 +174,22 @@ export const Contact = () => {
 
           <Button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            disabled={isSubmitting || isSubmitted}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
           >
             <Mail className="mr-2 h-4 w-4" />
             {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
           </Button>
+
+          {isSubmitted && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-center mt-4 font-medium"
+            >
+              Thank you for reaching out and I will get back as soon as possible.
+            </motion.p>
+          )}
         </motion.form>
       </div>
     </section>
