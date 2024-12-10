@@ -4,14 +4,34 @@
 
 @layer base {
   body {
-    @apply min-h-screen text-black;
-    background: #FFFFFF;
+    @apply min-h-screen text-white;
+    background: linear-gradient(-45deg, #0F0A1F, #7B3FE4, #4A1D96, #C026D3);
+    background-size: 300% 300%;
+    animation: gradient 8s ease infinite;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-black/5 backdrop-blur-lg border border-black/10 rounded-2xl;
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl;
   }
   
   .section-padding {
@@ -32,9 +52,9 @@
 
 /* Enhanced glass effect for cards */
 .glass {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
