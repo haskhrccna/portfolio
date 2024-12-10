@@ -45,9 +45,9 @@ export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps)
   console.log('Filtered visitors:', filteredVisitors);
 
   return (
-    <Card>
+    <Card className="glass">
       <CardHeader>
-        <CardTitle>Visitor Details</CardTitle>
+        <CardTitle className="text-white">Visitor Details</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex gap-4 mb-4">
@@ -56,37 +56,37 @@ export const VisitorsTable = ({ visitors, selectedCountry }: VisitorsTableProps)
               type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="w-full"
+              className="w-full bg-white/10 text-white border-white/20"
               disabled={!selectedCountry}
             />
           </div>
         </div>
-        <div className="rounded-md border">
+        <div className="rounded-md border border-white/20">
           <div className="max-h-[400px] overflow-y-auto">
             <Table>
-              <TableHeader className="sticky top-0 bg-background z-10">
+              <TableHeader className="sticky top-0 bg-white/10 backdrop-blur-md">
                 <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Country</TableHead>
-                  <TableHead>City</TableHead>
-                  <TableHead>IP Address</TableHead>
+                  <TableHead className="text-white">Date</TableHead>
+                  <TableHead className="text-white">Country</TableHead>
+                  <TableHead className="text-white">City</TableHead>
+                  <TableHead className="text-white">IP Address</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody className="bg-white/5">
                 {selectedCountry ? (
                   filteredVisitors?.map((visitor) => (
-                    <TableRow key={visitor.id}>
-                      <TableCell>
+                    <TableRow key={visitor.id} className="hover:bg-white/10">
+                      <TableCell className="text-white">
                         {visitor.visited_at ? format(new Date(visitor.visited_at), 'PPpp') : 'N/A'}
                       </TableCell>
-                      <TableCell>{visitor.country || 'Unknown'}</TableCell>
-                      <TableCell>{visitor.city || 'Unknown'}</TableCell>
-                      <TableCell>{visitor.ip_address || 'N/A'}</TableCell>
+                      <TableCell className="text-white">{visitor.country || 'Unknown'}</TableCell>
+                      <TableCell className="text-white">{visitor.city || 'Unknown'}</TableCell>
+                      <TableCell className="text-white">{visitor.ip_address || 'N/A'}</TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center text-muted-foreground">
+                    <TableCell colSpan={4} className="text-center text-white/60">
                       Click on a country in the chart above to view visitor details
                     </TableCell>
                   </TableRow>

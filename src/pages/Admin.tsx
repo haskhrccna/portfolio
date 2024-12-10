@@ -71,7 +71,7 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#D35400] to-[#E67E22]">
+    <div className="min-h-screen bg-gradient-to-br from-[#0F0A1F] via-[#7B3FE4] to-[#4A1D96]">
       <div className="container mx-auto p-8">
         <div className="space-y-8">
           {/* Header */}
@@ -110,7 +110,7 @@ const Admin = () => {
           </div>
 
           {/* Settings Section */}
-          <section className="bg-white/10 rounded-lg p-6">
+          <section className="glass p-6">
             <h2 className="text-lg font-semibold text-white mb-4">Settings</h2>
             <AdminSettings />
           </section>

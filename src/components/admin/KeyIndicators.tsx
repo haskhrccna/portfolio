@@ -85,14 +85,14 @@ export const KeyIndicators = () => {
       {indicators.map((indicator) => (
         <Card 
           key={indicator.title}
-          className="p-4 bg-[#D35400]/90 text-white border-none hover:bg-[#D35400] transition-colors"
+          className="p-4 glass hover:bg-white/20 transition-colors"
         >
           <div className="space-y-2">
             <p className="text-sm font-medium text-white/80">
               {indicator.title}
             </p>
             <div className="flex items-baseline justify-between">
-              <h3 className="text-2xl font-bold">
+              <h3 className="text-2xl font-bold text-white">
                 {indicator.value}
               </h3>
               <div className={`flex items-center text-sm ${

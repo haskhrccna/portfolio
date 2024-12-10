@@ -35,9 +35,9 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
   }).reverse();
 
   return (
-    <Card className="bg-[#D35400]/90 text-white border-none">
+    <Card className="glass">
       <CardHeader>
-        <CardTitle className="flex justify-between items-center">
+        <CardTitle className="flex justify-between items-center text-white">
           <span>Sessions</span>
           <div className="text-sm font-normal">
             Last 30 days ({format(subDays(new Date(), 30), 'MMM dd')} - {format(new Date(), 'MMM dd')})
@@ -50,8 +50,8 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
             <AreaChart data={last30Days}>
               <defs>
                 <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#FFA500" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#FFA500" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#7B3FE4" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#7B3FE4" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid 
@@ -79,7 +79,7 @@ export const VisitorsChart = ({ visitors }: VisitorsChartProps) => {
               <Area
                 type="monotone"
                 dataKey="visitors"
-                stroke="#FFA500"
+                stroke="#7B3FE4"
                 fillOpacity={1}
                 fill="url(#colorVisitors)"
               />
