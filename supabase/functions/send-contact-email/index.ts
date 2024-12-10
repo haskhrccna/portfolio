@@ -45,7 +45,7 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Contact Form <onboarding@resend.dev>",
         to: ["haskhr@hotmail.com"],
-        subject: `New Contact Form Submission: ${formData.subject}`,
+        subject: "Hassan Adam portfolio ver 2 : contact request",
         html: htmlContent,
       }),
     });
@@ -60,7 +60,8 @@ const handler = async (req: Request): Promise<Response> => {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.error("Error in sendemail function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
