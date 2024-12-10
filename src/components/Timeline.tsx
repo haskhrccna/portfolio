@@ -37,6 +37,13 @@ export const Timeline = () => {
       skills: ["Project Management", "High Voltage Systems", "Contractor Coordination", "Compliance Management"]
     },
     {
+      title: "Project Manager",
+      company: "AL BARRAK Electrical Cont.",
+      period: "2020-2021",
+      description: "Coordination with the stakeholders, finalizing the required NOC from local authorities, executing power infrastructure projects, ensuring correct design, compliance, electrical safety and ensuring a more trouble-free work environment, project based in Abu Dhabi UAE.",
+      skills: ["Stakeholder Management", "Infrastructure Projects", "Compliance", "Safety Management"]
+    },
+    {
       title: "Senior Electrical Engineer",
       company: "Power Distribution Company",
       period: "2017 - 2020",
