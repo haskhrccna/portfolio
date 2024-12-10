@@ -107,7 +107,6 @@ export const Timeline = () => {
         </motion.h2>
         
         <div className="relative">
-          {/* Vertical line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500" />
           
           {experiences.map((experience, index) => (
@@ -115,13 +114,15 @@ export const Timeline = () => {
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              transition={{ 
+                duration: index === 10 ? 0.3 : 0.5, 
+                delay: index === 10 ? 0.1 : index * 0.2,
+                ease: index === 10 ? "easeOut" : "easeInOut"
+              }}
               className={`relative flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-16`}
             >
-              {/* Timeline dot */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
               
-              {/* Content card */}
               <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                 <div className={`glass p-6 rounded-xl hover:shadow-lg transition-all duration-300 group ${
                   index === 10 ? 'bg-gradient-to-br from-[#8B5CF6] to-[#D946EF] bg-opacity-20' : ''
