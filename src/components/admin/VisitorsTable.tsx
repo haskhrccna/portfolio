@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 
 interface Visitor {
   id: string;
@@ -25,8 +24,6 @@ interface VisitorsTableProps {
 }
 
 export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
-  const [dateFilter, setDateFilter] = useState<string>("");
-
   // Process visitors data to count visitors per country
   const countryData = visitors.reduce((acc: { [key: string]: number }, visitor) => {
     if (visitor.country) {
@@ -49,16 +46,6 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
         <CardTitle className="text-white">Visitors by Country</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex gap-4 mb-4">
-          <div className="w-48">
-            <Input
-              type="date"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-              className="w-full bg-white/10 text-white border-white/20"
-            />
-          </div>
-        </div>
         <div className="h-[400px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} margin={{ left: 20, right: 20, bottom: 20 }}>
