@@ -25,11 +25,21 @@ const resources = {
       "contact": {
         "title": "Get in Touch",
         "getInTouch": "Contact Me",
+        "description": "Kindly if you have any inquiries or technical clarification I can help you with, don't hesitate to contact me",
         "adminLogin": "Admin Login",
         "name": "Name",
         "email": "Email",
         "message": "Message",
-        "send": "Send Message"
+        "send": "Send Message",
+        "success": "Message Sent",
+        "successMessage": "Thank you for your message. I will get back to you soon.",
+        "error": "Error",
+        "errorMessage": "There was an error sending your message. Please try again.",
+        "sending": "Sending...",
+        "sendMessage": "Send Message",
+        "companyName": "Company Name",
+        "subject": "Subject",
+        "requestCV": "Request CV"
       },
       "projects": {
         "title": "Projects Photo Library",
@@ -78,11 +88,21 @@ const resources = {
       "contact": {
         "title": "تواصل معي",
         "getInTouch": "اتصل بي",
+        "description": "إذا كان لديك أي استفسارات أو توضيحات تقنية يمكنني المساعدة بها، فلا تتردد في الاتصال بي",
         "adminLogin": "تسجيل دخول المشرف",
         "name": "الاسم",
         "email": "البريد الإلكتروني",
         "message": "الرسالة",
-        "send": "إرسال الرسالة"
+        "send": "إرسال الرسالة",
+        "success": "تم إرسال الرسالة",
+        "successMessage": "شكراً لرسالتك. سأرد عليك قريباً.",
+        "error": "خطأ",
+        "errorMessage": "حدث خطأ في إرسال رسالتك. يرجى المحاولة مرة أخرى.",
+        "sending": "جاري الإرسال...",
+        "sendMessage": "إرسال الرسالة",
+        "companyName": "اسم الشركة",
+        "subject": "الموضوع",
+        "requestCV": "طلب السيرة الذاتية"
       },
       "projects": {
         "title": "معرض صور المشاريع",
@@ -131,11 +151,21 @@ const resources = {
       "contact": {
         "title": "Contact",
         "getInTouch": "Me Contacter",
+        "description": "Si vous avez des questions ou des clarifications techniques dont je peux vous aider, n'hésitez pas à me contacter",
         "adminLogin": "Connexion Admin",
         "name": "Nom",
         "email": "Email",
         "message": "Message",
-        "send": "Envoyer"
+        "send": "Envoyer",
+        "success": "Message Envoyé",
+        "successMessage": "Merci pour votre message. Je vous répondrai bientôt.",
+        "error": "Erreur",
+        "errorMessage": "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.",
+        "sending": "Envoi en cours...",
+        "sendMessage": "Envoyer le message",
+        "companyName": "Nom de l'entreprise",
+        "subject": "Sujet",
+        "requestCV": "Demander CV"
       },
       "projects": {
         "title": "Galerie de Photos des Projets",
