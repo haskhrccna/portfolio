@@ -61,7 +61,7 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
         </div>
         <div className="h-[400px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
+            <BarChart data={chartData} margin={{ left: 20, right: 20, bottom: 20 }}>
               <CartesianGrid 
                 strokeDasharray="3 3" 
                 vertical={false}
@@ -71,9 +71,9 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
                 dataKey="country"
                 stroke="rgba(255,255,255,0.7)"
                 tick={{ fill: 'rgba(255,255,255,0.9)' }}
-                angle={-45}
-                textAnchor="end"
-                height={100}
+                angle={0}
+                textAnchor="middle"
+                height={60}
               />
               <YAxis
                 stroke="rgba(255,255,255,0.7)"
