@@ -8,16 +8,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Please check your .env file');
 }
 
-// Create a custom logger
-const loggerConfig = {
-  apiKey: supabaseAnonKey,
-  logLevel: 'debug',
-  // Add custom debug function
-  debug: (msg: string) => {
-    console.log('Supabase Debug:', msg);
-  },
-};
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
@@ -28,8 +18,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       'Content-Type': 'application/json',
     },
   },
-  // Add logger configuration
-  logger: loggerConfig,
 });
 
 // Add debug logs for monitoring
