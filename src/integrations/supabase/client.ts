@@ -8,6 +8,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Please check your .env file');
 }
 
+// Create a custom logger
+const loggerConfig = {
+  apiKey: supabaseAnonKey,
+  logLevel: 'debug',
+  // Add custom debug function
+  debug: (msg: string) => {
+    console.log('Supabase Debug:', msg);
+  },
+};
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
@@ -18,22 +28,14 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       'Content-Type': 'application/json',
     },
   },
+  // Add logger configuration
+  logger: loggerConfig,
 });
 
-// Add a request interceptor to log requests
-supabase.rest.interceptors.request.use((config) => {
-  console.log('Making Supabase request:', config);
-  return config;
-});
-
-// Add a response interceptor to log responses
-supabase.rest.interceptors.response.use(
-  (response) => {
-    console.log('Received Supabase response:', response);
-    return response;
-  },
-  (error) => {
-    console.error('Supabase request failed:', error);
-    return Promise.reject(error);
+// Add debug logs for monitoring
+supabase.auth.onAuthStateChange((event, session) => {
+  console.log('Supabase auth event:', event);
+  if (session) {
+    console.log('Session user:', session.user?.email);
   }
-);
+});
