@@ -14,7 +14,11 @@ export const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (isSubmitting) return; // Prevent double submission
+    
     setIsSubmitting(true);
+    console.log("Starting form submission...");
 
     const formData = new FormData(e.currentTarget);
     const data = {
@@ -27,28 +31,43 @@ export const Contact = () => {
     };
 
     try {
+      console.log("Attempting to save to Supabase...");
       // First, save to Supabase
       const { error: supabaseError } = await supabase
         .from('contact_messages')
         .insert([data]);
 
-      if (supabaseError) throw supabaseError;
+      if (supabaseError) {
+        console.error("Supabase insert error:", supabaseError);
+        throw supabaseError;
+      }
 
+      console.log("Successfully saved to Supabase, sending email...");
       // Then, send email
       const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
-        body: data
+        body: JSON.stringify(data)
       });
 
-      if (emailError) throw emailError;
+      if (emailError) {
+        console.error("Email sending error:", emailError);
+        throw emailError;
+      }
 
+      console.log("Form submission successful!");
       setIsSubmitted(true);
+      toast({
+        title: t('contact.success'),
+        description: t('contact.successMessage'),
+        duration: 5000,
+      });
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting form:', error);
       toast({
         variant: "destructive",
         title: t('contact.error'),
-        description: t('contact.errorMessage'),
+        description: error.message || t('contact.errorMessage'),
+        duration: 5000,
       });
     } finally {
       setIsSubmitting(false);

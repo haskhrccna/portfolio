@@ -35,7 +35,10 @@ export const ContactForm = ({
         .select('*')
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching admin settings:", error);
+        throw error;
+      }
       return data;
     }
   });
@@ -54,40 +57,40 @@ export const ContactForm = ({
           label={t('contact.name')}
           name="name"
           required
-          disabled={isSubmitted}
+          disabled={isSubmitted || isSubmitting}
         />
         <FormField
           label={t('contact.email')}
           name="email"
           type="email"
           required
-          disabled={isSubmitted}
+          disabled={isSubmitted || isSubmitting}
         />
         <FormField
           label={t('contact.companyName')}
           name="company"
           required
-          disabled={isSubmitted}
+          disabled={isSubmitted || isSubmitting}
         />
         <FormField
           label={t('contact.subject')}
           name="subject"
           required
-          disabled={isSubmitted}
+          disabled={isSubmitted || isSubmitting}
         />
         <FormField
           label={t('contact.message')}
           name="message"
           type="textarea"
           required
-          disabled={isSubmitted}
+          disabled={isSubmitted || isSubmitting}
         />
 
         {adminSettings?.show_cv_request && (
           <CVRequestCheckbox
             checked={requestCV}
             onCheckedChange={setRequestCV}
-            disabled={isSubmitted}
+            disabled={isSubmitted || isSubmitting}
           />
         )}
       </div>
@@ -97,8 +100,17 @@ export const ContactForm = ({
         disabled={isSubmitting || isSubmitted}
         className="w-full bg-[#0D2B59] hover:bg-[#0A2347] text-white disabled:opacity-50"
       >
-        <Send className="mr-2 h-4 w-4" />
-        {isSubmitting ? t('contact.sending') : t('contact.sendMessage')}
+        {isSubmitting ? (
+          <>
+            <Send className="mr-2 h-4 w-4 animate-spin" />
+            {t('contact.sending')}
+          </>
+        ) : (
+          <>
+            <Send className="mr-2 h-4 w-4" />
+            {t('contact.sendMessage')}
+          </>
+        )}
       </Button>
 
       {isSubmitted && (
