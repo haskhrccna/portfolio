@@ -2,9 +2,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -37,13 +35,12 @@ export const Hero = () => {
   };
 
   return (
-    <section className="min-h-[40vh] flex items-center justify-center relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 animate-gradient-xy overflow-hidden p-8">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.2),rgba(0,0,0,0))]" />
-      <div className="absolute w-full h-full opacity-20" />
-      <div className="max-w-7xl w-full mx-auto relative">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="flex flex-col items-center">
-            <Avatar className="h-48 w-48 flex-shrink-0 border-4 border-white/10 shadow-2xl hover:scale-105 transition-transform duration-300">
+    <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(0,0,0,0))]" />
+      <div className="container-width relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          <div className="flex flex-col items-center lg:items-start">
+            <Avatar className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 flex-shrink-0 border-4 border-white/10 shadow-2xl hover:scale-105 transition-transform duration-300">
               <AvatarImage
                 src="/lovable-uploads/072d3a59-e643-48d6-bb4c-7f55c36fd5a0.png"
                 alt="Profile photo"
@@ -58,34 +55,33 @@ export const Hero = () => {
               </div>
             </div>
           </div>
-          <div className="flex-grow text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
+          <div className="flex-grow text-center lg:text-left max-w-2xl">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gradient animate-fade-up">
               {t('name')}
             </h1>
-            <p className="text-lg text-gray-300 animate-fade-up opacity-90" style={{ animationDelay: '0.2s' }}>
+            <p className="text-xl sm:text-2xl text-gray-300 animate-fade-up opacity-90 mb-4" style={{ animationDelay: '0.2s' }}>
               {t('jobTitle')}
             </p>
-            <p className="text-lg text-gray-300 animate-fade-up opacity-90 mt-4" style={{ animationDelay: '0.3s' }}>
+            <p className="text-lg sm:text-xl text-gray-300 animate-fade-up opacity-90 mb-8" style={{ animationDelay: '0.3s' }}>
               {t('bio')}
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button 
+                onClick={handleGetInTouch}
+                className="glass hover:bg-white/20 transition-all text-lg"
+              >
+                Get in Touch
+              </Button>
+              <Button 
+                onClick={handleAdminLogin}
+                variant="outline"
+                className="glass hover:bg-white/20 transition-all text-lg"
+              >
+                {t('contact.adminLogin')}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={`fixed top-4 right-24 z-50 flex gap-4 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-20'}`}>
-        <Button 
-          onClick={handleAdminLogin}
-          variant="outline"
-          className="glass hover:bg-white/20 transition-all"
-        >
-          {t('contact.adminLogin')}
-        </Button>
-        <Button 
-          onClick={handleGetInTouch}
-          variant="outline"
-          className="glass hover:bg-white/20 transition-all"
-        >
-          Get in Touch
-        </Button>
       </div>
     </section>
   );

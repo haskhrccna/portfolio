@@ -5,9 +5,9 @@
 @layer base {
   body {
     @apply min-h-screen text-white;
-    background: linear-gradient(-45deg, #0F0A1F, #7B3FE4, #4A1D96, #C026D3);
-    background-size: 300% 300%;
-    animation: gradient 8s ease infinite;
+    background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
   }
 }
 
@@ -15,14 +15,8 @@
   0% {
     background-position: 0% 50%;
   }
-  25% {
-    background-position: 100% 50%;
-  }
   50% {
-    background-position: 50% 100%;
-  }
-  75% {
-    background-position: 0% 50%;
+    background-position: 100% 50%;
   }
   100% {
     background-position: 0% 50%;
@@ -35,7 +29,11 @@
   }
   
   .section-padding {
-    @apply py-20 px-6 md:px-12 lg:px-24;
+    @apply py-12 px-4 sm:py-16 sm:px-6 lg:py-20 lg:px-8;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
 
@@ -57,4 +55,19 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Mobile-first responsive design utilities */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600;
+  }
+  
+  .mobile-container {
+    @apply w-full px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl;
+  }
+  
+  .section-title {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12;
+  }
 }
