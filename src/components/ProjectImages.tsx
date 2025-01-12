@@ -71,6 +71,8 @@ const ProjectImages = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
+            <CarouselPrevious className="md:hidden flex absolute left-2 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
+            <CarouselNext className="md:hidden flex absolute right-2 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
             <CarouselPrevious className="hidden md:flex bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
             <CarouselNext className="hidden md:flex bg-white/10 backdrop-blur-sm hover:bg-white/20 border-white/20" />
           </Carousel>
