@@ -51,14 +51,14 @@ export const YearCircle = ({ year, isGraduationYear, isCurrentYear }: YearCircle
       initial="initial"
       whileHover="hover"
       variants={isGraduationYear ? celebrationVariants : isCurrentYear ? currentYearVariants : baseVariants}
-      className={`absolute left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full 
+      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full 
         ${isGraduationYear 
           ? 'bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 animate-gradient-xy' 
           : isCurrentYear
           ? 'bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 animate-shine hover:animate-pulse'
           : 'bg-gradient-to-br from-purple-500 to-pink-500'
         } 
-        flex items-center justify-center text-white font-bold text-sm z-10 
+        flex items-center justify-center text-white font-bold text-xs sm:text-sm z-10 
         shadow-lg hover:shadow-xl transition-shadow duration-200`}
     >
       {year}
@@ -76,7 +76,7 @@ export const YearCircle = ({ year, isGraduationYear, isCurrentYear }: YearCircle
               repeatType: "reverse",
             }}
           >
-            <Sparkles className="w-4 h-4 text-yellow-300" />
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
           </motion.div>
           <motion.div
             className="absolute -bottom-1 -left-1"
@@ -91,7 +91,7 @@ export const YearCircle = ({ year, isGraduationYear, isCurrentYear }: YearCircle
               delay: 0.5,
             }}
           >
-            <Sparkles className="w-4 h-4 text-yellow-300" />
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
           </motion.div>
         </>
       )}
