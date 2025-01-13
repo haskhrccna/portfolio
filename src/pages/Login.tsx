@@ -85,6 +85,16 @@ const Login = () => {
           view="sign_in"
           localization={{
             variables: {
+              sign_in: {
+                password_label: "Password",
+                email_label: "Email",
+                button_label: "Sign In",
+                loading_button_label: "Signing in ...",
+                password_input_placeholder: "Your password",
+                email_input_placeholder: "Your email",
+                link_text: "",
+                forgotten_password_label: ""
+              },
               sign_up: {
                 email_label: "",
                 password_label: "",
