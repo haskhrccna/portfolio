@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Home } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,8 +51,20 @@ const Login = () => {
     }
   };
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute top-4 left-4 text-white hover:bg-white/10"
+        onClick={handleHomeClick}
+      >
+        <Home className="h-6 w-6" />
+      </Button>
       <div className="w-full max-w-md p-8 glass rounded-xl shadow-xl">
         <h1 className="text-3xl font-bold text-center text-white mb-8">Admin Login</h1>
         <Auth
