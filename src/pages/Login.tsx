@@ -92,8 +92,7 @@ const Login = () => {
                 loading_button_label: "Signing in ...",
                 password_input_placeholder: "Your password",
                 email_input_placeholder: "Your email",
-                link_text: "",
-                forgotten_password_label: ""
+                link_text: ""
               },
               sign_up: {
                 email_label: "",
