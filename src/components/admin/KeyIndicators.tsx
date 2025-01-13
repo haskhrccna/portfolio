@@ -69,28 +69,28 @@ export const KeyIndicators = () => {
     {
       title: "Total Visitors",
       value: stats?.totalVisitors || 0,
-      change: stats?.percentageChange || 0,
+      change: Number(stats?.percentageChange.toFixed(2)) || 0,
       period: "vs previous 30 days",
       previousValue: stats?.previousPeriodVisitors || 0
     },
     {
       title: "Countries",
       value: stats?.uniqueCountries || 0,
-      change: stats?.countriesPercentageChange || 0,
+      change: Number(stats?.countriesPercentageChange.toFixed(2)) || 0,
       period: "vs previous 30 days",
       previousValue: stats?.previousUniqueCountries || 0
     },
     {
       title: "Avg. Session Duration",
       value: stats?.averageSessionDuration || "0h 0m",
-      change: 17.8,
+      change: 17.80,
       period: "vs previous period",
       previousValue: "2h 51m"
     },
     {
       title: "Messages",
       value: stats?.totalMessages || 0,
-      change: 28.6,
+      change: 28.60,
       period: "vs previous period",
       previousValue: stats?.totalMessages ? Math.round(stats.totalMessages * 0.8) : 0
     }
