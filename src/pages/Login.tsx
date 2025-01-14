@@ -83,6 +83,7 @@ const Login = () => {
           providers={[]}
           redirectTo={`${window.location.origin}/admin`}
           view="sign_in"
+          showLinks={false}
           localization={{
             variables: {
               sign_in: {
@@ -91,16 +92,7 @@ const Login = () => {
                 button_label: "Sign In",
                 loading_button_label: "Signing in ...",
                 password_input_placeholder: "Your password",
-                email_input_placeholder: "Your email",
-                link_text: ""
-              },
-              sign_up: {
-                email_label: "",
-                password_label: "",
-                button_label: "",
-                link_text: "",
-                password_input_placeholder: "",
-                email_input_placeholder: ""
+                email_input_placeholder: "Your email"
               }
             }
           }}
