@@ -1,13 +1,11 @@
-import { useState } from "react";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Visitor {
@@ -24,21 +22,36 @@ interface VisitorsTableProps {
 }
 
 export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
-  // Process visitors data to count visitors per country
-  const countryData = visitors.reduce((acc: { [key: string]: number }, visitor) => {
+  // Process visitors data to group by country
+  const countryData = visitors.reduce((acc: { 
+    [key: string]: {
+      count: number;
+      ipAddresses: Set<string>;
+    }
+  }, visitor) => {
     if (visitor.country) {
-      acc[visitor.country] = (acc[visitor.country] || 0) + 1;
+      if (!acc[visitor.country]) {
+        acc[visitor.country] = {
+          count: 0,
+          ipAddresses: new Set()
+        };
+      }
+      acc[visitor.country].count += 1;
+      if (visitor.ip_address) {
+        acc[visitor.country].ipAddresses.add(visitor.ip_address);
+      }
     }
     return acc;
   }, {});
 
-  // Convert to array format for recharts
-  const chartData = Object.entries(countryData)
-    .map(([country, count]) => ({
+  // Convert to array format for table
+  const tableData = Object.entries(countryData)
+    .map(([country, data]) => ({
       country,
-      visitors: count,
+      visits: data.count,
+      ipAddresses: Array.from(data.ipAddresses).join(', ')
     }))
-    .sort((a, b) => b.visitors - a.visitors);
+    .sort((a, b) => b.visits - a.visits);
 
   return (
     <Card className="glass">
@@ -46,41 +59,34 @@ export const VisitorsTable = ({ visitors }: VisitorsTableProps) => {
         <CardTitle className="text-white">Visitors by Country</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[400px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData} margin={{ left: 20, right: 20, bottom: 20 }}>
-              <CartesianGrid 
-                strokeDasharray="3 3" 
-                vertical={false}
-                stroke="rgba(255,255,255,0.2)"
-              />
-              <XAxis 
-                dataKey="country"
-                stroke="rgba(255,255,255,0.7)"
-                tick={{ fill: 'rgba(255,255,255,0.9)' }}
-                angle={0}
-                textAnchor="middle"
-                height={60}
-              />
-              <YAxis
-                stroke="rgba(255,255,255,0.7)"
-                tick={{ fill: 'rgba(255,255,255,0.9)' }}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'rgba(15, 10, 31, 0.9)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  borderRadius: '8px',
-                  color: 'white'
-                }}
-              />
-              <Bar 
-                dataKey="visitors" 
-                fill="#0EA5E9"
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="rounded-md border border-white/20">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-white/20">
+                <TableHead className="text-white">Country</TableHead>
+                <TableHead className="text-white text-right">Visits</TableHead>
+                <TableHead className="text-white">IP Addresses</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableData.map((row) => (
+                <TableRow key={row.country} className="border-white/20">
+                  <TableCell className="text-white">{row.country}</TableCell>
+                  <TableCell className="text-white text-right">{row.visits}</TableCell>
+                  <TableCell className="text-white font-mono text-sm">
+                    {row.ipAddresses || 'N/A'}
+                  </TableCell>
+                </TableRow>
+              ))}
+              {tableData.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={3} className="text-center text-white/60">
+                    No visitor data available
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
       </CardContent>
     </Card>
