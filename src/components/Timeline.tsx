@@ -8,7 +8,7 @@ export const Timeline = () => {
 
   const experiences: TimelineItem[] = [
     {
-      title: "Principal Resident Engineer - 400kV OHL Transmission lines",
+      title: "Principal Resident Engineer",
       company: "AtkinsRéalis",
       period: "Nov 2024 - Present",
       description: "400kV OHTL transmission line upgrade including but not limited to Engineering, procurement and construction including design, manufacturing, FAT, insurance, packing, shipping, delivery to site, installation, testing, commissioning and handing over in satisfactory condition of works. Abu Dhabi, UAE",
