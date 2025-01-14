@@ -59,9 +59,14 @@ export const Hero = () => {
 
           {/* Text Content Section */}
           <div className="lg:w-2/3 text-center lg:text-left">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gradient animate-fade-up">
-              {t('name')}
-            </h1>
+            <div className="mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient animate-fade-up mb-2">
+                {t('name.firstName')}
+              </h1>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient animate-fade-up">
+                {t('name.fullName')}
+              </h2>
+            </div>
             <p className="text-xl sm:text-2xl text-gray-300 animate-fade-up opacity-90 mb-4" style={{ animationDelay: '0.2s' }}>
               {t('jobTitle')}
             </p>
