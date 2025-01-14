@@ -53,7 +53,7 @@ export const Timeline = () => {
       title: "Project Manager",
       company: "EXSYM Corporation",
       period: "2008-2012",
-      description: "Construction supervision, technical/commercial evaluations for bidders' offers, design review and tendering of 132kV/220kV/400kV EHV cable projects based in Doha, Qatar.",
+      description: "Construction supervision, technical/commercial evaluations for bidders' offers, design review and tendering of 132kV/220kV/400kV EHV cable and related OHL transmission lines works projects based in Doha, Qatar.",
       skills: ["Construction Supervision", "Technical Evaluation", "Design Review", "EHV Cable Projects"]
     },
     {
