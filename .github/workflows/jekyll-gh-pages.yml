@@ -69,5 +69,5 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Deployment Completed"
           body: "The deployment to GitHub Pages has been completed successfully. URL: ${{ steps.deployment.outputs.page_url }}"
-          to: "haskhrccna@gmail.com"
+          to: "haskhr@hotmail.com"
           from: "haskhrccna@gmail.com"
