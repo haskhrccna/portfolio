@@ -99,6 +99,8 @@ const Login = () => {
                 password_label: "",
                 button_label: "",
                 link_text: "",
+                password_input_placeholder: "",
+                email_input_placeholder: ""
               }
             }
           }}
