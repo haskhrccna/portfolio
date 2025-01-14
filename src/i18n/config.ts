@@ -58,7 +58,7 @@ const resources = {
       },
       "bio": "Specialized in high-voltage power systems with extensive experience in managing and supervising infrastructure projects across the Middle East.",
       "getInTouch": "Get in Touch",
-      "jobTitle": "Principal Resident Engineer - Electrical",
+      "jobTitle": "Principal Resident Engineer - 400kV OHL Transmission lines",
       "name": {
         "firstName": "Hassan",
         "fullName": "Hassan Khairalla Adam"
@@ -124,10 +124,10 @@ const resources = {
       },
       "bio": "متخصص في أنظمة الطاقة عالية الجهد مع خبرة واسعة في إدارة والإشراف على مشاريع البنية التحتية في الشرق الأوسط",
       "getInTouch": "تواصل معي",
-      "jobTitle": "مهندس مقيم رئيسي - كهرباء",
+      "jobTitle": "مهندس مقيم رئيسي - خطوط نقل الكهرباء 400 كيلو فولت",
       "name": {
         "firstName": "حسن",
-        "fullName": "حسن حسن خير الله آدم"
+        "fullName": "حسن خير الله آدم"
       },
       "hero": {
         "status": "الحالة: تم التوظيف"
@@ -190,7 +190,7 @@ const resources = {
       },
       "bio": "Spécialisé dans les systèmes électriques haute tension avec une vaste expérience dans la gestion et la supervision de projets d'infrastructure au Moyen-Orient",
       "getInTouch": "Me Contacter",
-      "jobTitle": "Ingénieur Résident Principal - Électricité",
+      "jobTitle": "Ingénieur Résident Principal - Lignes de Transmission 400kV",
       "name": {
         "firstName": "Hassan",
         "fullName": "Hassan Khairalla Adam"
