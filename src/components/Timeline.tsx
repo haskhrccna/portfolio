@@ -39,7 +39,7 @@ export const Timeline = () => {
       title: "Project Manager",
       company: "Furukawa Electrical Co.",
       period: "2016-2019",
-      description: "Design & supervision and practice of electrical engineering on installation, testing and commissioning of 400kV / 132kV EHV power Cables, and FO cable works for power transmission & distribution system as per standards and regulations in Doha, Qatar.",
+      description: "Design & supervision and practice of electrical engineering on installation, testing and commissioning of 400kV / 132kV EHV power Cables, and FO cable works for power transmission, 400kV OHL transmission lines & distribution system as per standards and regulations in Doha, Qatar.",
       skills: ["Electrical Engineering", "EHV Power Cables", "Project Supervision", "Testing & Commissioning"]
     },
     {
