@@ -60,14 +60,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Send email notification
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 587
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Deployment Completed"
-          body: "The deployment to GitHub Pages has been completed successfully. URL: ${{ steps.deployment.outputs.page_url }}"
-          to: "haskhr@hotmail.com"
-          from: "haskhrccna@gmail.com"
+      
