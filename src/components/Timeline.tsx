@@ -17,9 +17,10 @@ export const Timeline = () => {
     },
     {
       title: "Principal Resident Engineer-Electrical",
-      company: "AECOM Middle East",
+      company: "AECOM Middle East Consultant",
       period: "May 2024 - Oct 2024",
-      description: "Infrastructure and Landscaping Works Al Noud, including installation of 33kV primary substations, switching station and 11kV cables and related substations. Installation of street light network with all related works, testing and commissioning of 33/11 kV Cables, transformers and switch gear. Al Ain, UAE",
+      description: "Infrastructure and Landscaping Works Al Noud, including installation of 33kV primary substations, switching station and 11kV cables and related substations. Installation of street light network with all related works, testing and commissioning of 33/11 kV Cables, transformers and switch gear.",
+      location: "Al Ain, UAE",
       skills: ["Infrastructure Works", "Substation Installation", "Project Management"]
     },
     {
@@ -27,6 +28,7 @@ export const Timeline = () => {
       company: "Mott MacDonald Consultant",
       period: "2022",
       description: "132kV cable /OHTL supply and installation works. Coordination with EtihadWE (previously EWEA) and main contractors in all aspects for smooth project execution as per client standard/specification, finalizing the required NOC from local authorities, executing power infrastructure projects, ensuring correct design, compliance, electrical safety and ensuring a more trouble-free work environment, project based in North, Central West and East area in UAE.",
+      location: "Dubai, UAE",
       skills: ["Project Management", "High Voltage Systems", "Contractor Coordination", "Compliance Management"]
     },
     {
