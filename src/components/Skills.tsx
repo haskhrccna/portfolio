@@ -78,7 +78,7 @@ export const Skills = () => {
 
   const ChartSection = ({ data, title }: { data: typeof skills; title?: string }) => (
     <div className={cn(
-      "glass p-8 transition-all duration-700",
+      "glass p-8 transition-all duration-700 h-full",
       animated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
     )}>
       {title && (
@@ -125,12 +125,12 @@ export const Skills = () => {
 
   return (
     <section id="skills" className="section-padding">
-      <div id="skills-section" className="max-w-4xl mx-auto">
+      <div id="skills-section" className="container-width">
         <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
           {t('skills.title')}
         </h2>
         
-        <div className="space-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <ChartSection data={skills} />
           <ChartSection data={itSkills} title={t('skills.itSkills.title')} />
         </div>
