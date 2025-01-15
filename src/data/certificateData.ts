@@ -7,7 +7,7 @@ interface Certificate {
 
 export const pmpCertification: Certificate = {
   id: 2,
-  title: "PMP",
+  title: "Project Management Professional (PMP) certificate",
   date: "June 2023",
   imageUrl: "/images/certifications/pmp-cert.jpg"
 };
