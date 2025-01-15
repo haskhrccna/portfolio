@@ -126,12 +126,8 @@ export const Skills = () => {
   return (
     <section id="skills" className="section-padding">
       <div id="skills-section" className="container-width">
-        <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
-          {t('skills.title')}
-        </h2>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <ChartSection data={skills} title={t('skills.technical')} />
+          <ChartSection data={skills} title={t('skills.title')} />
           <ChartSection data={itSkills} title={t('skills.itSkills.title')} />
         </div>
       </div>
