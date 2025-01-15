@@ -3,5 +3,6 @@ export interface TimelineItem {
   company: string;
   period: string;
   description: string;
+  location?: string;
   skills: string[];
 }

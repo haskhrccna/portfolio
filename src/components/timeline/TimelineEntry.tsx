@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TimelineItem } from "@/types/timeline";
 import { YearCircle } from "./YearCircle";
@@ -31,7 +31,6 @@ export const TimelineEntry = ({ experience, index }: TimelineEntryProps) => {
         index % 2 === 0 ? 'sm:justify-start' : 'sm:justify-end'
       }`}
     >
-      {/* Year circle - centered on mobile, alternating on desktop */}
       <div className="sm:hidden mx-auto mb-4">
         <YearCircle 
           year={year}
@@ -57,10 +56,16 @@ export const TimelineEntry = ({ experience, index }: TimelineEntryProps) => {
             {experience.title}
           </h3>
           <p className="text-muted-foreground mb-2 group-hover:text-white/90">{experience.company}</p>
-          <div className="flex items-center text-sm text-muted-foreground mb-4 group-hover:text-white/90">
+          <div className="flex items-center text-sm text-muted-foreground mb-2 group-hover:text-white/90">
             <Calendar className="w-4 h-4 mr-2" />
             {experience.period}
           </div>
+          {experience.location && (
+            <div className="flex items-center text-sm text-muted-foreground mb-4 group-hover:text-white/90">
+              <MapPin className="w-4 h-4 mr-2" />
+              {experience.location}
+            </div>
+          )}
           <p className="mb-4 text-sm sm:text-base group-hover:text-white/90">{experience.description}</p>
           <div className="flex flex-wrap gap-2">
             {experience.skills.map((skill, skillIndex) => (

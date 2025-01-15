@@ -11,7 +11,8 @@ export const Timeline = () => {
       title: "Principal Resident Engineer - 400kV OHL Transmission lines",
       company: "AtkinsRéalis",
       period: "Nov 2024 - Present",
-      description: "400kV OHTL transmission line upgrade including but not limited to Engineering, procurement and construction including design, manufacturing, FAT, insurance, packing, shipping, delivery to site, installation, testing, commissioning and handing over in satisfactory condition of works. Abu Dhabi, UAE",
+      description: "400kV OHTL transmission line upgrade including but not limited to Engineering, procurement and construction including design, manufacturing, FAT, insurance, packing, shipping, delivery to site, installation, testing, commissioning and handing over in satisfactory condition of works.",
+      location: "Abu Dhabi, UAE",
       skills: ["Project Management", "High Voltage Systems", "Team Leadership"]
     },
     {
@@ -99,7 +100,6 @@ export const Timeline = () => {
         </motion.h2>
         
         <div className="relative">
-          {/* Timeline center line - hidden on mobile, shown on larger screens */}
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500 hidden sm:block" />
           
           {experiences.map((experience, index) => (
