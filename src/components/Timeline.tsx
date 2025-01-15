@@ -9,7 +9,7 @@ export const Timeline = () => {
   const experiences: TimelineItem[] = [
     {
       title: "Principal Resident Engineer - 400kV OHL Transmission lines",
-      company: "AtkinsRéalis",
+      company: "AtkinsRealis Consultant",
       period: "Nov 2024 - Present",
       description: "400kV OHTL transmission line upgrade including but not limited to Engineering, procurement and construction including design, manufacturing, FAT, insurance, packing, shipping, delivery to site, installation, testing, commissioning and handing over in satisfactory condition of works.",
       location: "Abu Dhabi, UAE",
@@ -36,6 +36,7 @@ export const Timeline = () => {
       company: "AL BARRAK Electrical Cont.",
       period: "2020-2021",
       description: "Coordination with the stakeholders, finalizing the required NOC from local authorities, executing power infrastructure projects, ensuring correct design, compliance, electrical safety and ensuring a more trouble-free work environment, project based in Abu Dhabi UAE.",
+      location: "Abu Dhabi, UAE",
       skills: ["Stakeholder Management", "Infrastructure Projects", "Compliance", "Safety Management"]
     },
     {
@@ -43,6 +44,7 @@ export const Timeline = () => {
       company: "Furukawa Electrical Co.",
       period: "2016-2019",
       description: "Design & supervision and practice of electrical engineering on installation, testing and commissioning of 400kV / 132kV EHV power Cables, and FO cable works for power transmission, 400kV OHL transmission lines & distribution system as per standards and regulations in Doha, Qatar.",
+      location: "Doha, Qatar",
       skills: ["Electrical Engineering", "EHV Power Cables", "Project Supervision", "Testing & Commissioning"]
     },
     {
@@ -50,6 +52,7 @@ export const Timeline = () => {
       company: "KEO International Consultants",
       period: "2012-2016",
       description: "Design & supervision on 132kV / 11kV and street light network installation works for infrastructure and Highway roads projects and, testing and commissioning, project based in Doha, Qatar.",
+      location: "Doha, Qatar",
       skills: ["Electrical Design", "Infrastructure Projects", "Project Supervision", "Testing & Commissioning"]
     },
     {
@@ -57,6 +60,7 @@ export const Timeline = () => {
       company: "EXSYM Corporation",
       period: "2008-2012",
       description: "Construction supervision, technical/commercial evaluations for bidders' offers, design review and tendering of 132kV/220kV/400kV EHV cable and related OHL transmission lines works projects based in Doha, Qatar.",
+      location: "Doha, Qatar",
       skills: ["Construction Supervision", "Technical Evaluation", "Design Review", "EHV Cable Projects"]
     },
     {
@@ -64,6 +68,7 @@ export const Timeline = () => {
       company: "EXSYM Corporation",
       period: "Dec 2005 - Dec 2007",
       description: "Managing all site activities, site team, and subcontractors' works for 132kV cable installation projects, including supervision of installation processes and coordination of technical requirements.",
+      location: "Doha, Qatar",
       skills: ["Site Management", "Technical Coordination", "Installation Supervision", "Team Leadership"]
     },
     {
@@ -71,6 +76,7 @@ export const Timeline = () => {
       company: "Ministry of Electricity and Water (MEW)",
       period: "Nov 2002 - Nov 2005",
       description: "Supervised cable activities including excavation, laying, and jointing. Managed subcontractors, prepared safety permits, monitored progress, and supervised high voltage testing for 33kV-300kV cables. Responsible for fault location, repair activities, and switching operations across substations.",
+      location: "Kuwait, Kuwait",
       skills: ["Cable Maintenance", "Safety Management", "High Voltage Testing", "Subcontractor Management"]
     },
     {
