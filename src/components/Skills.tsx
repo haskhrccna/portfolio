@@ -1,24 +1,24 @@
-import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 export const Skills = () => {
   const [animated, setAnimated] = useState(false);
   const { t } = useLanguage();
 
   const skills = [
-    { name: t('skills.items.projectManagement'), level: 95, color: "from-purple-500 to-pink-500" },
-    { name: t('skills.items.constructionSupervision'), level: 90, color: "from-blue-500 to-purple-500" },
-    { name: t('skills.items.powerTransmission'), level: 95, color: "from-indigo-500 to-blue-500" },
-    { name: t('skills.items.infrastructureDesign'), level: 85, color: "from-violet-500 to-indigo-500" },
-    { name: t('skills.items.tenderManagement'), level: 90, color: "from-fuchsia-500 to-violet-500" }
+    { name: t('skills.items.projectManagement'), value: 95, fill: "#8b5cf6" },
+    { name: t('skills.items.constructionSupervision'), value: 90, fill: "#6366f1" },
+    { name: t('skills.items.powerTransmission'), value: 95, fill: "#3b82f6" },
+    { name: t('skills.items.infrastructureDesign'), value: 85, fill: "#7c3aed" },
+    { name: t('skills.items.tenderManagement'), value: 90, fill: "#a21caf" }
   ];
 
   const itSkills = [
-    { name: t('skills.itSkills.microsoftOffice'), level: 99, color: "from-emerald-500 to-teal-500" },
-    { name: t('skills.itSkills.pythonProgramming'), level: 95, color: "from-teal-500 to-cyan-500" },
-    { name: t('skills.itSkills.networking'), level: 97, color: "from-cyan-500 to-sky-500" },
-    { name: t('skills.itSkills.linux'), level: 90, color: "from-sky-500 to-blue-500" }
+    { name: t('skills.itSkills.microsoftOffice'), value: 99, fill: "#10b981" },
+    { name: t('skills.itSkills.pythonProgramming'), value: 95, fill: "#14b8a6" },
+    { name: t('skills.itSkills.networking'), value: 97, fill: "#06b6d4" },
+    { name: t('skills.itSkills.linux'), value: 90, fill: "#0ea5e9" }
   ];
 
   useEffect(() => {
@@ -43,24 +43,58 @@ export const Skills = () => {
     };
   }, []);
 
-  const SkillBar = ({ skill, delay }: { skill: { name: string; level: number; color: string }; delay: number }) => (
-    <div
-      className="animate-fade-up"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <div className="flex justify-between mb-2">
-        <span className="font-mono text-sm tracking-tight">{skill.name}</span>
-        <span className="font-mono text-primary text-sm">{skill.level}%</span>
-      </div>
-      <div className="relative h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out rounded-full`}
-          style={{
-            width: animated ? `${skill.level}%` : '0%',
-            transition: `width 1s ease-out ${delay}s`
-          }}
-        />
-      </div>
+  const SkillChart = ({ data, title }: { data: typeof skills | typeof itSkills, title?: string }) => (
+    <div className="h-[400px] w-full">
+      {title && (
+        <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
+          {title}
+        </h3>
+      )}
+      <ResponsiveContainer width="100%" height="100%">
+        <RadialBarChart
+          cx="50%"
+          cy="50%"
+          innerRadius="20%"
+          outerRadius="90%"
+          data={data}
+          startAngle={180}
+          endAngle={-180}
+        >
+          <RadialBar
+            minAngle={15}
+            background={{ fill: 'rgba(0,0,0,0.1)' }}
+            dataKey="value"
+            cornerRadius={10}
+            label={{ 
+              position: 'insideStart',
+              fill: '#fff',
+              fontWeight: 'bold'
+            }}
+          />
+          <Legend
+            iconSize={10}
+            layout="vertical"
+            verticalAlign="middle"
+            align="right"
+            wrapperStyle={{
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: '12px'
+            }}
+          />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (active && payload && payload.length) {
+                return (
+                  <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-2 rounded-lg border shadow-lg">
+                    <p className="font-mono text-sm">{`${payload[0].payload.name}: ${payload[0].value}%`}</p>
+                  </div>
+                );
+              }
+              return null;
+            }}
+          />
+        </RadialBarChart>
+      </ResponsiveContainer>
     </div>
   );
 
@@ -73,30 +107,14 @@ export const Skills = () => {
         
         <div className="space-y-16">
           <div className="glass p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {skills.map((skill, index) => (
-                <SkillBar 
-                  key={skill.name} 
-                  skill={skill} 
-                  delay={index * 0.1} 
-                />
-              ))}
-            </div>
+            <SkillChart data={skills} />
           </div>
 
           <div className="glass p-8">
-            <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
-              {t('skills.itSkills.title')}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {itSkills.map((skill, index) => (
-                <SkillBar 
-                  key={skill.name} 
-                  skill={skill} 
-                  delay={(index + skills.length) * 0.1} 
-                />
-              ))}
-            </div>
+            <SkillChart 
+              data={itSkills} 
+              title={t('skills.itSkills.title')} 
+            />
           </div>
         </div>
       </div>
