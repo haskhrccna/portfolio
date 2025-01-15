@@ -5,6 +5,7 @@ import { Timeline } from "@/components/Timeline";
 import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
 import Footer from "@/components/Footer";
+import { SplashAnimation } from "@/components/SplashAnimation";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -31,6 +32,7 @@ const Index = () => {
 
   return (
     <main className="overflow-hidden">
+      <SplashAnimation />
       <Hero />
       <About />
       <Timeline />
