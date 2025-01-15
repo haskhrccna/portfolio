@@ -1,24 +1,25 @@
-import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { cn } from "@/lib/utils";
 
 export const Skills = () => {
   const [animated, setAnimated] = useState(false);
   const { t } = useLanguage();
 
   const skills = [
-    { name: t('skills.items.projectManagement'), level: 95, color: "from-purple-500 to-pink-500" },
-    { name: t('skills.items.constructionSupervision'), level: 90, color: "from-blue-500 to-purple-500" },
-    { name: t('skills.items.powerTransmission'), level: 95, color: "from-indigo-500 to-blue-500" },
-    { name: t('skills.items.infrastructureDesign'), level: 85, color: "from-violet-500 to-indigo-500" },
-    { name: t('skills.items.tenderManagement'), level: 90, color: "from-fuchsia-500 to-violet-500" }
+    { name: t('skills.items.projectManagement'), value: 95, color: "#8B5CF6" },
+    { name: t('skills.items.constructionSupervision'), value: 90, color: "#6366F1" },
+    { name: t('skills.items.powerTransmission'), value: 95, color: "#4F46E5" },
+    { name: t('skills.items.infrastructureDesign'), value: 85, color: "#4338CA" },
+    { name: t('skills.items.tenderManagement'), value: 90, color: "#3730A3" }
   ];
 
   const itSkills = [
-    { name: t('skills.itSkills.microsoftOffice'), level: 99, color: "from-emerald-500 to-teal-500" },
-    { name: t('skills.itSkills.pythonProgramming'), level: 95, color: "from-teal-500 to-cyan-500" },
-    { name: t('skills.itSkills.networking'), level: 97, color: "from-cyan-500 to-sky-500" },
-    { name: t('skills.itSkills.linux'), level: 90, color: "from-sky-500 to-blue-500" }
+    { name: t('skills.itSkills.microsoftOffice'), value: 99, color: "#10B981" },
+    { name: t('skills.itSkills.pythonProgramming'), value: 95, color: "#059669" },
+    { name: t('skills.itSkills.networking'), value: 97, color: "#047857" },
+    { name: t('skills.itSkills.linux'), value: 90, color: "#065F46" }
   ];
 
   useEffect(() => {
@@ -43,23 +44,81 @@ export const Skills = () => {
     };
   }, []);
 
-  const SkillBar = ({ skill, delay }: { skill: { name: string; level: number; color: string }; delay: number }) => (
-    <div
-      className="animate-fade-up"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <div className="flex justify-between mb-2">
-        <span className="font-mono text-sm tracking-tight">{skill.name}</span>
-        <span className="font-mono text-primary text-sm">{skill.level}%</span>
-      </div>
-      <div className="relative h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-        <div
-          className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out rounded-full`}
-          style={{
-            width: animated ? `${skill.level}%` : '0%',
-            transition: `width 1s ease-out ${delay}s`
-          }}
-        />
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-background/80 backdrop-blur-sm border border-border/50 p-2 rounded-lg shadow-lg">
+          <p className="font-mono text-sm">{payload[0].name}</p>
+          <p className="font-mono text-primary text-sm font-bold">{`${payload[0].value}%`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value, name }: any) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="currentColor"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+        className="text-xs font-mono"
+      >
+        {`${value}%`}
+      </text>
+    );
+  };
+
+  const ChartSection = ({ data, title }: { data: typeof skills; title?: string }) => (
+    <div className={cn(
+      "glass p-8 transition-all duration-700",
+      animated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+    )}>
+      {title && (
+        <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
+          {title}
+        </h3>
+      )}
+      <div className="h-[400px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={renderCustomizedLabel}
+              outerRadius={150}
+              innerRadius={100}
+              paddingAngle={5}
+              dataKey="value"
+              animationBegin={0}
+              animationDuration={2000}
+              animationEasing="ease-out"
+            >
+              {data.map((entry, index) => (
+                <Cell 
+                  key={`cell-${index}`}
+                  fill={entry.color}
+                  className="stroke-background hover:opacity-80 transition-opacity cursor-pointer"
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend 
+              verticalAlign="bottom" 
+              height={36}
+              formatter={(value) => <span className="text-sm font-mono">{value}</span>}
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
@@ -72,32 +131,8 @@ export const Skills = () => {
         </h2>
         
         <div className="space-y-16">
-          <div className="glass p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {skills.map((skill, index) => (
-                <SkillBar 
-                  key={skill.name} 
-                  skill={skill} 
-                  delay={index * 0.1} 
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="glass p-8">
-            <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
-              {t('skills.itSkills.title')}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {itSkills.map((skill, index) => (
-                <SkillBar 
-                  key={skill.name} 
-                  skill={skill} 
-                  delay={(index + skills.length) * 0.1} 
-                />
-              ))}
-            </div>
-          </div>
+          <ChartSection data={skills} />
+          <ChartSection data={itSkills} title={t('skills.itSkills.title')} />
         </div>
       </div>
     </section>
