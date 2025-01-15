@@ -5,7 +5,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
@@ -42,9 +41,9 @@ export const LanguageSwitcher = () => {
           <Button 
             variant="outline" 
             size="icon"
-            className="glass hover:bg-white/20 transition-all"
+            className="glass hover:bg-white/20 transition-all font-mono text-sm"
           >
-            <Languages className="h-[1.2rem] w-[1.2rem]" />
+            {i18n.language === 'ar' ? 'ع' : 'En'}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
