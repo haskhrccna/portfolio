@@ -41,9 +41,9 @@ export const LanguageSwitcher = () => {
           <Button 
             variant="outline" 
             size="icon"
-            className="glass hover:bg-white/20 transition-all font-mono text-sm"
+            className="glass hover:bg-white/20 transition-all font-mono text-sm min-w-[3rem]"
           >
-            {i18n.language === 'ar' ? 'ع' : 'En'}
+            En/ع
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
