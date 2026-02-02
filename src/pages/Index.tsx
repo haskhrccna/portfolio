@@ -7,6 +7,7 @@ import ProjectImages from "@/components/ProjectImages";
 import Footer from "@/components/Footer";
 import { SplashAnimation } from "@/components/SplashAnimation";
 import { useEffect } from "react";
+import "@/utils/diagnostics"; // Load diagnostics for browser console testing
 
 const Index = () => {
   useEffect(() => {
