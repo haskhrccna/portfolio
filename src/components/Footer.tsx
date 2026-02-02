@@ -12,28 +12,20 @@ const Footer = () => {
       // Track the visit
       await trackVisitor();
 
-      // Get total visitor count based on visitor_number sequence
+      // Get total visitor count using count query
       try {
         console.log('Fetching visitor count from Supabase');
-        const { data, error } = await supabase
+        const { count, error } = await supabase
           .from('visitors')
-          .select('visitor_number')
-          .order('visitor_number', { ascending: false })
-          .limit(1)
-          .maybeSingle();
+          .select('*', { count: 'exact', head: true });
 
         if (error) {
           console.error('Error fetching visitor count:', error);
           throw error;
         }
 
-        if (data) {
-          console.log('Successfully fetched visitor count:', data.visitor_number);
-          setVisitorCount(data.visitor_number);
-        } else {
-          console.log('No visitors found yet');
-          setVisitorCount(0);
-        }
+        console.log('Successfully fetched visitor count:', count);
+        setVisitorCount(count || 0);
       } catch (error) {
         console.error('Error in visitor count fetch:', error);
         setVisitorCount(0);
