@@ -8,7 +8,7 @@ const Footer = () => {
   useEffect(() => {
     const initializeVisitor = async () => {
       console.log('Initializing visitor tracking in Footer');
-      
+
       // Track the visit
       await trackVisitor();
 
@@ -20,19 +20,23 @@ const Footer = () => {
           .select('visitor_number')
           .order('visitor_number', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
 
         if (error) {
           console.error('Error fetching visitor count:', error);
           throw error;
         }
-        
+
         if (data) {
           console.log('Successfully fetched visitor count:', data.visitor_number);
           setVisitorCount(data.visitor_number);
+        } else {
+          console.log('No visitors found yet');
+          setVisitorCount(0);
         }
       } catch (error) {
         console.error('Error in visitor count fetch:', error);
+        setVisitorCount(0);
       }
     };
 
