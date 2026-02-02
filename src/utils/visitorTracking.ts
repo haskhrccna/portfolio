@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const trackVisitor = async () => {
   try {
     console.log("Tracking visitor for page:", window.location.pathname);
-    
+
     // Insert visitor data with minimal info if location API fails
     const { data: visitorData, error } = await supabase
       .from('visitors')
@@ -18,13 +18,24 @@ export const trackVisitor = async () => {
 
     if (error) {
       console.error("Supabase error while tracking visitor:", error);
+      console.error("Error details:", {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       throw error;
     }
-    
+
     console.log("Successfully tracked visitor:", visitorData);
     return visitorData;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error tracking visitor:", error);
+    console.error("Full error object:", {
+      name: error?.name,
+      message: error?.message,
+      stack: error?.stack
+    });
     // Return null instead of throwing to prevent app crashes
     return null;
   }
@@ -34,20 +45,30 @@ export const trackVisitor = async () => {
 export const getVisitorCount = async () => {
   try {
     console.log("Fetching visitor count");
-    
+
     const { count, error } = await supabase
       .from('visitors')
       .select('*', { count: 'exact', head: true });
 
     if (error) {
       console.error("Error fetching visitor count:", error);
+      console.error("Error details:", {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      });
       throw error;
     }
 
     console.log("Total visitors:", count);
-    return count;
-  } catch (error) {
+    return count || 0;
+  } catch (error: any) {
     console.error("Error getting visitor count:", error);
+    console.error("Full error object:", {
+      name: error?.name,
+      message: error?.message
+    });
     return 0;
   }
 };

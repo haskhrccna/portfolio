@@ -10,20 +10,20 @@ export const KeyIndicators = () => {
       console.log("Fetching admin statistics...");
       
       // Get total visitors and previous period
-      const currentPeriod = await supabase
+      const { count: currentCount } = await supabase
         .from('visitors')
         .select('*', { count: 'exact' })
         .gte('visited_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
 
-      const previousPeriod = await supabase
+      const { count: previousCount } = await supabase
         .from('visitors')
         .select('*', { count: 'exact' })
         .gte('visited_at', new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString())
         .lt('visited_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
 
       // Calculate percentage change
-      const percentageChange = previousPeriod.count ? 
-        ((currentPeriod.count - previousPeriod.count) / previousPeriod.count) * 100 : 0;
+      const percentageChange = previousCount ?
+        ((currentCount! - previousCount) / previousCount) * 100 : 0;
 
       // Get unique countries for current period
       const { data: currentCountries } = await supabase
@@ -53,8 +53,8 @@ export const KeyIndicators = () => {
         .select('*', { count: 'exact' });
 
       return {
-        totalVisitors: currentPeriod.count || 0,
-        previousPeriodVisitors: previousPeriod.count || 0,
+        totalVisitors: currentCount || 0,
+        previousPeriodVisitors: previousCount || 0,
         percentageChange,
         uniqueCountries: currentUniqueCountries,
         previousUniqueCountries,
