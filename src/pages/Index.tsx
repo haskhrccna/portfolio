@@ -6,9 +6,7 @@ import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
 import Footer from "@/components/Footer";
 import { SplashAnimation } from "@/components/SplashAnimation";
-import { DiagnosticPanel } from "@/components/DiagnosticPanel";
 import { useEffect } from "react";
-import "@/utils/diagnostics"; // Load diagnostics for browser console testing
 import "@/utils/keepAlive"; // Auto-ping database to keep Supabase project active
 
 const Index = () => {
@@ -43,7 +41,6 @@ const Index = () => {
       <Certifications />
       <ProjectImages />
       <Footer />
-      <DiagnosticPanel />
     </main>
   );
 };
