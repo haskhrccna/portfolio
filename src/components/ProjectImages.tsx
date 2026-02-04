@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { useTranslation } from "react-i18next";
 
-const IMAGES = [
+// Fallback images if database is empty
+const FALLBACK_IMAGES = [
   "/images/projects/cable-installation.jpg",
   "/images/projects/equipment-setup.jpg",
   "/images/projects/concrete-blocks.jpg",
@@ -28,10 +31,50 @@ const IMAGES = [
   "/images/projects/testing1.JPG"
 ];
 
+interface ProjectPhoto {
+  id: string;
+  title: string | null;
+  description: string | null;
+  image_url: string;
+  display_order: number;
+}
+
 const ProjectImages = () => {
   const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [totalSlides, setTotalSlides] = useState(IMAGES.length);
+  const [totalSlides, setTotalSlides] = useState(0);
+
+  // Fetch photos from database
+  const { data: dbPhotos } = useQuery({
+    queryKey: ["public-project-photos"],
+    queryFn: async () => {
+      const { data, error} = await supabase
+        .from('project_photos')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        console.error("Error fetching photos:", error);
+        return null;
+      }
+
+      return data as ProjectPhoto[];
+    }
+  });
+
+  // Use database photos if available, otherwise use fallback
+  const images = dbPhotos && dbPhotos.length > 0
+    ? dbPhotos.map(photo => ({
+        url: photo.image_url,
+        title: photo.title || `Project ${photo.display_order}`,
+        description: photo.description
+      }))
+    : FALLBACK_IMAGES.map((url, index) => ({
+        url,
+        title: `Construction project phase ${index + 1}`,
+        description: null
+      }));
 
   const handleSlideChange = (api: any) => {
     if (!api) return;
@@ -55,17 +98,26 @@ const ProjectImages = () => {
             onSelect={handleSlideChange}
           >
             <CarouselContent className="-ml-2 md:-ml-4">
-              {IMAGES.map((src, index) => (
+              {images.map((image, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <div className="relative h-60 overflow-hidden rounded-lg group">
                     <img
-                      src={src}
-                      alt={`Construction project phase ${index + 1}`}
+                      src={image.url}
+                      alt={image.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      onError={(e) => {
+                        // Fallback for broken images
+                        e.currentTarget.src = '/placeholder.svg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {image.description && (
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-white text-sm">{image.description}</p>
+                      </div>
+                    )}
                     <div className="absolute bottom-2 right-2 bg-white/10 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                      {index + 1} / {IMAGES.length}
+                      {index + 1} / {images.length}
                     </div>
                   </div>
                 </CarouselItem>
