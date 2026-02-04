@@ -12,8 +12,9 @@ import { ContactMessages } from "@/components/admin/ContactMessages";
 import { DataExport } from "@/components/admin/DataExport";
 import { VisitorManagement } from "@/components/admin/VisitorManagement";
 import { ActivityLog } from "@/components/admin/ActivityLog";
+import { PhotoGallery } from "@/components/admin/PhotoGallery";
 import { toast } from "sonner";
-import { BarChart3, MessageSquare, Database, Users, Activity, Settings, Home, LogOut } from "lucide-react";
+import { BarChart3, MessageSquare, Database, Users, Activity, Settings, Home, LogOut, Image } from "lucide-react";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -131,6 +132,10 @@ const Admin = () => {
                 <MessageSquare className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Messages</span>
               </TabsTrigger>
+              <TabsTrigger value="photos" className="data-[state=active]:bg-white/20">
+                <Image className="h-4 w-4 mr-2" />
+                <span className="hidden md:inline">Gallery</span>
+              </TabsTrigger>
               <TabsTrigger value="export" className="data-[state=active]:bg-white/20">
                 <Database className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Export</span>
@@ -167,6 +172,11 @@ const Admin = () => {
             {/* Messages Tab */}
             <TabsContent value="messages" className="space-y-6">
               <ContactMessages />
+            </TabsContent>
+
+            {/* Photo Gallery Tab */}
+            <TabsContent value="photos" className="space-y-6">
+              <PhotoGallery />
             </TabsContent>
 
             {/* Export Tab */}
