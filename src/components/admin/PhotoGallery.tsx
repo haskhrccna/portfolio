@@ -48,6 +48,7 @@ export const PhotoGallery = () => {
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
 
   const { data: photos, isLoading } = useQuery({
     queryKey: ["project-photos"],
@@ -110,6 +111,7 @@ export const PhotoGallery = () => {
       setTitle("");
       setDescription("");
       setPreviewUrl(null);
+      setImageDimensions(null);
       setUploading(false);
       toast.success("Photo uploaded successfully!");
     },
@@ -197,8 +199,22 @@ export const PhotoGallery = () => {
         toast.error("File size must be less than 5MB");
         return;
       }
+
+      const url = URL.createObjectURL(file);
       setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setPreviewUrl(url);
+
+      // Load image to get dimensions
+      const img = new Image();
+      img.onload = () => {
+        setImageDimensions({ width: img.width, height: img.height });
+
+        // Warnings for image quality
+        if (img.width < 800 || img.height < 600) {
+          toast.warning("Image resolution is low. Recommended: at least 800x600px for better quality");
+        }
+      };
+      img.src = url;
     }
   };
 
@@ -244,7 +260,7 @@ export const PhotoGallery = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label className="text-white">Photo File *</Label>
@@ -298,14 +314,48 @@ export const PhotoGallery = () => {
             </div>
 
             {previewUrl && (
-              <div className="space-y-2">
-                <Label className="text-white">Preview</Label>
-                <div className="relative h-64 rounded-lg overflow-hidden border-2 border-white/20">
-                  <img
-                    src={previewUrl}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                  />
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-white">Image Preview</Label>
+                  {imageDimensions && (
+                    <div className="text-xs text-white/70 space-y-1">
+                      <p>Dimensions: {imageDimensions.width} × {imageDimensions.height}px</p>
+                      <p>Aspect Ratio: {(imageDimensions.width / imageDimensions.height).toFixed(2)}:1</p>
+                    </div>
+                  )}
+                  <div className="relative h-48 rounded-lg overflow-hidden border-2 border-white/20">
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="w-full h-full object-contain bg-black/20"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-white flex items-center gap-2">
+                    Gallery Frame Preview
+                    <Badge variant="outline" className="text-xs bg-blue-500/20 text-blue-300 border-blue-400/50">
+                      How it will appear
+                    </Badge>
+                  </Label>
+                  <p className="text-xs text-white/60">This shows exactly how your photo will fit in the gallery carousel</p>
+                  <div className="relative h-60 rounded-lg overflow-hidden border-2 border-green-500/50 group">
+                    <img
+                      src={previewUrl}
+                      alt="Gallery Preview"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {description && (
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-white text-sm">{description}</p>
+                      </div>
+                    )}
+                    <div className="absolute top-2 right-2 bg-white/10 backdrop-blur-sm text-white px-2 py-1 rounded text-xs">
+                      Gallery Frame (240px height)
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
