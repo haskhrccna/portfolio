@@ -1,0 +1,55 @@
+name: Database Keep-Alive
+
+# Run every 5 minutes to keep Supabase project active
+on:
+  schedule:
+    # Runs every 5 minutes
+    - cron: '*/5 * * * *'
+
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Supabase Database
+        run: |
+          echo "🔄 Pinging Supabase database to keep project active..."
+
+          # Get current timestamp
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "Timestamp: $TIMESTAMP"
+
+          # Ping the database with a lightweight HEAD request to count visitors
+          # This uses Supabase's REST API with the public anon key
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X HEAD \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/visitors?select=count")
+
+          echo "Response code: $RESPONSE"
+
+          if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
+            echo "✅ Database ping successful!"
+          else
+            echo "⚠️ Database ping returned code $RESPONSE"
+            # Don't fail the workflow on non-200 responses
+            # The database might return different codes but still be active
+          fi
+
+          echo "Keep-alive ping completed at $TIMESTAMP"
+
+      - name: Report Status
+        if: always()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Database Keep-Alive Status Report"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run Number: ${{ github.run_number }}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Status: ${{ job.status }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
