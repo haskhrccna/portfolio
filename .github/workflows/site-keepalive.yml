@@ -1,0 +1,57 @@
+name: Site Keep-Alive (Alternative)
+
+# Alternative workflow that pings your website URL instead of Supabase directly
+# This keeps both your site AND database active
+# Only enable ONE keep-alive workflow (either this or database-keepalive.yml)
+
+on:
+  schedule:
+    # Runs every 10 minutes
+    - cron: '*/10 * * * *'
+
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+jobs:
+  ping-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Website
+        run: |
+          echo "🔄 Pinging website to keep site and database active..."
+
+          # Replace with your actual website URL
+          SITE_URL="https://yourusername.github.io/portfolio"
+
+          # Get current timestamp
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "Timestamp: $TIMESTAMP"
+          echo "Target URL: $SITE_URL"
+
+          # Ping the website
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "User-Agent: GitHub-Actions-KeepAlive/1.0" \
+            "$SITE_URL")
+
+          echo "Response code: $RESPONSE"
+
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "✅ Website ping successful!"
+          else
+            echo "⚠️ Website returned code $RESPONSE"
+          fi
+
+          echo "Keep-alive ping completed at $TIMESTAMP"
+
+      - name: Report Status
+        if: always()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Site Keep-Alive Status Report"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run Number: ${{ github.run_number }}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Status: ${{ job.status }}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
