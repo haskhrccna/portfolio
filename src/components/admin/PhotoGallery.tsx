@@ -56,7 +56,7 @@ export const PhotoGallery = () => {
       const { data, error } = await supabase
         .from('project_photos')
         .select('*')
-        .order('display_order', { ascending: true });
+        .order('display_order', { ascending: false });
 
       if (error) throw error;
       return data as ProjectPhoto[];

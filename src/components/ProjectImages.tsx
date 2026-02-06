@@ -52,7 +52,7 @@ const ProjectImages = () => {
         .from('project_photos')
         .select('*')
         .eq('is_active', true)
-        .order('display_order', { ascending: true });
+        .order('display_order', { ascending: false });
 
       if (error) {
         console.error("Error fetching photos:", error);
