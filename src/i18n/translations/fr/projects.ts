@@ -1,7 +1,6 @@
 export default {
   "projects": {
-    "title": "Projets",
-    "viewMore": "Voir plus",
-    "viewLess": "Voir moins"
+    "title": "Bibliothèque de photos de projets",
+    "viewAll": "Voir tous les projets"
   }
 };

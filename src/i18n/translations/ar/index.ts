@@ -4,6 +4,7 @@ import contact from './contact';
 import projects from './projects';
 import certifications from './certifications';
 import general from './general';
+import experience from './experience';
 
 export default {
   translation: {
@@ -12,6 +13,7 @@ export default {
     ...contact,
     ...projects,
     ...certifications,
-    ...general
+    ...general,
+    ...experience
   }
 };
