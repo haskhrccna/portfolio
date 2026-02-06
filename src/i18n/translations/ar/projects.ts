@@ -1,7 +1,6 @@
 export default {
   "projects": {
-    "title": "المشاريع",
-    "viewMore": "عرض المزيد",
-    "viewLess": "عرض أقل"
+    "title": "مكتبة صور المشاريع",
+    "viewAll": "عرض جميع المشاريع"
   }
 };
