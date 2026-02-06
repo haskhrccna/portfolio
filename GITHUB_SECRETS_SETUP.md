@@ -123,19 +123,65 @@ The workflow runs automatically every 5 minutes. Just wait and check the Actions
 2. Check project URL matches: `https://ikxgwmujogucdamjgqkp.supabase.co`
 3. Update GitHub secret if URL changed
 
-### Issue: Workflow Still Failing with Exit Code 3
+### Issue: Exit Code 3 - Secrets Not Set
+
+**Cause:** GitHub secrets are not configured
+
+**Solution:** Follow the setup steps above to add both secrets
+
+### Issue: Exit Code 6 - Couldn't Resolve Host
+
+**Cause:** The `SUPABASE_URL` secret is incorrect, has extra characters, or contains quotes/spaces
+
+**Solution:**
+1. Go to Settings → Secrets and variables → Actions
+2. Find `SUPABASE_URL` secret
+3. Delete it (click the trash icon)
+4. Add it again with **exact value** (no quotes, no spaces):
+   ```
+   https://ikxgwmujogucdamjgqkp.supabase.co
+   ```
+5. **Important:** When pasting:
+   - Do NOT include quotes
+   - Do NOT add spaces before or after
+   - Paste exactly as shown above
+6. Re-run the workflow
+
+**Common mistakes:**
+- ❌ `"https://ikxgwmujogucdamjgqkp.supabase.co"` (has quotes)
+- ❌ ` https://ikxgwmujogucdamjgqkp.supabase.co` (has leading space)
+- ❌ `https://ikxgwmujogucdamjgqkp.supabase.co ` (has trailing space)
+- ✅ `https://ikxgwmujogucdamjgqkp.supabase.co` (correct)
+
+### Issue: Exit Code 7 - Failed to Connect
+
+**Cause:** Network connection to Supabase failed
+
+**Possible reasons:**
+1. Supabase project is paused
+2. Supabase service is down
+3. Network issues
+
+**Solution:**
+1. Check Supabase dashboard: https://supabase.com/dashboard
+2. Verify project status (should be "Active", not "Paused")
+3. If paused, click "Resume project"
+4. Check Supabase status: https://status.supabase.com
+
+### Issue: Workflow Still Failing
 
 **Possible causes:**
 1. ❌ Secrets not added
 2. ❌ Secret names incorrect (typos)
-3. ❌ Supabase project paused
-4. ❌ Network issues (rare)
+3. ❌ Secret values have extra characters
+4. ❌ Supabase project paused
 
 **Debug steps:**
 1. Verify secrets exist: Go to Settings → Secrets and variables → Actions
-2. Delete and re-add secrets with exact names/values
-3. Manually trigger workflow again
-4. Check workflow logs for detailed error message
+2. Check the improved workflow logs (now shows detailed debugging)
+3. Delete and re-add secrets with exact names/values
+4. Manually trigger workflow again
+5. Check workflow logs for specific error messages
 
 ---
 
