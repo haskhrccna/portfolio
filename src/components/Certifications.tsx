@@ -1,16 +1,43 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card } from "@/components/ui/card";
-import { gpmCertification, pmpCertification, otherCertifications } from '@/data/certificateData';
-import { Award } from 'lucide-react';
+import { Award, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+
+interface CertificationImage {
+  id: string;
+  title: string;
+  date: string;
+  storage_path: string;
+  public_url: string;
+  is_featured: boolean;
+  display_order: number;
+  is_active: boolean;
+}
 
 export const Certifications = () => {
   const { t } = useLanguage();
 
-  const CertificationCard = ({ cert }: { cert: typeof pmpCertification }) => {
+  // Fetch certifications from database
+  const { data: certifications, isLoading, error } = useQuery({
+    queryKey: ['certifications'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('certification_images')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+      return data as CertificationImage[];
+    }
+  });
+
+  const CertificationCard = ({ cert }: { cert: CertificationImage }) => {
     const [imageError, setImageError] = useState(false);
-    // Featured certifications (GPM-b and PMP) get larger width
-    const isFeatured = cert.id === 2 || cert.id === 9;
+    // Featured certifications get larger width
+    const isFeatured = cert.is_featured;
 
     return (
       <Card
@@ -25,7 +52,7 @@ export const Certifications = () => {
               <Award className="w-12 h-12 text-purple-400" />
             ) : (
               <img
-                src={cert.imageUrl}
+                src={cert.public_url}
                 alt={cert.title}
                 className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
                 onError={() => setImageError(true)}
@@ -52,6 +79,42 @@ export const Certifications = () => {
     );
   };
 
+  // Show loading state
+  if (isLoading) {
+    return (
+      <section id="certifications" className="section-padding">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
+            {t('certifications.title')}
+          </h2>
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-purple-400" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <section id="certifications" className="section-padding">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
+            {t('certifications.title')}
+          </h2>
+          <div className="text-center py-20 text-red-400">
+            {t('error')}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Separate featured and regular certifications
+  const featuredCerts = certifications?.filter(cert => cert.is_featured) || [];
+  const regularCerts = certifications?.filter(cert => !cert.is_featured) || [];
+
   return (
     <section id="certifications" className="section-padding">
       <div className="max-w-4xl mx-auto">
@@ -60,27 +123,34 @@ export const Certifications = () => {
         </h2>
 
         {/* Featured Certifications */}
-        <div className="space-y-6 mb-12">
-          <div className="animate-fade-up">
-            <CertificationCard cert={gpmCertification} />
+        {featuredCerts.length > 0 && (
+          <div className="space-y-6 mb-12">
+            {featuredCerts.map((cert, index) => (
+              <div
+                key={cert.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CertificationCard cert={cert} />
+              </div>
+            ))}
           </div>
-          <div className="animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            <CertificationCard cert={pmpCertification} />
-          </div>
-        </div>
+        )}
 
         {/* Other Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {otherCertifications.map((cert, index) => (
-            <div
-              key={cert.id}
-              className="animate-fade-up"
-              style={{ animationDelay: `${(index + 2) * 0.1}s` }}
-            >
-              <CertificationCard cert={cert} />
-            </div>
-          ))}
-        </div>
+        {regularCerts.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {regularCerts.map((cert, index) => (
+              <div
+                key={cert.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${(index + featuredCerts.length) * 0.1}s` }}
+              >
+                <CertificationCard cert={cert} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
