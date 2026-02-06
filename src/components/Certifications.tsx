@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card } from "@/components/ui/card";
-import { pmpCertification, otherCertifications } from '@/data/certificateData';
+import { gpmCertification, pmpCertification, otherCertifications } from '@/data/certificateData';
 import { Award } from 'lucide-react';
 import { useState } from 'react';
 
@@ -9,6 +9,8 @@ export const Certifications = () => {
 
   const CertificationCard = ({ cert }: { cert: typeof pmpCertification }) => {
     const [imageError, setImageError] = useState(false);
+    // Featured certifications (GPM-b and PMP) get larger width
+    const isFeatured = cert.id === 2 || cert.id === 9;
 
     return (
       <Card
@@ -17,7 +19,7 @@ export const Certifications = () => {
           hover:border-white/40"
       >
         <div className="flex items-start space-x-4">
-          <div className={`${cert.id === 2 ? 'w-48' : 'w-24'} h-24 flex-shrink-0 rounded-lg overflow-hidden bg-white/5
+          <div className={`${isFeatured ? 'w-48' : 'w-24'} h-24 flex-shrink-0 rounded-lg overflow-hidden bg-white/5
             group-hover:animate-pulse transition-all duration-300 flex items-center justify-center`}>
             {imageError ? (
               <Award className="w-12 h-12 text-purple-400" />
@@ -56,17 +58,24 @@ export const Certifications = () => {
         <h2 className="font-display text-4xl font-bold text-center mb-16 tracking-tight">
           {t('certifications.title')}
         </h2>
-        
-        <div className="mb-12 animate-fade-up">
-          <CertificationCard cert={pmpCertification} />
+
+        {/* Featured Certifications */}
+        <div className="space-y-6 mb-12">
+          <div className="animate-fade-up">
+            <CertificationCard cert={gpmCertification} />
+          </div>
+          <div className="animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            <CertificationCard cert={pmpCertification} />
+          </div>
         </div>
 
+        {/* Other Certifications */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {otherCertifications.map((cert, index) => (
-            <div 
+            <div
               key={cert.id}
               className="animate-fade-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ animationDelay: `${(index + 2) * 0.1}s` }}
             >
               <CertificationCard cert={cert} />
             </div>
