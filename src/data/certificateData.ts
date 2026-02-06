@@ -5,6 +5,13 @@ interface Certificate {
   imageUrl: string;
 }
 
+export const gpmCertification: Certificate = {
+  id: 9,
+  title: "Certified Green Project Manager (GPM-b™)",
+  date: "October 2025",
+  imageUrl: "/images/certifications/gpm-b-badge.png"
+};
+
 export const pmpCertification: Certificate = {
   id: 2,
   title: "Project Management Professional (PMP) certificate",
@@ -13,12 +20,6 @@ export const pmpCertification: Certificate = {
 };
 
 export const otherCertifications: Certificate[] = [
-  {
-    id: 9,
-    title: "Certified Green Project Manager (GPM-b™)",
-    date: "October 2025",
-    imageUrl: "/images/certifications/gpm-b-badge.png"
-  },
   {
     id: 1,
     title: "HashiCorp Certified: Terraform Associate (003)",
