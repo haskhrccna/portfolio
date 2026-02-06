@@ -14,6 +14,12 @@ export const pmpCertification: Certificate = {
 
 export const otherCertifications: Certificate[] = [
   {
+    id: 9,
+    title: "Certified Green Project Manager (GPM-b™)",
+    date: "October 2025",
+    imageUrl: "/images/certifications/gpm-b-cert.png"
+  },
+  {
     id: 1,
     title: "HashiCorp Certified: Terraform Associate (003)",
     date: "Nov 2023",
