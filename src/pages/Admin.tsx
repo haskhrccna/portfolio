@@ -13,8 +13,10 @@ import { DataExport } from "@/components/admin/DataExport";
 import { VisitorManagement } from "@/components/admin/VisitorManagement";
 import { ActivityLog } from "@/components/admin/ActivityLog";
 import { PhotoGallery } from "@/components/admin/PhotoGallery";
+import { MediaLibrary } from "@/components/admin/MediaLibrary";
+import { BackupRestore } from "@/components/admin/BackupRestore";
 import { toast } from "sonner";
-import { BarChart3, MessageSquare, Database, Users, Activity, Settings, Home, LogOut, Image } from "lucide-react";
+import { BarChart3, MessageSquare, Database, Users, Activity, Settings, Home, LogOut, Image, FolderOpen, Archive } from "lucide-react";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -132,9 +134,17 @@ const Admin = () => {
                 <MessageSquare className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Messages</span>
               </TabsTrigger>
+              <TabsTrigger value="media" className="data-[state=active]:bg-white/20">
+                <FolderOpen className="h-4 w-4 mr-2" />
+                <span className="hidden md:inline">Media</span>
+              </TabsTrigger>
               <TabsTrigger value="photos" className="data-[state=active]:bg-white/20">
                 <Image className="h-4 w-4 mr-2" />
                 <span className="hidden md:inline">Gallery</span>
+              </TabsTrigger>
+              <TabsTrigger value="backup" className="data-[state=active]:bg-white/20">
+                <Archive className="h-4 w-4 mr-2" />
+                <span className="hidden md:inline">Backup</span>
               </TabsTrigger>
               <TabsTrigger value="export" className="data-[state=active]:bg-white/20">
                 <Database className="h-4 w-4 mr-2" />
@@ -174,9 +184,19 @@ const Admin = () => {
               <ContactMessages />
             </TabsContent>
 
+            {/* Media Library Tab */}
+            <TabsContent value="media" className="space-y-6">
+              <MediaLibrary />
+            </TabsContent>
+
             {/* Photo Gallery Tab */}
             <TabsContent value="photos" className="space-y-6">
               <PhotoGallery />
+            </TabsContent>
+
+            {/* Backup & Restore Tab */}
+            <TabsContent value="backup" className="space-y-6">
+              <BackupRestore />
             </TabsContent>
 
             {/* Export Tab */}
