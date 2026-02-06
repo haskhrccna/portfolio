@@ -16,28 +16,93 @@ jobs:
     steps:
       - name: Ping Supabase Database
         run: |
+          set +e  # Don't exit on errors, we want to handle them
+
           echo "🔄 Pinging Supabase database to keep project active..."
 
           # Get current timestamp
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           echo "Timestamp: $TIMESTAMP"
 
-          # Ping the database with a lightweight HEAD request to count visitors
-          # This uses Supabase's REST API with the public anon key
+          # Debug: Check if secrets are set (without revealing values)
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Debug Information:"
+          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then
+            echo "❌ SUPABASE_URL secret is NOT set or empty"
+          else
+            echo "✅ SUPABASE_URL secret is set (length: ${#SUPABASE_URL})"
+            echo "   URL starts with: ${SUPABASE_URL:0:20}..."
+          fi
+
+          if [ -z "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
+            echo "❌ SUPABASE_ANON_KEY secret is NOT set or empty"
+          else
+            echo "✅ SUPABASE_ANON_KEY secret is set (length: ${#SUPABASE_ANON_KEY})"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          # Store secrets in variables to avoid repetition
+          SUPABASE_URL="${{ secrets.SUPABASE_URL }}"
+          SUPABASE_KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+
+          # Trim any whitespace from secrets
+          SUPABASE_URL=$(echo "$SUPABASE_URL" | xargs)
+          SUPABASE_KEY=$(echo "$SUPABASE_KEY" | xargs)
+
+          # Build the full URL
+          FULL_URL="${SUPABASE_URL}/rest/v1/visitors?select=count"
+          echo "Making request to: ${FULL_URL:0:50}..."
+
+          # Ping the database with a lightweight HEAD request
+          echo "Executing curl command..."
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
             -X HEAD \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/visitors?select=count")
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            "$FULL_URL" 2>&1)
 
-          echo "Response code: $RESPONSE"
+          CURL_EXIT_CODE=$?
 
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Results:"
+          echo "Curl exit code: $CURL_EXIT_CODE"
+          echo "HTTP response code: $RESPONSE"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          # Check curl exit code first
+          if [ $CURL_EXIT_CODE -ne 0 ]; then
+            echo "❌ Curl command failed with exit code: $CURL_EXIT_CODE"
+            case $CURL_EXIT_CODE in
+              6)
+                echo "   Error: Couldn't resolve host"
+                echo "   → Check SUPABASE_URL secret for typos, extra spaces, or quotes"
+                echo "   → Should be: https://ikxgwmujogucdamjgqkp.supabase.co"
+                ;;
+              7)
+                echo "   Error: Failed to connect to host"
+                echo "   → Check if Supabase project is paused or down"
+                ;;
+              *)
+                echo "   Error: Unknown curl error"
+                ;;
+            esac
+            exit 1
+          fi
+
+          # Check HTTP response code
           if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
             echo "✅ Database ping successful!"
+          elif [ "$RESPONSE" -eq 401 ]; then
+            echo "❌ Authentication failed (401 Unauthorized)"
+            echo "   → Check SUPABASE_ANON_KEY secret is correct"
+            exit 1
+          elif [ "$RESPONSE" -eq 404 ]; then
+            echo "❌ Table not found (404 Not Found)"
+            echo "   → Verify 'visitors' table exists in your Supabase database"
+            exit 1
           else
-            echo "⚠️ Database ping returned code $RESPONSE"
-            # Don't fail the workflow on non-200 responses
-            # The database might return different codes but still be active
+            echo "⚠️ Unexpected response code: $RESPONSE"
+            echo "   Database may still be active, but worth investigating"
           fi
 
           echo "Keep-alive ping completed at $TIMESTAMP"
