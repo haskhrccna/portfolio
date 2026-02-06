@@ -17,13 +17,13 @@ export const otherCertifications: Certificate[] = [
     id: 9,
     title: "Certified Green Project Manager (GPM-b™)",
     date: "October 2025",
-    imageUrl: "/images/certifications/gpm-b-cert.png"
+    imageUrl: "/images/certifications/gpm-b-badge.png"
   },
   {
     id: 1,
     title: "HashiCorp Certified: Terraform Associate (003)",
     date: "Nov 2023",
-    imageUrl: "https://images.credly.com/size/340x340/images/85b9cfc4-257a-4742-878c-4f7ab4a2631b/image.png"
+    imageUrl: "/images/certifications/hashi-corp-terraform.png"
   },
   {
     id: 3,
