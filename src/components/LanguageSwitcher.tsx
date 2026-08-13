@@ -23,37 +23,41 @@ export const LanguageSwitcher = () => {
       setLastScrollY(window.scrollY);
     };
 
-    window.addEventListener('scroll', controlNavbar);
+    window.addEventListener("scroll", controlNavbar, { passive: true });
     return () => {
-      window.removeEventListener('scroll', controlNavbar);
+      window.removeEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
   };
 
   return (
-    <div className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-20'}`}>
+    <div
+      className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-24"
+      }`}
+    >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="icon"
-            className="glass hover:bg-white/20 transition-all font-mono text-sm min-w-[3rem]"
+            className="min-w-[3rem] rounded-full border-gold/25 bg-navy/70 font-mono text-xs text-ivory hover:bg-white/10"
           >
             En/ع
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => changeLanguage('en')}>
+        <DropdownMenuContent align="end" className="border-gold/20 bg-navy text-ivory">
+          <DropdownMenuItem onClick={() => changeLanguage("en")}>
             English (EN)
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => changeLanguage('ar')}>
+          <DropdownMenuItem onClick={() => changeLanguage("ar")}>
             العربية (AR)
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => changeLanguage('fr')}>
+          <DropdownMenuItem onClick={() => changeLanguage("fr")}>
             Français (FR)
           </DropdownMenuItem>
         </DropdownMenuContent>

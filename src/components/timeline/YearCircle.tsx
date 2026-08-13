@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface YearCircleProps {
   year: string;
@@ -8,93 +7,23 @@ interface YearCircleProps {
 }
 
 export const YearCircle = ({ year, isGraduationYear, isCurrentYear }: YearCircleProps) => {
-  const baseVariants = {
-    initial: { scale: 0.8 },
-    hover: {
-      scale: 1.2,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  };
-
-  const celebrationVariants = {
-    initial: { scale: 0.8 },
-    hover: {
-      scale: 1.3,
-      transition: {
-        duration: 0.3,
-        repeat: Infinity,
-        repeatType: "reverse" as const,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const currentYearVariants = {
-    initial: { scale: 1 },
-    hover: {
-      scale: 1.2,
-      transition: {
-        duration: 0.3,
-        repeat: Infinity,
-        repeatType: "reverse" as const,
-        ease: "easeInOut"
-      }
-    }
-  };
+  const reduceMotion = useReducedMotion();
 
   return (
-    <motion.div 
-      initial="initial"
-      whileHover="hover"
-      variants={isGraduationYear ? celebrationVariants : isCurrentYear ? currentYearVariants : baseVariants}
-      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full 
-        ${isGraduationYear 
-          ? 'bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 animate-gradient-xy' 
-          : isCurrentYear
-          ? 'bg-gradient-to-br from-green-400 via-green-500 to-emerald-600 animate-shine hover:animate-pulse'
-          : 'bg-gradient-to-br from-purple-500 to-pink-500'
-        } 
-        flex items-center justify-center text-white font-bold text-xs sm:text-sm z-10 
-        shadow-lg hover:shadow-xl transition-shadow duration-200`}
+    <motion.div
+      initial={reduceMotion ? false : { scale: 0.86, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ once: true }}
+      whileHover={reduceMotion ? undefined : { scale: 1.08 }}
+      className={`z-10 flex h-11 w-11 items-center justify-center rounded-full border text-[11px] font-medium sm:h-12 sm:w-12 sm:text-xs ${
+        isCurrentYear
+          ? "border-gold bg-gold text-ink"
+          : isGraduationYear
+          ? "border-gold/70 bg-navy text-gold-soft"
+          : "border-gold/30 bg-ink text-ivory"
+      }`}
     >
       {year}
-      {isGraduationYear && (
-        <>
-          <motion.div
-            className="absolute -top-1 -right-1"
-            animate={{
-              rotate: [0, 15, -15, 0],
-              scale: [1, 1.2, 1.2, 1],
-            }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-          >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
-          </motion.div>
-          <motion.div
-            className="absolute -bottom-1 -left-1"
-            animate={{
-              rotate: [0, -15, 15, 0],
-              scale: [1, 1.2, 1.2, 1],
-            }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: 0.5,
-            }}
-          >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
-          </motion.div>
-        </>
-      )}
     </motion.div>
   );
 };
