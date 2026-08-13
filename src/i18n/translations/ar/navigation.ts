@@ -4,6 +4,8 @@ export default {
     "about": "عني",
     "skills": "المهارات",
     "projects": "المشاريع",
-    "contact": "اتصل بي"
+    "contact": "اتصل بي",
+    "experience": "الخبرة",
+    "certifications": "الشهادات"
   }
 };

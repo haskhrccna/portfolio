@@ -10,9 +10,9 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { AmbientBackground } from "./components/AmbientBackground";
 import "./i18n/config";
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -30,6 +30,7 @@ const App = () => {
           <TooltipProvider>
             <Toaster />
             <Sonner />
+            <AmbientBackground />
             <LanguageSwitcher />
             <BrowserRouter>
               <Routes>

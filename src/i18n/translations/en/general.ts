@@ -9,5 +9,7 @@ export default {
   },
   "hero": {
     "status": "Status: Hired"
-  }
+  },
+  "welcome": "Welcome",
+  "error": "An error occurred"
 };

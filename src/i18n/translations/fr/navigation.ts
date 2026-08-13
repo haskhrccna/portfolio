@@ -4,6 +4,8 @@ export default {
     "about": "À Propos",
     "skills": "Compétences",
     "projects": "Projets",
-    "contact": "Contact"
+    "contact": "Contact",
+    "experience": "Expérience",
+    "certifications": "Certifications"
   }
 };

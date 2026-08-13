@@ -6,25 +6,25 @@ import { Certifications } from "@/components/Certifications";
 import ProjectImages from "@/components/ProjectImages";
 import Footer from "@/components/Footer";
 import { SplashAnimation } from "@/components/SplashAnimation";
+import { SiteNav } from "@/components/SiteNav";
 import { useEffect } from "react";
-import "@/utils/keepAlive"; // Auto-ping database to keep Supabase project active
+import "@/utils/keepAlive";
 
 const Index = () => {
   useEffect(() => {
-    // Set up scroll animations
     const observerCallback: IntersectionObserverCallback = (entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
         }
       });
     };
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1
+      threshold: 0.1,
     });
 
-    document.querySelectorAll('.animate-on-scroll').forEach(element => {
+    document.querySelectorAll(".animate-on-scroll").forEach((element) => {
       observer.observe(element);
     });
 
@@ -32,8 +32,9 @@ const Index = () => {
   }, []);
 
   return (
-    <main className="overflow-hidden">
+    <main className="relative overflow-hidden">
       <SplashAnimation />
+      <SiteNav />
       <Hero />
       <About />
       <Timeline />
