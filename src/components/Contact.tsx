@@ -15,7 +15,7 @@ export const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (isSubmitting) return; // Prevent double submission
+    if (isSubmitting) return;
     
     setIsSubmitting(true);
     console.log("Starting form submission...");
@@ -32,7 +32,6 @@ export const Contact = () => {
 
     try {
       console.log("Attempting to save to Supabase...");
-      // First, save to Supabase
       const { error: supabaseError } = await supabase
         .from('contact_messages')
         .insert([data]);
@@ -43,7 +42,6 @@ export const Contact = () => {
       }
 
       console.log("Successfully saved to Supabase, sending email...");
-      // Then, send email
       const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
         body: JSON.stringify(data)
       });
@@ -75,8 +73,8 @@ export const Contact = () => {
   };
 
   return (
-    <section className="min-h-screen bg-[#1F5199] text-white py-16">
-      <div className="max-w-3xl mx-auto px-4">
+    <section className="relative z-10 min-h-screen py-24 text-ivory">
+      <div className="mx-auto max-w-3xl px-4">
         <ContactHeader />
         <ContactForm
           isSubmitting={isSubmitting}

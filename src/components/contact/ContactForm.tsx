@@ -26,7 +26,6 @@ export const ContactForm = ({
   const { t } = useTranslation();
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Fetch admin settings to check if CV request should be shown
   const { data: adminSettings } = useQuery({
     queryKey: ["admin-settings"],
     queryFn: async () => {
@@ -50,7 +49,7 @@ export const ContactForm = ({
       animate={{ opacity: 1 }}
       transition={{ delay: 0.2 }}
       onSubmit={onSubmit}
-      className="space-y-6 bg-[#163C73] p-8 rounded-lg"
+      className="glass space-y-6 p-8"
     >
       <div className="space-y-4">
         <FormField
@@ -98,7 +97,7 @@ export const ContactForm = ({
       <Button
         type="submit"
         disabled={isSubmitting || isSubmitted}
-        className="w-full bg-[#0D2B59] hover:bg-[#0A2347] text-white disabled:opacity-50"
+        className="w-full rounded-full border border-gold/40 bg-gold text-ink hover:bg-gold-soft disabled:opacity-50"
       >
         {isSubmitting ? (
           <>
@@ -117,7 +116,7 @@ export const ContactForm = ({
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-green-500 text-center mt-4 font-medium"
+          className="mt-4 text-center font-medium text-gold-soft"
         >
           {t('contact.successMessage')}
         </motion.p>

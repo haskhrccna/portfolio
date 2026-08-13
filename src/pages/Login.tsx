@@ -56,17 +56,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="relative z-10 flex min-h-screen flex-col items-center justify-center">
       <Button
         variant="ghost"
         size="icon"
-        className="absolute top-4 left-4 text-white hover:bg-white/10"
+        className="absolute top-4 left-4 text-ivory hover:bg-white/10"
         onClick={handleHomeClick}
       >
         <Home className="h-6 w-6" />
       </Button>
-      <div className="w-full max-w-md p-8 glass rounded-xl shadow-xl">
-        <h1 className="text-3xl font-bold text-center text-white mb-8">Admin Login</h1>
+      <div className="glass w-full max-w-md p-8">
+        <h1 className="mb-8 text-center font-display text-3xl text-ivory">Admin Login</h1>
         <Auth
           supabaseClient={supabase}
           appearance={{
@@ -74,8 +74,8 @@ const Login = () => {
             variables: {
               default: {
                 colors: {
-                  brand: '#7c3aed',
-                  brandAccent: '#6d28d9',
+                  brand: '#c6a46a',
+                  brandAccent: '#a8884e',
                 }
               }
             }
