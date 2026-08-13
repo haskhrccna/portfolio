@@ -14,7 +14,7 @@ export const FormField = ({ label, name, type = "text", required = false, disabl
   
   return (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium mb-2">
+      <label htmlFor={name} className="mb-2 block text-sm font-medium text-stone">
         {label} {required && "*"}
       </label>
       <Component
@@ -23,7 +23,7 @@ export const FormField = ({ label, name, type = "text", required = false, disabl
         type={type === "textarea" ? undefined : type}
         required={required}
         disabled={disabled}
-        className={`w-full bg-[#1C2537] border-gray-700 text-white disabled:opacity-50 ${
+        className={`w-full border-white/10 bg-white/5 text-ivory disabled:opacity-50 ${
           type === "textarea" ? "min-h-[150px]" : ""
         }`}
       />

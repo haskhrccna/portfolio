@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { cn } from "@/lib/utils";
+import { Reveal } from "./Reveal";
 
 export const Skills = () => {
   const [animated, setAnimated] = useState(false);
   const { t } = useLanguage();
 
   const skills = [
-    { name: t('skills.items.projectManagement'), value: 95, color: "#8B5CF6" },
-    { name: t('skills.items.constructionSupervision'), value: 90, color: "#6366F1" },
-    { name: t('skills.items.powerTransmission'), value: 95, color: "#4F46E5" },
-    { name: t('skills.items.infrastructureDesign'), value: 85, color: "#4338CA" },
-    { name: t('skills.items.tenderManagement'), value: 90, color: "#3730A3" }
+    { name: t("skills.items.projectManagement"), value: 95, color: "#C6A46A" },
+    { name: t("skills.items.constructionSupervision"), value: 90, color: "#A8884E" },
+    { name: t("skills.items.powerTransmission"), value: 95, color: "#8B7344" },
+    { name: t("skills.items.infrastructureDesign"), value: 85, color: "#6E5C3A" },
+    { name: t("skills.items.tenderManagement"), value: 90, color: "#4A4030" },
   ];
 
   const itSkills = [
-    { name: t('skills.itSkills.microsoftOffice'), value: 99, color: "#10B981" },
-    { name: t('skills.itSkills.pythonProgramming'), value: 95, color: "#059669" },
-    { name: t('skills.itSkills.networking'), value: 97, color: "#047857" },
-    { name: t('skills.itSkills.linux'), value: 90, color: "#065F46" }
+    { name: t("skills.itSkills.microsoftOffice"), value: 99, color: "#C9D4E3" },
+    { name: t("skills.itSkills.pythonProgramming"), value: 95, color: "#8A9BB0" },
+    { name: t("skills.itSkills.networking"), value: 97, color: "#6B7C94" },
+    { name: t("skills.itSkills.linux"), value: 90, color: "#4D5F78" },
   ];
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const Skills = () => {
       { threshold: 0.1 }
     );
 
-    const element = document.getElementById('skills-section');
+    const element = document.getElementById("skills-section");
     if (element) {
       observer.observe(element);
     }
@@ -47,16 +48,23 @@ export const Skills = () => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-background/80 backdrop-blur-sm border border-border/50 p-2 rounded-lg shadow-lg">
-          <p className="font-mono text-sm">{payload[0].name}</p>
-          <p className="font-mono text-primary text-sm font-bold">{`${payload[0].value}%`}</p>
+        <div className="rounded-lg border border-gold/20 bg-navy/90 p-2 shadow-lg backdrop-blur-sm">
+          <p className="font-mono text-sm text-ivory">{payload[0].name}</p>
+          <p className="font-mono text-sm font-medium text-gold">{`${payload[0].value}%`}</p>
         </div>
       );
     }
     return null;
   };
 
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value, name }: any) => {
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    value,
+  }: any) => {
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -67,7 +75,7 @@ export const Skills = () => {
         x={x}
         y={y}
         fill="currentColor"
-        textAnchor={x > cx ? 'start' : 'end'}
+        textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
         className="text-xs font-mono"
       >
@@ -77,12 +85,14 @@ export const Skills = () => {
   };
 
   const ChartSection = ({ data, title }: { data: typeof skills; title?: string }) => (
-    <div className={cn(
-      "glass p-8 transition-all duration-700 h-full",
-      animated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-    )}>
+    <div
+      className={cn(
+        "glass h-full p-8 transition-all duration-700",
+        animated ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      )}
+    >
       {title && (
-        <h3 className="font-display text-2xl font-bold text-center mb-8 tracking-tight">
+        <h3 className="mb-8 text-center font-display text-2xl tracking-tight text-ivory">
           {title}
         </h3>
       )}
@@ -104,18 +114,18 @@ export const Skills = () => {
               animationEasing="ease-out"
             >
               {data.map((entry, index) => (
-                <Cell 
+                <Cell
                   key={`cell-${index}`}
                   fill={entry.color}
-                  className="stroke-background hover:opacity-80 transition-opacity cursor-pointer"
+                  className="stroke-ink hover:opacity-80 transition-opacity cursor-pointer"
                 />
               ))}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
-            <Legend 
-              verticalAlign="bottom" 
+            <Legend
+              verticalAlign="bottom"
               height={36}
-              formatter={(value) => <span className="text-sm font-mono">{value}</span>}
+              formatter={(value) => <span className="font-mono text-sm text-stone">{value}</span>}
             />
           </PieChart>
         </ResponsiveContainer>
@@ -124,11 +134,16 @@ export const Skills = () => {
   );
 
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding relative z-10">
       <div id="skills-section" className="container-width">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <ChartSection data={skills} title={t('skills.title')} />
-          <ChartSection data={itSkills} title={t('skills.itSkills.title')} />
+        <Reveal>
+          <p className="eyebrow mb-4 text-center">{t("navigation.skills")}</p>
+          <h2 className="display-title text-center">{t("skills.title")}</h2>
+          <div className="gold-rule mx-auto my-8" />
+        </Reveal>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <ChartSection data={skills} title={t("skills.title")} />
+          <ChartSection data={itSkills} title={t("skills.itSkills.title")} />
         </div>
       </div>
     </section>
